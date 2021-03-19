@@ -30,7 +30,6 @@ function UserContextProvider(props) {
       .collection("post")
       .onSnapshot((snapshot) => {
         setDocs(snapshot.docs.map(doc => doc.data()))
-        console.log(doc)
       })
   }  
   
@@ -39,6 +38,12 @@ function UserContextProvider(props) {
       db
       .collection("post")
       .add(blog)
+      .then((docRef) => {
+        console.log(docRef.id)
+        return db.collection("post").doc(docRef.id).update({
+          id: docRef.id
+        })
+      })
     } 
     
   function updateUser(displayName){

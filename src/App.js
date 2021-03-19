@@ -10,6 +10,7 @@ import PrivateRoute from "./components/PrivateRoute"
 import PublicRoute from "./components/PublicRoute"
 import Dashboard from "./pages/Dashboard"
 import Home from "./pages/Home"
+import BlogDetails from "./components/blog-details"
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
           path="/Home"
           component={Home}
         />
+        <Route path="/blogs/:id">
+          <BlogDetails />
+        </Route>
         <Route path="/SignUp"><SignUp /></Route>
         <Route path="/PasswordReset">
           <PasswordReset />

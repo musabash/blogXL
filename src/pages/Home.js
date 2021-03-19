@@ -7,7 +7,6 @@ export default function Home() {
 
   useEffect(() => {
     getDoc()
-    console.log(doc)
   }, [])
   return (
     <div className="home">
