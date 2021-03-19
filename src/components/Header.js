@@ -5,8 +5,13 @@ function Header() {
   return(
     <ul>
       <li><Link to="/ProfilePage">Profile Page</Link></li>
-      <li><Link to="/">Sign In</Link></li>
-      <li><Link to="/SignUp">Sign Up</Link></li>
+      <li><Link to="/Dashboard">Dashboard</Link></li>
+      <li>
+        <Link to="/create">New Blog</Link>
+      </li>
+      <li>
+        <Link to="/Home">Home</Link>
+      </li>
       <li><Link to="/PasswordReset">Reset Password</Link></li>
     </ul>
   )

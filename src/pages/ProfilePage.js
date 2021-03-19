@@ -3,7 +3,7 @@ import { UserContext } from "../contexts/UserContext"
 import { useHistory } from "react-router-dom"
 
 const ProfilePage = () => {
-  const {user, signout, photoURL, userName, data} = useContext(UserContext)
+  const {user, signout, updateUser, data} = useContext(UserContext)
   const [error, setError] = useState("")
   const history = useHistory()
 
@@ -23,7 +23,7 @@ const ProfilePage = () => {
         <div
           style={{
             background:
-                `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
+                `url(${user.photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
             backgroundSize: "cover",
             height: "100px",
             width: "100px"
@@ -36,8 +36,13 @@ const ProfilePage = () => {
       </div>
       {error && <h3 className="error">{error}</h3>}
       <button onClick={() => handleSignOut()}>Sign out</button>
+      <button onClick={() => {
+        updateUser()
+        console.log(user.photoURL)
+      }
+      }>USER</button>
     </div>
-  ) 
+  )
 };
 
 export default ProfilePage

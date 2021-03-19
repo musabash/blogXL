@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 
 function SignUp() {
-  const {signup} = useContext(UserContext)
+  const {signup, updateUser} = useContext(UserContext)
   const [displayName, setDisplayName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -21,6 +21,7 @@ function SignUp() {
       setError("")
       setLoading(true)
       await signup(email, password)
+      await updateUser(displayName)
     } catch(error) {
       setError(`Failed to create an account: ${error.message}`)
     }

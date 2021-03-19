@@ -8,7 +8,6 @@ function SignIn() {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
   const {signin} = useContext(UserContext)
-  const [userName, setUserName] = useState("")
   const history = useHistory()
   
   async function handleSubmit(e){
@@ -22,7 +21,6 @@ function SignIn() {
       setError(`Failed to sign in: ${error.message}`)
     }
     setLoading(false)
-    setUserName("")
     setEmail("")
     setPassword("")
   }

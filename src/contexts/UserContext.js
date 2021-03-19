@@ -34,16 +34,19 @@ function UserContextProvider(props) {
       })
   }  
   
-  function post() {
+  function post(blog) {
       const db = firebase.firestore()
       db
       .collection("post")
-      .add({
-        post: "hello",
-        username: "emine"
-      })
+      .add(blog)
     } 
-  
+    
+  function updateUser(displayName){
+    firebase.auth().currentUser.updateProfile({
+      displayName: displayName,
+      photoURL: "https://unsplash.com/photos/I0fDR8xtApA"
+    })
+  }
   
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(curUser => {
@@ -61,7 +64,8 @@ function UserContextProvider(props) {
     post,
     data,
     getDoc,
-    doc
+    doc,
+    updateUser
   }
   return (
     <UserContext.Provider value={value}>
