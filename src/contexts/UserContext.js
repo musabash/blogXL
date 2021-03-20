@@ -34,14 +34,15 @@ function UserContextProvider(props) {
   }  
   
   function post(blog) {
+      const date = new Date()
       const db = firebase.firestore()
       db
       .collection("post")
       .add(blog)
       .then((docRef) => {
-        console.log(docRef.id)
         return db.collection("post").doc(docRef.id).update({
-          id: docRef.id
+          id: docRef.id,
+          date: date.toString()
         })
       })
     } 
@@ -49,7 +50,7 @@ function UserContextProvider(props) {
   function updateUser(displayName){
     firebase.auth().currentUser.updateProfile({
       displayName: displayName,
-      photoURL: "https://unsplash.com/photos/I0fDR8xtApA"
+      photoURL: "https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png"
     })
   }
   

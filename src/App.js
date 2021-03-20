@@ -16,36 +16,39 @@ function App() {
   return (
     <div className="app"> 
       <Header />
-      <Switch>
-        <PublicRoute 
-          exact path="/"
-          restricted={true}
-          component={SignIn}
-        />
-        <PrivateRoute
-          path="/ProfilePage"
-          component={ProfilePage}
-        />
-        <PrivateRoute 
-          path="/create" 
-          component={Create}
-        />
-        <PrivateRoute
-          path="/Dashboard"
-          component={Dashboard}
-        />
-        <PrivateRoute
-          path="/Home"
-          component={Home}
-        />
-        <Route path="/blogs/:id">
-          <BlogDetails />
-        </Route>
-        <Route path="/SignUp"><SignUp /></Route>
-        <Route path="/PasswordReset">
-          <PasswordReset />
-        </Route>
-      </Switch>
+      <div className="content">
+        <Switch>
+          <PublicRoute 
+            exact path="/"
+            restricted={true}
+            component={SignIn}
+          />
+          <PrivateRoute
+            path="/ProfilePage"
+            component={ProfilePage}
+          />
+          <PrivateRoute 
+            path="/create" 
+            component={Create}
+          />
+          <PrivateRoute
+            path="/Dashboard"
+            component={Dashboard}
+          />
+          <PrivateRoute
+            path="/Home"
+            component={Home}
+          />
+          <Route path="/blogs/:id">
+            <BlogDetails />
+          </Route>
+          <Route path="/SignUp"><SignUp /></Route>
+          <Route path="/PasswordReset">
+            <PasswordReset />
+          </Route>
+        </Switch>
+      </div>
+      
     </div>
   )
 }
