@@ -40,17 +40,21 @@ const Create = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <div className="blog-body" onKeyDown={handleKeyDown}>
+        <div className="blog-body">
           <label>Blog body</label>
-          {body.map((elm) => 
+          {body.map((par, index) => 
             <BlogParagraph
-            value={elm}
+              index={index}
+              par={par}
+              body={body}
+              setBody={setBody}
             />
           )}
           <textarea
             required
             value={paragraph}
             onChange={(e) => setParagraph(e.target.value)}
+            onKeyDown={handleKeyDown}
           />  
         </div>
         {!isPending && <button>Add blog</button>}
