@@ -17,7 +17,6 @@ const Create = () => {
     const blog = {title, body, author}
     setIsPending(true)
     post(blog)
-      console.log('New blog added')
       setIsPending(false)
       history.push('/home')
   }

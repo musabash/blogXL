@@ -34,25 +34,39 @@ function UserContextProvider(props) {
   }  
   
   function post(blog) {
-      const date = new Date()
-      const db = firebase.firestore()
-      db
-      .collection("post")
-      .add(blog)
-      .then((docRef) => {
-        return db.collection("post").doc(docRef.id).update({
-          id: docRef.id,
-          date: date.toString()
-        })
+    const date = new Date()
+    const db = firebase.firestore()
+    db
+    .collection("post")
+    .add(blog)
+    .then((docRef) => {
+      return db.collection("post").doc(docRef.id).update({
+        id: docRef.id,
+        date: date.toString()
       })
-    } 
-    
+    })
+  } 
+  
+  function deleteBlog(id) {
+    const db = firebase.firestore()
+    db.collection("post").doc(id).delete()
+  }
+  
+  function updateBlog(body, id) {
+    const db = firebase.firestore()
+    db.collection("post").doc(id).update({
+      body: body
+    })
+  }
+
   function updateUser(displayName){
     firebase.auth().currentUser.updateProfile({
       displayName: displayName,
       photoURL: "https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png"
     })
   }
+
+
   
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(curUser => {
@@ -71,7 +85,9 @@ function UserContextProvider(props) {
     data,
     getDoc,
     doc,
-    updateUser
+    updateUser,
+    deleteBlog,
+    updateBlog
   }
   return (
     <UserContext.Provider value={value}>
