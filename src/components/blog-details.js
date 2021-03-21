@@ -19,7 +19,7 @@ const BlogDetails = () => {
         <article>
           <h2>{blog.title}</h2>
           <p>Written by {blog.author}</p>
-          <div>{blog.body}</div>
+          <div>{blog.body.map(e => <p>{e}</p>)}</div>
           <div>{blog.date}</div>
           <button onClick={handleClick}>delete</button>
         </article>

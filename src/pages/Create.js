@@ -5,7 +5,7 @@ import BlogParagraph from '../components/blog-body-paragraph'
 
 const Create = () => {
   const [title, setTitle] = useState('')
-  const [body, setBody] = useState([""])
+  const [body, setBody] = useState([])
   const [paragraph, setParagraph] = useState("")
   const [isPending, setIsPending] = useState(false)
   const history = useHistory()
@@ -25,7 +25,7 @@ const Create = () => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       console.log("Enter key was hit.")
-      setBody((prev) => [...prev, ""])
+      setBody((prev) => [...prev, paragraph])
       setParagraph("")
     }
   }
@@ -44,10 +44,14 @@ const Create = () => {
           <label>Blog body</label>
           {body.map((elm) => 
             <BlogParagraph
-            content={elm || paragraph}
-            setParagraph={setParagraph}
+            value={elm}
             />
           )}
+          <textarea
+            required
+            value={paragraph}
+            onChange={(e) => setParagraph(e.target.value)}
+          />  
         </div>
         {!isPending && <button>Add blog</button>}
         {isPending && <button disabled>Adding blog...</button>}

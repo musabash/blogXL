@@ -1,10 +1,9 @@
-const BlogParagraph = ({content, setParagraph}) => {
+const BlogParagraph = ({value}) => {
   return (
     <>
       <textarea
         required
-        value={content}
-        onChange={(e) => setParagraph(e.target.value)}
+        value={value}
       />
     </>
   );
