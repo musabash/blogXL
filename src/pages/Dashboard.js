@@ -3,10 +3,11 @@ import { UserContext } from "../contexts/UserContext"
 
 
 export default function Dashboard() {
-  const {user, updateUser} = useContext(UserContext)
+  const { updateUser } = useContext(UserContext)
   return (
     <div>
-      <button onClick={updateUser("herkul")}>musa</button>
+      <button onClick={updateUser("Musa Bas")}>musa</button>
     </div>
   )
 }
+ 

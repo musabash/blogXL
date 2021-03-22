@@ -10,6 +10,7 @@ const BlogParagraph = ({par, index, setBody, body}) => {
     return (
       <>
         <textarea
+          className="blog-body-par"
           onChange={onChangeHandler}
           value={value}
         />
