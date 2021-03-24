@@ -3,6 +3,7 @@ import { UserContext } from "../contexts/UserContext"
 import {useContext, useState} from "react"
 import BlogParagraph from '../components/blog-body-paragraph'
 import DeleteButton from "./delete-button"
+import Title from "./title"
 
 const BlogDetails = () => {
   const [isEditable, setIsEditable] = useState(false)
@@ -10,6 +11,7 @@ const BlogDetails = () => {
   const { doc, deleteBlog, updateBlog, user } = useContext(UserContext)
   const [blog] = doc.filter(e => e.id === id)
   const [body, setBody] = useState(blog.body)
+  const [title, setTitle] = useState(blog.title)
   const [isAuthorised, setIsAuthorised] = useState(user.displayName === blog.author ? true : false)
 
   return ( 
@@ -18,8 +20,10 @@ const BlogDetails = () => {
       {error && <div>{error}</div>} */}
       {blog && (
         <article>
-          <h2>{blog.title}</h2>
+          {isEditable ? <Title title={title} setTitle={setTitle} /> :
+          <h2>{title}</h2>}
           <p className="blog-author">Written by {blog.author}</p>
+          <p className="blog-date">{blog.date}</p>
           <div className="blog-body">{blog.body.map((elm, index) =>
             isEditable ?
               <BlogParagraph
@@ -31,12 +35,12 @@ const BlogDetails = () => {
             <p>{elm}</p> 
           )}
           </div>
-          <p className="blog-date">{blog.date}</p>
+          
           {isAuthorised && <DeleteButton id={id} deleteBlog={deleteBlog}/>}
           
           {isEditable && isAuthorised &&
             <button onClick={() => {
-              updateBlog(body, id)
+              updateBlog(title, body, id)
               setIsEditable(prev => !prev)
             }}>save</button>}
             {!isEditable && isAuthorised &&

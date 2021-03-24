@@ -34,7 +34,6 @@ function UserContextProvider(props) {
   }  
   
   function post(blog) {
-    const date = new Date()
     const db = firebase.firestore()
     db
     .collection("post")
@@ -42,7 +41,8 @@ function UserContextProvider(props) {
     .then((docRef) => {
       return db.collection("post").doc(docRef.id).update({
         id: docRef.id,
-        date: date.toString()
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString()
       })
     })
   } 
@@ -52,10 +52,11 @@ function UserContextProvider(props) {
     db.collection("post").doc(id).delete()
   }
   
-  function updateBlog(body, id) {
+  function updateBlog(title, body, id) {
     const db = firebase.firestore()
     db.collection("post").doc(id).update({
-      body: body
+      body: body,
+      title: title
     })
   }
 
