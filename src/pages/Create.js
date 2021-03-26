@@ -23,7 +23,6 @@ const Create = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      console.log("Enter key was hit.")
       setBody((prev) => [...prev, paragraph])
       setParagraph("")
     }

@@ -3,7 +3,7 @@ import { UserContext } from "../contexts/UserContext"
 import { useHistory } from "react-router-dom"
 
 const ProfilePage = () => {
-  const {user, signout, updateUser, data} = useContext(UserContext)
+  const {user, signout, updateUser} = useContext(UserContext)
   const [error, setError] = useState("")
   const history = useHistory()
 
@@ -30,7 +30,7 @@ const ProfilePage = () => {
           }}>
         </div>
         <div>
-        <h2>{data.ad}</h2>
+        <h2>{user.displayName}</h2>
         <h3>{user && user.email}</h3>
         </div>
       </div>

@@ -6,7 +6,6 @@ const UserContext = React.createContext()
 function UserContextProvider(props) {
   const [user, setUser] = useState()
   const [loading, setLoading] = useState(true)
-  const [data, setData] = useState([])
   const [doc, setDocs] = useState([])
 
   function signup(email, password) {
@@ -83,7 +82,6 @@ function UserContextProvider(props) {
     signout,
     rstPass,
     post,
-    data,
     getDoc,
     doc,
     updateUser,

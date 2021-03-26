@@ -6,7 +6,7 @@ export default function Home() {
   const { getDoc, doc } = useContext(UserContext)
 
   useEffect(() => {
-    getDoc()
+    const unsubscribe = getDoc()
   }, [])
   return (
     <div className="home">

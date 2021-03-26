@@ -7,7 +7,7 @@ const Title = ({title, setTitle}) => {
     setValue(trgt)
     setTitle(trgt)
   }
-  return <input onChange={onChangeHandler} value={value}/>
+  return <input className="blog-title" onChange={onChangeHandler} value={value}/>
 }
  
 export default Title;

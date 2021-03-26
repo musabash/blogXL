@@ -227,7 +227,7 @@ span {
   color: #f1356d;
   margin-bottom: 30px;
 }
-.create input, .create textarea, .create select {
+.create input, .create textarea {
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
@@ -270,10 +270,15 @@ span {
   text-decoration: none;
 }
 
-.blog-details h2 {
+.blog-details h2, .blog-title {
   font-size: 30px;
   color: #f1356d;
   margin-bottom: 10px;
+}
+
+.blog-title {
+  border: none;
+  background: transparent;
 }
 .blog-details div {
   margin: 20px 0;
@@ -305,6 +310,9 @@ span {
   border: none;
   background-color: transparent;
   overflow: visible;
+  width: 100%;
+  font-size: large;
+  font-family: 'Quicksand', Courier, monospace;
 }
 .nav {
   position: fixed;
@@ -312,4 +320,26 @@ span {
   width: 100%;
   max-width: 640px;
   padding-top: 1em;
+}
+
+.blog-paragraph-container {
+  display: flex;
+  align-items: baseline;
+}
+.par-edit-btns {
+  display: flex;
+  flex-direction: column;
+}
+.par-edit-btns > button {
+  height: 1.5em;
+  width: 1.4em;
+  margin: 0.2em;
+  padding: 0.12em;
+  font-weight: 900;
+  font-size: 1rem;
+  background:#f5afaf;
+}
+
+.par-edit-btns > button:hover {
+  opacity: 1;
 }
