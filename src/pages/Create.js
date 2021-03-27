@@ -7,22 +7,24 @@ const Create = () => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState([])
   const [paragraph, setParagraph] = useState("")
-  const [isPending, setIsPending] = useState(false)
   const history = useHistory()
   const { post, user } = useContext(UserContext)
   const author = user.displayName
   
   const handleSubmit = (e) => {
     e.preventDefault()
-    const blog = {title, body, author}
-    setIsPending(true)
-    post(blog)
-      setIsPending(false)
+    if (body.length === 0) {
+      window.alert("No blog body. Please submit after adding your blog body.")
+    } else {
+      const blog = {title, body, author}
+      post(blog)
       history.push('/home')
+    }
   }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault()
       setBody((prev) => [...prev, paragraph])
       setParagraph("")
     }
@@ -49,14 +51,12 @@ const Create = () => {
             />
           )}
           <textarea
-            required
             value={paragraph}
             onChange={(e) => setParagraph(e.target.value)}
             onKeyDown={handleKeyDown}
           />  
         </div>
-        {!isPending && <button>Add blog</button>}
-        {isPending && <button disabled>Adding blog...</button>}
+        <button type="submit">Add blog</button>
       </form>
     </div>
    );

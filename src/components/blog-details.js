@@ -14,7 +14,22 @@ const BlogDetails = () => {
   const [title, setTitle] = useState(blog.title)
   const isAuthorised = user.displayName === blog.author
 
-
+  function BlogBody() {
+    return (
+      <div className="blog-body">{body.map((elm, index) =>
+        isEditable ?
+          <BlogParagraph
+            key={index}
+            index={index}
+            par={elm}
+            body={body}
+            setBody={setBody}
+          /> :
+        <p key={index}>{elm}</p> 
+      )}
+      </div>
+    )
+  }
   return ( 
     <div className="blog-details">
       {/* {isLoading && <div>Loading ...</div>}
@@ -25,19 +40,7 @@ const BlogDetails = () => {
           <h2>{title}</h2>}
           <p className="blog-author">Written by {blog.author}</p>
           <p className="blog-date">{blog.date}</p>
-          <div className="blog-body">{body.map((elm, index) =>
-            isEditable ?
-              <BlogParagraph
-                key={index}
-                index={index}
-                par={elm}
-                body={body}
-                setBody={setBody}
-              /> :
-            <p key={index}>{elm}</p> 
-          )}
-          </div>
-          
+          <BlogBody />
           {isAuthorised && <DeleteButton id={id} deleteBlog={deleteBlog}/>}
           
           {isEditable && isAuthorised &&

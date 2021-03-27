@@ -9,13 +9,14 @@ const BlogParagraph = ({par, index, body, setBody}) => {
   }
   
   const removePar = () => {
-    setBody(() => body.filter((elm, i) => i !== index))
+    setBody(() => body.filter((_, i) => i !== index))
   }
   
     return (
       <div className="blog-paragraph-container">
         <div className="par-edit-btns">
-          <button onClick={() => removePar()}>-</button>
+          <button type="button" onClick={() => removePar()}>-</button>
+          <button type="button" onClick={() => setBody((prev) => [...prev.slice(0, index + 1), "", ...prev.slice(index + 1)])}>+</button>
         </div>
         <textarea
           className="blog-body-par"
