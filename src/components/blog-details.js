@@ -30,11 +30,11 @@ const BlogDetails = () => {
       </div>
     )
   }
-  return ( 
+
+  return (
     <div className="blog-details">
       {/* {isLoading && <div>Loading ...</div>}
       {error && <div>{error}</div>} */}
-      {blog && (
         <article>
           {isEditable ? <Title title={title} setTitle={setTitle} /> :
           <h2>{title}</h2>}
@@ -52,8 +52,6 @@ const BlogDetails = () => {
             <button onClick={() => setIsEditable(prev => !prev)}>edit</button>
           }
         </article>
-        )
-      }
     </div>
    );
 }
