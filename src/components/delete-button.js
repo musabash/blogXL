@@ -5,7 +5,7 @@ const DeleteButton = ({id, deleteBlog}) => {
 
   return <button onClick={() => {
             deleteBlog(id)
-            history.push('/home')
+            history.push('/blogs')
           }}>delete</button>
 }
  

@@ -9,7 +9,7 @@ import Create from "./pages/Create"
 import PrivateRoute from "./components/PrivateRoute"
 import PublicRoute from "./components/PublicRoute"
 import Dashboard from "./pages/Dashboard"
-import Home from "./pages/Home"
+import Blogs from "./pages/Blogs"
 import BlogDetails from "./components/blog-details"
 
 function App() {
@@ -36,16 +36,14 @@ function App() {
             component={Dashboard}
           />
           <PrivateRoute
-            path="/Home"
-            component={Home}
+            exact path="/blogs"
+            component={Blogs}
           />
-          <Route path="/blogs/:id">
-            <BlogDetails />
-          </Route>
-          <Route path="/SignUp"><SignUp /></Route>
           <Route path="/PasswordReset">
             <PasswordReset />
           </Route>
+          <Route path="/SignUp"><SignUp /></Route>
+          <Route path="/blogs/:id" render={() => (<BlogDetails />)} />
         </Switch>
       </div>
       

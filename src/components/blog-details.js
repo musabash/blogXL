@@ -33,8 +33,6 @@ const BlogDetails = () => {
 
   return (
     <div className="blog-details">
-      {/* {isLoading && <div>Loading ...</div>}
-      {error && <div>{error}</div>} */}
         <article>
           {isEditable ? <Title title={title} setTitle={setTitle} /> :
           <h2>{title}</h2>}
@@ -44,7 +42,7 @@ const BlogDetails = () => {
           {isAuthorised && <DeleteButton id={id} deleteBlog={deleteBlog}/>}
           
           {isEditable && isAuthorised &&
-            <button onClick={() => {
+            <button onClick={(e) => {
               updateBlog(title, body, id)
               setIsEditable(prev => !prev)
             }}>save</button>}

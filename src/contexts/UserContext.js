@@ -23,6 +23,7 @@ function UserContextProvider(props) {
   function rstPass(email) {
     return auth.sendPasswordResetEmail(email)
   }
+
   function getDoc() {
      const db = firebase.firestore()
       db
@@ -65,8 +66,6 @@ function UserContextProvider(props) {
       photoURL: "https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png"
     })
   }
-
-
   
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(curUser => {

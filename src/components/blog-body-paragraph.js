@@ -4,8 +4,12 @@ const BlogParagraph = ({par, index, body, setBody}) => {
   const [text, setText] = useState(par)
 
   const onChangeHandler = (e) => {
+    setText(e.target.value)
+  }
+
+  const onBlurHandler = (e) => {
     const trgt = e.target.value
-    setText(trgt)
+    setBody((prev) => prev.map((elm, i) => i === index ? trgt : elm))
   }
   
   const removePar = () => {
@@ -24,6 +28,7 @@ const BlogParagraph = ({par, index, body, setBody}) => {
         </div>
         <textarea
           className="blog-body-par"
+          onBlur={onBlurHandler}
           onChange={onChangeHandler}
           value={text}
         />

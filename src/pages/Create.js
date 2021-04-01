@@ -18,7 +18,7 @@ const Create = () => {
     } else {
       const blog = {title, body, author}
       post(blog)
-      history.push('/home')
+      history.push('/blogs')
     }
   }
 
