@@ -343,3 +343,9 @@ span {
 .par-edit-btns > button:hover {
   opacity: 1;
 }
+
+.interaction-bar__container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

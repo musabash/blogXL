@@ -24,13 +24,13 @@ function UserContextProvider(props) {
     return auth.sendPasswordResetEmail(email)
   }
 
-  function getDoc() {
+  function getDoc(coll) {
      const db = firebase.firestore()
-      db
-      .collection("post")
+     db
+      .collection(coll)
       .onSnapshot((snapshot) => {
         setDocs(snapshot.docs.map(doc => doc.data()))
-      })
+      }, (error) => {console.log(error)})
   }  
   
   function post(blog) {
@@ -40,9 +40,7 @@ function UserContextProvider(props) {
     .add(blog)
     .then((docRef) => {
       return db.collection("post").doc(docRef.id).update({
-        id: docRef.id,
-        date: new Date().toLocaleDateString(),
-        time: new Date().toLocaleTimeString()
+        id: docRef.id
       })
     })
   } 
@@ -52,12 +50,9 @@ function UserContextProvider(props) {
     db.collection("post").doc(id).delete()
   }
   
-  function updateBlog(title, body, id) {
+  function updateDoc(obj, id) {
     const db = firebase.firestore()
-    db.collection("post").doc(id).update({
-      body: body,
-      title: title
-    })
+    db.collection("post").doc(id).update(obj)
   }
 
   function updateUser(displayName){
@@ -85,7 +80,7 @@ function UserContextProvider(props) {
     doc,
     updateUser,
     deleteBlog,
-    updateBlog
+    updateDoc
   }
   return (
     <UserContext.Provider value={value}>

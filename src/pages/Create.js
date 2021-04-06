@@ -13,10 +13,12 @@ const Create = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault()
+    let date = new Date().toLocaleDateString()
+    let time = new Date().toLocaleTimeString()
     if (body.length === 0) {
       window.alert("No blog body. Please submit after adding your blog body.")
     } else {
-      const blog = {title, body, author}
+      const blog = {title, body, author, date, time, bookmark: 0, likes: [], comments: []}
       post(blog)
       history.push('/blogs')
     }
