@@ -33,26 +33,35 @@ function UserContextProvider(props) {
       }, (error) => {console.log(error)})
   }  
   
-  function post(blog) {
+  function post(coll, blog) {
     const db = firebase.firestore()
     db
-    .collection("post")
+    .collection(coll)
     .add(blog)
     .then((docRef) => {
-      return db.collection("post").doc(docRef.id).update({
+      return db.collection(coll).doc(docRef.id).update({
         id: docRef.id
       })
     })
   } 
-  
-  function deleteBlog(id) {
+
+  function reuploadData() {
     const db = firebase.firestore()
-    db.collection("post").doc(id).delete()
+    db
+    .collection("post")
+      .onSnapshot((snapshot) => {
+        snapshot.docs.forEach(doc => db.collection("blogs").add(doc.data()))
+      })
   }
   
-  function updateDoc(obj, id) {
+  function deleteBlog(coll, id) {
     const db = firebase.firestore()
-    db.collection("post").doc(id).update(obj)
+    db.collection(coll).doc(id).delete()
+  }
+  
+  function updateDoc(coll, obj, id) {
+    const db = firebase.firestore()
+    db.collection(coll).doc(id).update(obj)
   }
 
   function updateUser(displayName){
@@ -80,7 +89,8 @@ function UserContextProvider(props) {
     doc,
     updateUser,
     deleteBlog,
-    updateDoc
+    updateDoc,
+    reuploadData
   }
   return (
     <UserContext.Provider value={value}>

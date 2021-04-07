@@ -24,8 +24,22 @@ const BlogDetails = () => {
 
   const handleUpdate = () => {
     let obj = {title, body}
-    updateDoc(obj, id)
+    updateDoc("blogs", obj, id)
     setIsEditable(prev => !prev)
+  }
+
+  const handleLike = () => {
+    if (isLiked) {
+      let likesArr = likes.filter(elm => elm !== user.uid)
+            updateDoc("blogs", {likes: likesArr}, id)
+            setLikes(likesArr)
+            setIsLiked(prev => !prev)
+          } else if (!isLiked){
+            let likesArr = [...likes, user.uid]
+            updateDoc("blogs", {likes: likesArr}, id)
+            setLikes(likesArr)
+            setIsLiked(prev => !prev)
+          }
   }
 
   function BlogBody() {
@@ -69,19 +83,7 @@ const BlogDetails = () => {
           console.log(user.uid)
           setBookmarked(prev => !prev)}
         } />
-        <InteractionBar.Like isLiked={isLiked} onClick={() => {
-          if (isLiked) {
-            let likesArr = likes.filter(elm => elm !== user.uid)
-            updateDoc({likes: likesArr}, id)
-            setLikes(likesArr)
-            setIsLiked(prev => !prev)
-          } else if (!isLiked){
-            let likesArr = [...likes, user.uid]
-            updateDoc({likes: likesArr}, id)
-            setLikes(likesArr)
-            setIsLiked(prev => !prev)
-          }
-        }} />
+        <InteractionBar.Like isLiked={isLiked} onClick={handleLike} />
       </InteractionBar>
       <p>{likes.length}</p>
     </div>

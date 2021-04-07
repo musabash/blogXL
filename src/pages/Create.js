@@ -19,7 +19,7 @@ const Create = () => {
       window.alert("No blog body. Please submit after adding your blog body.")
     } else {
       const blog = {title, body, author, date, time, bookmark: 0, likes: [], comments: []}
-      post(blog)
+      post("blogs", blog)
       history.push('/blogs')
     }
   }
