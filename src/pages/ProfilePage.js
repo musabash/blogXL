@@ -1,11 +1,15 @@
-import React, {useContext, useState} from "react"
+import React, {useContext, useState, useEffect} from "react"
 import { UserContext } from "../contexts/UserContext"
 import { useHistory } from "react-router-dom"
 
 const ProfilePage = () => {
-  const {user, signout, updateUser} = useContext(UserContext)
+  const {user, signout, updateUser, getUserLog} = useContext(UserContext)
   const [error, setError] = useState("")
   const history = useHistory()
+
+  useEffect(() => {
+    const unsubscribe = getUserLog("users")
+  }, [])
 
   async function handleSignOut() {
     setError("")
@@ -36,11 +40,7 @@ const ProfilePage = () => {
       </div>
       {error && <h3 className="error">{error}</h3>}
       <button onClick={() => handleSignOut()}>Sign out</button>
-      <button onClick={() => {
-        updateUser()
-        console.log(user.photoURL)
-      }
-      }>USER</button>
+      <button onClick={() => updateUser()}>USER</button>
     </div>
   )
 };

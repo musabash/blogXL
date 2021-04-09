@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../contexts/UserContext"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 
 function SignUp() {
@@ -11,6 +11,7 @@ function SignUp() {
   const [confirmedPassword, setConfirmedPassword] = useState("")
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
+  const history = useHistory()
   
   async function handleSubmit(e){
     e.preventDefault()
@@ -30,6 +31,7 @@ function SignUp() {
     setEmail("")
     setPassword("")
     setConfirmedPassword("")
+    history.push("/ProfilePage")
   }
   return(
     

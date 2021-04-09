@@ -4,10 +4,10 @@ import { UserContext } from "../contexts/UserContext"
 
 export default function Dashboard() {
   
-  const { updateUser, reuploadData } = useContext(UserContext)
+  const { userLog } = useContext(UserContext)
   return (
     <div>
-      <button onClick={reuploadData}>musa</button>
+      <button onClick={() => console.log(userLog)}>musa</button>
     </div>
   )
 }

@@ -7,6 +7,7 @@ function UserContextProvider(props) {
   const [user, setUser] = useState()
   const [loading, setLoading] = useState(true)
   const [doc, setDocs] = useState([])
+  const [userLog, setUserLog] = useState([])
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password)
@@ -25,13 +26,27 @@ function UserContextProvider(props) {
   }
 
   function getDoc(coll) {
-     const db = firebase.firestore()
-     db
-      .collection(coll)
-      .onSnapshot((snapshot) => {
-        setDocs(snapshot.docs.map(doc => doc.data()))
-      }, (error) => {console.log(error)})
-  }  
+    const db = firebase.firestore()
+    db
+    .collection(coll)
+    .onSnapshot((snapshot) => {
+      setDocs(snapshot.docs.map(doc => doc.data()))
+    }, (error) => {console.log(error)})
+  }
+
+  function getUserLog() {
+    const db = firebase.firestore()
+    const docRef = db.collection("users").doc(user.uid)
+      docRef.get().then((doc) => {
+        if (doc.exists) {
+          setUserLog(doc.data())
+        } else {
+          setUserLog("No data")
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
   
   function post(coll, blog) {
     const db = firebase.firestore()
@@ -43,14 +58,24 @@ function UserContextProvider(props) {
         id: docRef.id
       })
     })
+    .catch((error) => {
+    console.error("Error adding document: ", error.message)
+  })
   } 
 
   function reuploadData() {
     const db = firebase.firestore()
     db
-    .collection("post")
+    .collection("blogs")
       .onSnapshot((snapshot) => {
-        snapshot.docs.forEach(doc => db.collection("blogs").add(doc.data()))
+        snapshot.docs.forEach(doc => {
+          db.collection("blogscopy").add(doc.data())
+          .then((docRef) => {
+            return db.collection("blogscopy").doc(docRef.id).update({
+              id: docRef.id
+            })
+          })
+        })
       })
   }
   
@@ -68,6 +93,15 @@ function UserContextProvider(props) {
     firebase.auth().currentUser.updateProfile({
       displayName: displayName,
       photoURL: "https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png"
+    })
+    .then((e) => console.log(e))
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({
+      bookmarks: [],
+      likes: [],
+      comments: []
+    })
+    .catch((error) => {
+      console.error("Error writing document: ", error)
     })
   }
   
@@ -90,7 +124,9 @@ function UserContextProvider(props) {
     updateUser,
     deleteBlog,
     updateDoc,
-    reuploadData
+    reuploadData,
+    getUserLog,
+    userLog
   }
   return (
     <UserContext.Provider value={value}>
