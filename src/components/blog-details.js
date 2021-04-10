@@ -4,7 +4,7 @@ import {useContext, useState} from "react"
 import BlogParagraph from '../components/blog-body-paragraph'
 import DeleteButton from "./delete-button"
 import Title from "./title"
-import InteractionBar from "./interaction-bar/interaction-bar"
+import { InteractionBar } from "../components"
 
 const BlogDetails = () => {
   const [isEditable, setIsEditable] = useState(false)
@@ -55,6 +55,7 @@ const BlogDetails = () => {
     updateDoc("blogs", {likes: likesArr}, id)
     updateDoc("users", {likes: userLikesArr}, user.uid)
     setLikes(likesArr)
+    setUserLikes(userLikesArr)
     setIsLiked(prev => !prev)
   }
 
