@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { UserContext } from "../contexts/UserContext"
 import { Link, useHistory } from "react-router-dom"
-
+import { load } from 'recaptcha-v3'
 
 function SignUp() {
   const {signup, updateUser} = useContext(UserContext)
@@ -23,6 +23,7 @@ function SignUp() {
       setLoading(true)
       await signup(email, password)
       await updateUser(displayName)
+      history.push("/ProfilePage")
     } catch(error) {
       setError(`Failed to create an account: ${error.message}`)
     }
@@ -31,8 +32,15 @@ function SignUp() {
     setEmail("")
     setPassword("")
     setConfirmedPassword("")
-    history.push("/ProfilePage")
   }
+
+  async function capt() {
+    const recaptcha = await load('<site key>')
+    const token = await recaptcha.execute('<action>')
+  
+    console.log(token)
+  }
+
   return(
     
     <div className="form-area">
@@ -56,6 +64,9 @@ function SignUp() {
         <input required value={confirmedPassword} type="password" className="input" name="confirmedPassword" placeholder="Re-type Your Password" onChange={(e) => {
           setConfirmedPassword(e.target.value)
         }}/>
+        <p>{password === confirmedPassword && "match"}</p>
+        
+
         <button disabled={loading} className="btn btn-signup" type="submit">Sign up</button>
         <p style={{textAlign: "center", margin: "0 auto"}}>or</p>
         <input type="button" className="btn btn-google" value="Sign in with Google"/>

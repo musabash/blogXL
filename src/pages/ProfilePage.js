@@ -8,7 +8,7 @@ const ProfilePage = () => {
   const history = useHistory()
 
   useEffect(() => {
-    const unsubscribe = getUserLog("users")
+    getUserLog()
   }, [])
 
   async function handleSignOut() {

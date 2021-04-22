@@ -1,14 +1,42 @@
 import React, {useContext} from "react"
 import { UserContext } from "../contexts/UserContext"
-import { Accordion } from "../components"
+import { Dashboard, Accordion } from "../components"
+import UserBookmarks from "../components/dasboard-active-element"
 
 
-export default function Dashboard() {
+export default function MyActivities() {
   
   const { userLog, doc } = useContext(UserContext)
+  // const [blogs, setBlogs] = useState()
   return (
     <div>
-      <Accordion>
+      <Dashboard>
+        <Dashboard.Frame>
+          <Dashboard.MenuButton/>
+          <Dashboard.Menu>
+            <Dashboard.MenuList>
+              <Dashboard.MenuItem>
+                <Dashboard.MenuLink name="blogs" >Your Blogs</Dashboard.MenuLink>
+              </Dashboard.MenuItem>
+              <Dashboard.MenuItem>
+                <Dashboard.MenuLink name="bookmarks">Your Bookmarks</Dashboard.MenuLink>
+              </Dashboard.MenuItem>
+              <Dashboard.MenuItem>
+                <Dashboard.MenuLink name="yourRecentViews">Your Recent Views</Dashboard.MenuLink>
+              </Dashboard.MenuItem>
+              <Dashboard.MenuItem>
+                <Dashboard.MenuLink name="likes">You Liked</Dashboard.MenuLink>
+              </Dashboard.MenuItem>
+            </Dashboard.MenuList> 
+          </Dashboard.Menu>
+        </Dashboard.Frame>
+        <Dashboard.Frame>
+          <Dashboard.Title></Dashboard.Title>
+          <Dashboard.Item />  
+        </Dashboard.Frame>
+      </Dashboard>
+
+      {/* <Accordion>
         <Accordion.Title>My Activities</Accordion.Title>
         <Accordion.Frame>
           {["likes", "bookmarks", "comments"].map(act => (
@@ -38,8 +66,7 @@ export default function Dashboard() {
             )
           )}
         </Accordion.Frame>
-      </Accordion>
-      <button onClick={() => console.log(userLog)}>musa</button>
+      </Accordion> */}
     </div>
   )
 }

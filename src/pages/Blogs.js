@@ -3,10 +3,11 @@ import { UserContext } from "../contexts/UserContext"
 import { useEffect, useContext } from 'react'
 
 export default function Home() {
-  const { getDoc, doc } = useContext(UserContext)
+  const { getDoc, doc, getUserLog } = useContext(UserContext)
 
   useEffect(() => {
-    const unsubscribe = getDoc("blogs")
+    getDoc("blogs")
+    getUserLog()
   }, [])
   return (
     <div className="home">

@@ -8,7 +8,7 @@ import ProfilePage from "./pages/ProfilePage"
 import Create from "./pages/Create"
 import PrivateRoute from "./components/PrivateRoute"
 import PublicRoute from "./components/PublicRoute"
-import Dashboard from "./pages/Dashboard"
+import Dashboard from "./pages/MyActivities"
 import Blogs from "./pages/Blogs"
 import BlogDetails from "./components/blog-details"
 
@@ -32,7 +32,7 @@ function App() {
             component={Create}
           />
           <PrivateRoute
-            path="/Dashboard"
+            path="/MyActivities"
             component={Dashboard}
           />
           <PrivateRoute

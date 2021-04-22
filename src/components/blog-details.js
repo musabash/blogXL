@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
 import {useContext, useState} from "react"
 import BlogParagraph from '../components/blog-body-paragraph'
@@ -15,9 +15,11 @@ const BlogDetails = () => {
   const [title, setTitle] = useState(blog.title)
   const [likes, setLikes] = useState(blog.likes)
   const [userLikes, setUserLikes] = useState(userLog.likes)
-  const [bookmarks, setBookmarks] = useState(userLog.bookmarks)
+  const [userBookmarks, setUserBookmarks] = useState(userLog.bookmarks)
+  const [bookmarks, setBookmarks] = useState(blog.bookmark)
   const [isLiked, setIsLiked] = useState(() => [...likes].includes(user.uid))
-  const [bookmarked, setBookmarked] = useState(() => [...bookmarks].includes(user.uid))
+  const [bookmarked, setBookmarked] = useState(() => [...userBookmarks].includes(id))
+  const history = useHistory()
   const isAuthorised = user.displayName === blog.author
 
   function EditButton({name}) {
@@ -29,16 +31,21 @@ const BlogDetails = () => {
     updateDoc("blogs", obj, id)
     setIsEditable(prev => !prev)
   }
-
+  
   const handleBookmark = () => {
-    let bookmarkArr = []
+    let userBookmarksArr = []
+    let bookmarksArr = []
     if (bookmarked) {
-      bookmarkArr = bookmarks.filter(elm => elm !== id)
+      userBookmarksArr = userBookmarks.filter(elm => elm !== id)
+      bookmarksArr = bookmarks.filter(elm => elm !== user.uid)
     } else {
-      bookmarkArr = [...bookmarks, id]
+      userBookmarksArr = [...userBookmarks, id]
+      bookmarksArr = [...bookmarks, user.uid]
     }
-    updateDoc("users", {bookmarks: bookmarkArr}, user.uid)
-    setBookmarks(bookmarkArr)
+    setBookmarks([...bookmarksArr])
+    setUserBookmarks([...userBookmarksArr])
+    updateDoc("users", {bookmarks: userBookmarksArr}, user.uid)
+    updateDoc("blogs", {bookmark: bookmarksArr}, id)
     setBookmarked(prev => !prev)
   }
 
@@ -52,10 +59,10 @@ const BlogDetails = () => {
       userLikesArr = [...userLikes, id]
       likesArr = [...likes, user.uid]
     }
-    updateDoc("blogs", {likes: likesArr}, id)
-    updateDoc("users", {likes: userLikesArr}, user.uid)
-    setLikes(likesArr)
     setUserLikes(userLikesArr)
+    setLikes(likesArr)
+    updateDoc("users", {likes: userLikesArr}, user.uid)
+    updateDoc("blogs", {likes: likesArr}, id)
     setIsLiked(prev => !prev)
   }
 
