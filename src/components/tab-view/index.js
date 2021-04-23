@@ -3,10 +3,10 @@ import React, { useState, useContext, createContext } from 'react'
 const TabContext = createContext()
 
 export default function TabView({children, ...restProps}) {
-  const [tabActive, setTabActive] = useState('published')
+  const [tab, setTab] = useState('published')
 
   return (
-    <TabContext.Provider value={{tabActive, setTabActive}}>
+    <TabContext.Provider value={{tab, setTab}}>
       <div className="dashboard__container" {...restProps}>
           <div className="dashboard__inner">{children}</div> 
       </div>
@@ -25,15 +25,15 @@ TabView.Tabs = function TabViewTabs({children, ...restProps}) {
 }
 
 TabView.Title = function TabViewTitle({children, ...restProps}) {
-  const {tabActive} = useContext(TabContext)
-  return <h1 className="dashboard__title" {...restProps}>{tabActive}</h1>
+  const {tab} = useContext(TabContext)
+  return <h1 className="dashboard__title" {...restProps}>{tab}</h1>
 }
 
 TabView.Tab = function TabViewTab({children, name, ...restProps}) {
-  const {tabActive, setTabActive} = useContext(TabContext)
+  const {tab, setTab} = useContext(TabContext)
   return (
-    <div name={name} className={tabActive === name ? 'dashboard__tab active-tab' : 'dashboard__tab'} onClick={(e) => {
-      setTabActive(name)
+    <div name={name} className={tab === name ? 'dashboard__tab active-tab' : 'dashboard__tab'} onClick={(e) => {
+      setTab(name)
     }} {...restProps}>
       {children}
     </div>
@@ -41,6 +41,6 @@ TabView.Tab = function TabViewTab({children, name, ...restProps}) {
 }
 
 TabView.Body = function TabViewBody({children, userLog, ...restProps}) {
-  const {tabActive} = useContext(TabContext)
-  return <div className="dashboard__body" {...restProps}>{children}{userLog[tabActive].map(elm => <p>{elm}</p>)}</div>
+  const {tab} = useContext(TabContext)
+  return <div className="dashboard__body" {...restProps}>{children}{userLog[tab].map(elm => <p>{elm}</p>)}</div>
 }

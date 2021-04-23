@@ -32,8 +32,8 @@ Dashboard.Item = function DashboardItem({children, ...restProps}) {
   const {toggleActive} = useContext(ToggleContext)
   return (
     toggleActive === "blogs" ?
-    <UserBlogs /> :
-    <DashboardActiveElement toggleActive={toggleActive} />
+    <UserBlogs {...restProps}/> :
+    <DashboardActiveElement toggleActive={toggleActive} {...restProps}/>
   )
 }
 
