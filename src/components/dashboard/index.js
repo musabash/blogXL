@@ -21,12 +21,6 @@ Dashboard.Frame = function DashboardFrame({children, ...restProps}) {
   return <section className="dashboard__frame" {...restProps}>{children}</section>
 }
 
-Dashboard.Tabs = function DashboardTabs({children, ...restProps}) {
-  return (
-      <div className="dashboard__tabs" {...restProps}>{children}</div>
-  )
-}
-
 Dashboard.Item = function DashboardItem({children, ...restProps}) {
   
   const {toggleActive} = useContext(ToggleContext)
@@ -40,17 +34,6 @@ Dashboard.Item = function DashboardItem({children, ...restProps}) {
 Dashboard.Title = function DashboardTitle({children, ...restProps}) {
   const {toggleActive} = useContext(ToggleContext)
   return <h1 className="dashboard__title" {...restProps}>{toggleActive}</h1>
-}
-
-Dashboard.Tab = function DashboardTab({children, name, ...restProps}) {
-  const {toggleActive, setToggleActive} = useContext(ToggleContext)
-  return (
-    <div name={name} className={toggleActive === name ? 'dashboard__tab active-tab' : 'dashboard__tab'} onClick={(e) => {
-      setToggleActive(name)
-    }} {...restProps}>
-      {children}
-    </div>
-  )
 }
 
 Dashboard.Body = function DashboardBody({children, userLog, ...restProps}) {

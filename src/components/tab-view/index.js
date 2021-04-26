@@ -3,7 +3,7 @@ import React, { useState, useContext, createContext } from 'react'
 const TabContext = createContext()
 
 export default function TabView({children, ...restProps}) {
-  const [tab, setTab] = useState('published')
+  const [tab, setTab] = useState('drafts')
 
   return (
     <TabContext.Provider value={{tab, setTab}}>
@@ -19,8 +19,22 @@ TabView.Frame = function TabViewFrame({children, ...restProps}) {
 }
 
 TabView.Tabs = function TabViewTabs({children, ...restProps}) {
+  const [sliderPos, setSliderPos] = useState(15)
   return (
-      <div className="dashboard__tabs" {...restProps}>{children}</div>
+    <div className="tabs-container">
+      <div onClick={(e) => {
+        setSliderPos(e.target.offsetLeft - 5)
+      } } className="dashboard__tabs" {...restProps}>{children}
+      </div>
+      <div className="slider-container">
+      <div 
+        className="slider" 
+        style={{transform: `translateX(${sliderPos}px)`}}
+      ></div>
+    </div>
+      
+    </div>
+      
   )
 }
 
