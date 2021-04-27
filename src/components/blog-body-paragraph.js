@@ -26,7 +26,7 @@ const BlogParagraph = ({par, index, body, setBody}) => {
           <button type="button" onClick={() => removePar()}>-</button>
           <button type="button" onClick={() => addPar()}>+</button>
         </div>
-        <textarea
+        <input
           className="blog-body-par"
           onBlur={onBlurHandler}
           onChange={onChangeHandler}

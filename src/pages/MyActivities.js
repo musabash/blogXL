@@ -1,13 +1,9 @@
-import React, {useContext} from "react"
-import { UserContext } from "../contexts/UserContext"
-import { Dashboard, Accordion } from "../components"
-import UserBookmarks from "../components/dasboard-active-element"
+import { Dashboard } from "../components"
+
 
 
 export default function MyActivities() {
   
-  const { userLog, doc } = useContext(UserContext)
-  // const [blogs, setBlogs] = useState()
   return (
     <div>
       <Dashboard>

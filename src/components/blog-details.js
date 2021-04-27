@@ -1,4 +1,4 @@
-import { useParams, useHistory } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
 import {useContext, useState} from "react"
 import BlogParagraph from '../components/blog-body-paragraph'
@@ -10,17 +10,17 @@ const BlogDetails = () => {
   const [isEditable, setIsEditable] = useState(false)
   const { id } = useParams()
   const { doc, deleteBlog, updateDoc, user, userLog } = useContext(UserContext)
-  const [blog] = doc.filter(e => e.id === id)
-  const [body, setBody] = useState(blog.body)
-  const [title, setTitle] = useState(blog.title)
-  const [likes, setLikes] = useState(blog.likes)
+  const [blog, setBlog] = useState(doc.filter(e => e.id === id))
+  const [likes, setLikes] = useState(blog[0].likes)
+  const [comments, setComments] = useState(blog[0].comments)
+  const [body, setBody] = useState(blog[0].body)
+  const [title, setTitle] = useState(blog[0].title)
   const [userLikes, setUserLikes] = useState(userLog.likes)
   const [userBookmarks, setUserBookmarks] = useState(userLog.bookmarks)
-  const [bookmarks, setBookmarks] = useState(blog.bookmark)
-  const [isLiked, setIsLiked] = useState(() => [...likes].includes(user.uid))
+  const [bookmarks, setBookmarks] = useState(blog[0].bookmark)
+  const [isLiked, setIsLiked] = useState(() => userLikes.includes(id))
   const [bookmarked, setBookmarked] = useState(() => [...userBookmarks].includes(id))
-  const history = useHistory()
-  const isAuthorised = user.displayName === blog.author
+  const isAuthorised = user.displayName === blog[0].author
 
   function EditButton({name}) {
     return <button onClick={() => setIsEditable(prev => !prev)}>{name}</button>
@@ -102,9 +102,9 @@ const BlogDetails = () => {
       </article>
       <InteractionBar>
         <InteractionBar.Share />
-        <InteractionBar.Comment />
-        <InteractionBar.Bookmark bookmarked={bookmarked} onClick={handleBookmark} />
-        <InteractionBar.Like isLiked={isLiked} onClick={handleLike} />
+        {isAuthorised ? <p>{comments.length} comment{comments.length > 1 && "s"}</p> : <InteractionBar.Comment />}
+        {isAuthorised ? <p>{likes.length} like{likes.length > 1 && "s"}</p> : <InteractionBar.Bookmark bookmarked={bookmarked} onClick={handleBookmark} />}
+        {isAuthorised ? <p>{bookmarks.length} bookmark{bookmarks.length > 1 && "s"}</p> : <InteractionBar.Like isLiked={isLiked} onClick={handleLike} />}
       </InteractionBar>
       <p>{likes.length}</p>
     </div>

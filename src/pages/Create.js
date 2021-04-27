@@ -52,7 +52,7 @@ const Create = () => {
               setBody={setBody}
             />
           )}
-          <textarea
+          <input
             value={paragraph}
             onChange={(e) => setParagraph(e.target.value)}
             onKeyDown={handleKeyDown}

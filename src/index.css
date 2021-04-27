@@ -222,7 +222,7 @@ span {
 
 .create {
   max-width: 400px;
-  margin: 0 auto;
+  margin: 2em auto;
   text-align: center;
 }
 .create label {
@@ -230,7 +230,7 @@ span {
   display: block;
 }
 .create h2 {
-  font-size: 20px;
+  font-size: 2rem;
   color: #f1356d;
   margin-bottom: 30px;
 }
@@ -238,9 +238,11 @@ span {
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
-  border: 1px solid #ddd;
+  border: none;
   box-sizing: border-box;
   display: block;
+  background: transparent;
+  outline: none;
 }
 .create button {
   background: #f1356d;
