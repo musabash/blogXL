@@ -11,6 +11,13 @@
   --logo-background: #f0e991;
   --hover: #00a5f1;
   --hover-dark: #0081bd;
+  --mauvelous: #ff9fb2;
+  --navy: #03045e;
+  --star: #0077b6;
+  --cerulean: #00b4d8;
+  --sky-blue: #90e0ef;
+  --powder-blue: #caf0f8;
+
 }
 
 body {
@@ -28,9 +35,10 @@ h1 {
   margin: 1em auto;
   text-align: center;
 }
+
 .app {
   width: 100%;
-  background-color: #f1f6f8;
+  background: white;
   margin: 0 auto;
   margin-bottom: 0.5em;
   padding-bottom: 0.2em;
@@ -375,7 +383,7 @@ span {
 }
 
 .accordion__item {
-  color: #fb0c0c;
+  color: #ffffff;
   margin-bottom: 1em;
 }
 
@@ -396,7 +404,7 @@ span {
   line-height: 1.1;
   margin-top: 0;
   margin-bottom: 0.6em;
-  color: rgb(253, 1, 1);
+  color: rgb(255, 255, 255);
   text-align: center;
   
   @media (max-width: 600px) {
@@ -412,12 +420,14 @@ span {
   cursor: pointer;
   margin-bottom: 2px;
   font-size: 26px;
+  color: white;
   font-weight: normal;
-  background: #e5cfcf;
+  background: #03045e;
   padding: 0.4em 0.6em 0.4em 0.6em;
   user-select: none;
   align-items: center;
   width: 100%;
+  border-radius: 5px;
   
   @media (max-width: 600px) {
         font-size: 16px;
@@ -425,18 +435,9 @@ span {
 }
 
 .accordion__header span {
-    color: rgb(105, 5, 5);
+    color: rgb(253, 253, 253);
     font-size: 1rem;
     margin-left: 1rem;
-}
-
-.acordion__header img {
-  filter: brightness(0) invert(1);
-  width: 24px;
-  
-  @media (max-width: 600px) {
-      width: 16px;
-  }
 }
 
 .accordion__body {
@@ -445,11 +446,13 @@ span {
   font-size: 20px;
   font-weight: normal;
   line-height: normal;
-  background: #ddb5b5;
+  background: #0077b6;
+  color: white;
   padding: 0.4em 0.6em 0.4em 0.6em;
   user-select: none;
   align-items: center;
   width: 100%;
+  border-radius: 5px;
   
   @media (max-width: 600px) {
     font-size: 16px;
@@ -517,8 +520,7 @@ span {
 }
 
 .active-tab {
-  background: #f1f6f8;
-  color: var(--hover);
+  font-weight: 600;
 }
 
 .tabs-container {
@@ -535,7 +537,7 @@ span {
   align-self: baseline;
   left: 0;
   padding: 0.06em;
-  background-color: var(--hover-dark);
+  background-color: #444444;
   border-radius: 50px;
   width: 110px;
   transition: transform 250ms cubic-bezier(.5, 0, .5, 1);

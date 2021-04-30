@@ -3,7 +3,7 @@ import { UserContext } from "../contexts/UserContext"
 import { useEffect, useContext, useState } from 'react'
 
 export default function Home() {
-  const { getDoc, doc, getUserLog } = useContext(UserContext)
+  const { getDoc, doc, getUserLog, deleteBlog } = useContext(UserContext)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -17,6 +17,7 @@ export default function Home() {
     })
     .catch(error =>setError(error.message))
   }, [])
+  
   return (
     <div className="home">
       {error && <div>{error}</div>}

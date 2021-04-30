@@ -3,7 +3,7 @@ import React, { useState, useContext, createContext } from 'react'
 const TabContext = createContext()
 
 export default function TabView({children, ...restProps}) {
-  const [tab, setTab] = useState('drafts')
+  const [tab, setTab] = useState('published')
 
   return (
     <TabContext.Provider value={{tab, setTab}}>
@@ -56,5 +56,7 @@ TabView.Tab = function TabViewTab({children, name, ...restProps}) {
 
 TabView.Body = function TabViewBody({children, userLog, ...restProps}) {
   const {tab} = useContext(TabContext)
-  return <div className="dashboard__body" {...restProps}>{children}{userLog[tab].map(elm => <p>{elm}</p>)}</div>
+  return (
+    <div className="dashboard__body" {...restProps}>{children}</div>
+  ) 
 }

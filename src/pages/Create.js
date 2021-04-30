@@ -1,33 +1,56 @@
-import {useState, useContext} from 'react'
+import {useState, useContext, useEffect, useRef} from 'react'
 import { UserContext } from "../contexts/UserContext"
 import { useHistory } from 'react-router-dom'
 import BlogParagraph from '../components/blog-body-paragraph'
+import BlogList from '../components/blog-list'
 
 const Create = () => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState([])
   const [paragraph, setParagraph] = useState("")
+  const [published, setPublished] = useState(false)
+  const isFirstRun = useRef(true)
   const history = useHistory()
   const { post, user } = useContext(UserContext)
   const author = user.displayName
   
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  
+  const handlePost = (d) => {
     let date = new Date().toLocaleDateString()
     let time = new Date().toLocaleTimeString()
+    const blog = {title, body, author, date, time, bookmark: [], likes: [], comments: [], published: d}
+    post("blogs", blog)
+  }
+  
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setPublished(true)
     if (body.length === 0) {
       window.alert("No blog body. Please submit after adding your blog body.")
     } else {
-      const blog = {title, body, author, date, time, bookmark: 0, likes: [], comments: []}
-      post("blogs", blog)
+      handlePost(true)
       history.push('/blogs')
     }
   }
 
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false
+    }
+
+    return () => {
+      if (!published && body.length !== 0) {
+        handlePost(false)
+        console.log(body)
+      }
+    } 
+  }, [])
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      setBody((prev) => [...prev, paragraph])
+      setBody(prev => [...prev, paragraph])
+      console.log(body)
       setParagraph("")
     }
   }
