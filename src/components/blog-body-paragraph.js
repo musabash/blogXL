@@ -4,7 +4,7 @@ const BlogParagraph = ({par, index, body, setBody}) => {
   const [text, setText] = useState(par)
 
   const onChangeHandler = (e) => {
-    setText(e.target.value)
+    e.target.value.length === 0 ? removePar() : setText(e.target.value)
   }
 
   const onBlurHandler = (e) => {

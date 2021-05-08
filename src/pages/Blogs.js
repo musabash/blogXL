@@ -3,10 +3,11 @@ import { UserContext } from "../contexts/UserContext"
 import { useEffect, useContext, useState } from 'react'
 
 export default function Home() {
-  const { getDoc, doc, getUserLog, deleteBlog } = useContext(UserContext)
+  const { getDoc, doc, getUserLog } = useContext(UserContext)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  
   useEffect(() => {
     setError("")
     setLoading(true)
@@ -21,8 +22,8 @@ export default function Home() {
   return (
     <div className="home">
       {error && <div>{error}</div>}
-      {loading && <div>Loading...</div>}
-      {doc && <BlogList blogs={doc} title="All Blogs"/>}
+      {console.log(loading)}
+      <BlogList blogs={doc.filter(blog => blog.published)} title="All Blogs"/>
     </div>
   )
 }

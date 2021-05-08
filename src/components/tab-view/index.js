@@ -1,4 +1,5 @@
 import React, { useState, useContext, createContext } from 'react'
+import BlogList from "../blog-list"
 
 const TabContext = createContext()
 
@@ -40,7 +41,7 @@ TabView.Tabs = function TabViewTabs({children, ...restProps}) {
 
 TabView.Title = function TabViewTitle({children, ...restProps}) {
   const {tab} = useContext(TabContext)
-  return <h1 className="dashboard__title" {...restProps}>{tab}</h1>
+  return <h1 className="dashboard__title" {...restProps}>{tab.toUpperCase()}</h1>
 }
 
 TabView.Tab = function TabViewTab({children, name, ...restProps}) {
@@ -54,9 +55,13 @@ TabView.Tab = function TabViewTab({children, name, ...restProps}) {
   )
 }
 
-TabView.Body = function TabViewBody({children, userLog, ...restProps}) {
+TabView.Body = function TabViewBody({children, userLog, blogs, ...restProps}) {
   const {tab} = useContext(TabContext)
+  const blogList = tab === "published" ? blogs.filter(blog => blog.published) : blogs.filter(blog => !blog.published)
   return (
-    <div className="dashboard__body" {...restProps}>{children}</div>
+    <div className="dashboard__body" {...restProps}>
+      {children}
+      {blogList.length === 0 ? `No ${tab}` : <BlogList blogs={blogList} />  }
+    </div>
   ) 
 }

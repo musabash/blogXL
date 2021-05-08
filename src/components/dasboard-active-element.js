@@ -1,4 +1,5 @@
 import {useContext} from "react"
+import { Link } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
 import { Accordion } from "."
 
@@ -15,9 +16,11 @@ export default function DashboardActiveElement({toggleActive}) {
             <Accordion.Header>
               {blog.title} by {blog.author}
             </Accordion.Header>
-            <Accordion.Body>
-              {blog.body[0].slice(0, 25)} ...
-            </Accordion.Body>
+            <Link to={`blogs/${blog.id}`}>
+              <Accordion.Body>
+                {blog.body[0].slice(0, 25)} ...
+              </Accordion.Body>
+            </Link>
           </Accordion.Item>
           )} 
         )}

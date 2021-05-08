@@ -28,7 +28,7 @@ export default function MyActivities() {
         </Dashboard.Frame>
         <Dashboard.Frame>
           <Dashboard.Title></Dashboard.Title>
-          <Dashboard.Item />  
+          <Dashboard.Item />
         </Dashboard.Frame>
       </Dashboard>
 

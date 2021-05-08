@@ -2,7 +2,6 @@ import {useState, useContext, useEffect, useRef} from 'react'
 import { UserContext } from "../contexts/UserContext"
 import { useHistory } from 'react-router-dom'
 import BlogParagraph from '../components/blog-body-paragraph'
-import BlogList from '../components/blog-list'
 
 const Create = () => {
   const [title, setTitle] = useState('')
@@ -18,7 +17,7 @@ const Create = () => {
   const handlePost = (d) => {
     let date = new Date().toLocaleDateString()
     let time = new Date().toLocaleTimeString()
-    const blog = {title, body, author, date, time, bookmark: [], likes: [], comments: [], published: d}
+    const blog = {title, body, author, authorId: user.uid, date, time, bookmark: [], likes: [], comments: [], published: d}
     post("blogs", blog)
   }
   
@@ -81,7 +80,7 @@ const Create = () => {
             onKeyDown={handleKeyDown}
           />  
         </div>
-        <button type="submit">Add blog</button>
+        <button type="submit">Publish</button>
       </form>
     </div>
    );

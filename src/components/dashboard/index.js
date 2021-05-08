@@ -5,7 +5,7 @@ import UserBlogs from '../user-blogs'
 const ToggleContext = createContext()
 
 export default function Dashboard({children, ...restProps}) {
-  const [toggleActive, setToggleActive] = useState('bookmarks')
+  const [toggleActive, setToggleActive] = useState(prev => !prev && 'blogs' )
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
@@ -33,7 +33,7 @@ Dashboard.Item = function DashboardItem({children, ...restProps}) {
 
 Dashboard.Title = function DashboardTitle({children, ...restProps}) {
   const {toggleActive} = useContext(ToggleContext)
-  return <h1 className="dashboard__title" {...restProps}>{toggleActive}</h1>
+  return <h1 className="dashboard__title" {...restProps}>{toggleActive.toUpperCase()}</h1>
 }
 
 Dashboard.Body = function DashboardBody({children, userLog, ...restProps}) {
@@ -43,7 +43,7 @@ Dashboard.Body = function DashboardBody({children, userLog, ...restProps}) {
 
 Dashboard.MenuButton = function DashboardMenuButton({children, ...restProps}) {
   const {setMenuOpen, menuOpen} = useContext(ToggleContext)
-  return (<div className={menuOpen ? "hamburger cross" : "hamburger"} {...restProps} onMouseEnter={() => setMenuOpen(true)} onClick={() => setMenuOpen(prev => !prev)}>
+  return (<div className={menuOpen ? "hamburger cross" : "hamburger"} {...restProps} onClick={() => setMenuOpen(prev => !prev)}>
   </div>)
 }
 
