@@ -22,7 +22,10 @@ function SignUp() {
       setError("")
       setLoading(true)
       await signup(email, password)
-      await updateUser(displayName)
+      await updateUser({
+        displayName: displayName,
+        photoURL: 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'
+      })
       history.push("/ProfilePage")
     } catch(error) {
       setError(`Failed to create an account: ${error.message}`)

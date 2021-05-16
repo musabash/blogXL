@@ -22,12 +22,12 @@ export default function UserMenu({signout, user}) {
 
   return (
     <>
-      {user && <ProfilePicture handleClick={handleClick} photoURL={user.photoURL}  size="30px" borderRadius="50%"/>}
+      {user && <ProfilePicture handleClick={handleClick} photoURL={user.photoURL} size="40px" borderRadius="50%"/>}
       <div onMouseLeave={() => setMenuOpen(false)} className={menuOpen ? "user__menu__container user__menu-open" : "user__menu__container"}>
         
         <ul className="user__menu__list">
           {menuList.map(elm => (
-            <li key={elm.id} className="user__menu__link">
+            <li onClick={() => setMenuOpen(false)} key={elm.id} className="user__menu__link">
               <Link to={elm.to}>{elm.name}</Link>
             </li>
           ))}

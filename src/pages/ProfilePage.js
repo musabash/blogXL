@@ -28,7 +28,7 @@ const ProfilePage = () => {
         <h3>{user.email}</h3>
         </div>
       </div>
-      {/* <button onClick={() => updateUser({photoURL: ""})}>update user</button> */}
+      {/* <button onClick={() => updateUser({photoURL: 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})}>update user</button> */}
       
     </div>
   )
