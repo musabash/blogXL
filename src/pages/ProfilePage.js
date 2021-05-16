@@ -1,46 +1,35 @@
-import React, {useContext, useState, useEffect} from "react"
+import React, {useContext, useState, useEffect, useRef} from "react"
 import { UserContext } from "../contexts/UserContext"
-import { useHistory } from "react-router-dom"
+import ProfilePicture from "../components/profile-picture";
 
 const ProfilePage = () => {
-  const {user, signout, updateUser, getUserLog} = useContext(UserContext)
-  const [error, setError] = useState("")
-  const history = useHistory()
+  const {user, updateUser, getUserLog, uploadPic, picLoadingPercent} = useContext(UserContext)
+  const [file, setFile] = useState("")
+  const inputFileRef = useRef(null)
+
+  const handleClick = () => inputFileRef.current.click()
 
   useEffect(() => {
     getUserLog()
   }, [])
-
-  async function handleSignOut() {
-    setError("")
-    try {
-      await signout()
-      history.push("/")
-    } catch(error) {
-      setError(`Failed to sign out: ${error.message}`)
-    }
-  }
-  
   return (
-    <div>
+    <div className="profile-page__container">
       <div>
-        <div
-          style={{
-            background:
-                `url(${user.photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
-            backgroundSize: "cover",
-            height: "100px",
-            width: "100px"
-          }}>
-        </div>
+        <ProfilePicture photoURL={user.photoURL} handleClick={handleClick} borderRadius="5%" size="100px"/>
+        <input style={{visibility: 'hidden'}} type="file" ref={inputFileRef} name="profilePic" onChange={(e) => setFile(e.target.files[0])}/>
         <div>
+        <button onClick={() => uploadPic(file)}>upload</button>
+        {![0, 100].includes(picLoadingPercent) &&
+          <div style={{background: "gray", width: "20%", height: "4px"}}>
+            <div style={{background: "blue", height: "4px", width: `${picLoadingPercent}%`}}></div>
+          </div>
+        }
         <h2>{user.displayName}</h2>
-        <h3>{user && user.email}</h3>
+        <h3>{user.email}</h3>
         </div>
       </div>
-      {error && <h3 className="error">{error}</h3>}
-      <button onClick={() => handleSignOut()}>Sign out</button>
-      <button onClick={() => updateUser()}>USER</button>
+      {/* <button onClick={() => updateUser({photoURL: ""})}>update user</button> */}
+      
     </div>
   )
 };

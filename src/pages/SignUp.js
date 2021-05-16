@@ -48,33 +48,92 @@ function SignUp() {
       
       <form className="form" onSubmit={handleSubmit}>
         {error && <h4 className="error">{error}</h4>}
-        <label htmlFor="displayName" className="label">User Name</label>
-        <input required value={displayName} type="text" className="input" name="displayName" placeholder="e.g. John123" onChange={(e) => {
-          setDisplayName(e.target.value)
-        }}/>
-        <label htmlFor="email" className="label">Email</label>
-        <input required value={email} type="email" className="input" name="email" placeholder="e.g. xyz@abc.com" onChange={(e) => {
-          setEmail(e.target.value)
-        }}/>
-        <label htmlFor="password" className="label">Password</label>
-        <input required value={password} type="password" className="input" name="password" placeholder="Your Password" onChange={(e) => {
-          setPassword(e.target.value)
-        }}/>
-        <label htmlFor="confirmedPassword" className="label">Password Confirmation</label>
-        <input required value={confirmedPassword} type="password" className="input" name="confirmedPassword" placeholder="Re-type Your Password" onChange={(e) => {
-          setConfirmedPassword(e.target.value)
-        }}/>
-        <p>{password === confirmedPassword && "match"}</p>
+        <label 
+          htmlFor="displayName"
+          className="label"
+        >
+          User Name
+        </label>
+        <input
+          required
+          value={displayName}
+          type="text"
+          className="input"
+          name="displayName"
+          placeholder="e.g. John123"
+          onChange={(e) => {setDisplayName(e.target.value)}}
+        />
+        <label
+          htmlFor="email"
+          className="label"
+        >
+          Email
+        </label>
+        <input
+          required
+          value={email}
+          type="email"
+          className="input"
+          name="email"
+          placeholder="e.g. xyz@abc.com"
+          onChange={(e) => {setEmail(e.target.value)}}
+        />
+        <label
+          htmlFor="password"
+          className="label"
+        >
+          Password
+        </label>
+        <input
+          required
+          value={password}
+          type="password"
+          className="input"
+          name="password"
+          placeholder="Your Password"
+          onChange={(e) => {
+          setPassword(e.target.value)}}
+        />
+        <label
+          htmlFor="confirmedPassword"
+          className="label"
+        >
+          Password Confirmation <span>{password !== confirmedPassword && "!!!Passwords do not match!!!"}</span>
+        </label>
+        <input
+          required
+          value={confirmedPassword}
+          type="password"
+          className="input"
+          name="confirmedPassword"
+          placeholder="Re-type Your Password"
+          onChange={(e) => {setConfirmedPassword(e.target.value)}}
+        />
         
-
-        <button disabled={loading} className="btn btn-signup" type="submit">Sign up</button>
+        <button
+          disabled={loading}
+          className="btn btn-signup" 
+          type="submit"
+        >
+          Sign up
+        </button>
         <p style={{textAlign: "center", margin: "0 auto"}}>or</p>
-        <input type="button" className="btn btn-google" value="Sign in with Google"/>
-        <p style={{textAlign: "center", margin: "0.2em auto", fontSize:"0.8em"}}>Already have an account{" "}
+        <input
+          type="button"
+          className="btn btn-google" 
+          value="Sign in with Google"
+        />
+        <p
+          style={{
+            textAlign: "center",
+            margin: "0.2em auto",
+            fontSize:"0.8em"
+          }}
+        >
+          Already have an account{" "}
           <Link to="/" className="sub-link">Sign in here</Link>
         </p>
       </form>
-      
     </div>
   )
 }

@@ -47,9 +47,9 @@ Dashboard.MenuButton = function DashboardMenuButton({children, ...restProps}) {
   </div>)
 }
 
-Dashboard.Menu = function DashboardMenu({children, ...restProps}) {
+Dashboard.Menu = function DashboardMenu({children, left, ...restProps}) {
   const {menuOpen, setMenuOpen} = useContext(ToggleContext)
-  return (<nav onMouseLeave={() => setMenuOpen(false)} className={menuOpen ? "dashboard__menu dashboard__menu-open" : "dashboard__menu"} {...restProps}>
+  return (<nav style={{left: left}} onMouseLeave={() => setMenuOpen(false)} className={menuOpen ? "dashboard__menu dashboard__menu-open" : "dashboard__menu"} {...restProps}>
     {children}
   </nav>)
 }

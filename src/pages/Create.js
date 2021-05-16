@@ -80,7 +80,7 @@ const Create = () => {
             onKeyDown={handleKeyDown}
           />  
         </div>
-        <button type="submit">Publish</button>
+        <button className="publish" type="submit">Publish</button>
       </form>
     </div>
    );

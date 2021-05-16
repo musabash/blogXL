@@ -1,7 +1,5 @@
 import { Dashboard } from "../components"
 
-
-
 export default function MyActivities() {
   
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import firebase, {auth} from "../firebase"
+import firebase, {auth, storage} from "../firebase"
 
 
 const UserContext = React.createContext()
@@ -8,6 +8,8 @@ function UserContextProvider(props) {
   const [loading, setLoading] = useState(true)
   const [doc, setDocs] = useState([])
   const [userLog, setUserLog] = useState([])
+  const [picLoadingPercent, setPicLoadingPercent] = useState(0)
+  const [error, setError] = useState("")
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password)
@@ -79,6 +81,50 @@ function UserContextProvider(props) {
       })
   }
   
+  function uploadPic(file) {
+    console.log(file)
+    const metadata = {
+      contentType: 'image/jpeg'
+    };
+    const storageRef = firebase.storage().ref();
+    const uploadTask = storageRef.child('images/' + user.uid).put(file, metadata);
+
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, 
+      (snapshot) => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setPicLoadingPercent(progress);
+        // switch (snapshot.state) {
+        //   case firebase.storage.TaskState.PAUSED:
+        //     console.log('Upload is paused');
+        //     break;
+        //   case firebase.storage.TaskState.RUNNING:
+        //     console.log('Upload is running');
+        //     break;
+        //   default:
+        //     console.log(snapshot.state);
+        // }
+      }, 
+      (error) => {
+        switch (error.code) {
+          case 'storage/unauthorized':
+            setError("unauthorised request")
+            break;
+          case 'storage/canceled':
+            setError("canceled request")
+            break;
+          case 'storage/unknown':
+            setError("unknown file")
+            break;
+        }
+      }, 
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          updateUser({photoURL: downloadURL})
+        });
+      }
+    );
+  }
+
   function deleteBlog(coll, id) {
     const db = firebase.firestore()
     db.collection(coll).doc(id).delete()
@@ -89,17 +135,9 @@ function UserContextProvider(props) {
     db.collection(coll).doc(id).update(obj)
   }
 
-  function updateUser(displayName){
-    firebase.auth().currentUser.updateProfile({
-      displayName: displayName,
-      photoURL: "https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png"
-    })
-    .then((e) => console.log(e))
-    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({
-      bookmarks: [],
-      likes: [],
-      comments: []
-    })
+  function updateUser(obj){
+    firebase.auth().currentUser.updateProfile(obj)
+    .then(() => console.log("profile updated"))
     .catch((error) => {
       console.error("Error writing document: ", error)
     })
@@ -126,7 +164,9 @@ function UserContextProvider(props) {
     updateDoc,
     reuploadData,
     getUserLog,
-    userLog
+    userLog,
+    uploadPic,
+    picLoadingPercent
   }
   return (
     <UserContext.Provider value={value}>

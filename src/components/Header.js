@@ -1,19 +1,16 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { useContext } from "react"
+import { UserContext } from "../contexts/UserContext"
+import UserMenu from "./user-menu"
 
 function Header() {
+  const {signout, user} = useContext(UserContext)
   return(
     <ul className="nav">
-      <li><div className="logo"></div></li>
-      <li><Link to="/ProfilePage">Profile Page</Link></li>
-      <li><Link to="/MyActivities">Dashboard</Link></li>
-      <li>
-        <Link to="/create">New Blog</Link>
+      <li className="logo-container">
+        <div className="logo-name">BlogXL</div>
+        <div className="logo"></div>
       </li>
-      <li>
-        <Link to="/blogs">Blogs</Link>
-      </li>
-      <li><Link to="/PasswordReset">Reset Password</Link></li>
+      <li><UserMenu signout={signout} user={user} /></li>
     </ul>
   )
 }
