@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ProfilePicture({ size, borderRadius, photoURL, handleClick }) {
+export default function ProfilePicture({displayName, size, borderRadius, photoURL, handleClick }) {
   return (
     <div
       onClick={handleClick}
@@ -13,6 +13,7 @@ export default function ProfilePicture({ size, borderRadius, photoURL, handleCli
         height: size,
         width: size
       }}>
+      {!photoURL && <span>{displayName[0].toUpperCase()}</span>}
     </div>
   )
 }

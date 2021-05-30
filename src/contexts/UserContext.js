@@ -115,6 +115,8 @@ function UserContextProvider(props) {
           case 'storage/unknown':
             setError("unknown file")
             break;
+          default:
+            setError('')
         }
       }, 
       () => {

@@ -277,13 +277,22 @@ span {
   margin: 4em auto;
   padding: 20px;
 }
-.blog-list, .blog-details {
+
+.blog-list {
+  display: grid;
+  justify-items: flex-start;
+  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(8em, 1fr));
+  gap: 1em;
   padding-top: 2em;
+}
+.blog-details {
+  padding: 2em;
 }
 .blog-preview {
   padding: 10px 16px;
   margin: 20px 0;
-  border-bottom: 1px solid #fafafa;
+  box-shadow: 0 0 2px 0 #e4e4e4;
 }
 .blog-preview:hover {
   box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
@@ -296,6 +305,11 @@ span {
 
 .blog-preview a{
   text-decoration: none;
+}
+
+.blog-preview p {
+  display: flex;
+  align-items: center;
 }
 
 .blog-details h2, .blog-title {
@@ -623,6 +637,17 @@ span {
 
 .profile__pic {
   cursor: pointer;
+  text-align: center;
+  border: 0.2px solid red;
+  box-shadow: 0 0 0.5px 0.5px rgb(248, 133, 133),
+              0 0 0.2px 0.2px rgb(221, 175, 175),
+              0 0 0.5px 1px red;
+}
+
+.profile__pic span {
+  vertical-align: middle;
+  font-size: 1.7rem;
+  text-shadow: rgb(51, 82, 117) 0px 0px 2px;
 }
 
 .signin-avatar {
