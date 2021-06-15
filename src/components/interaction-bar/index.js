@@ -8,6 +8,10 @@ function InteractionBar({children, ...restProps}) {
   )
 }
 
+InteractionBar.Authorised = function InteractionBarAuthorised({length, name}) {
+  return <p>{length} {length === 1 ? name.slice(-1) : name}</p>
+}
+
 InteractionBar.Share = function InteractionBarShare({...restProps}) {
   return <FaRegShareSquare className="icon" {...restProps}/>
 }

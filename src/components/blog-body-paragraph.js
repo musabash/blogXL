@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { FaMinusCircle, FaPlusCircle } from "react-icons/fa"
 
 const BlogParagraph = ({par, index, body, setBody}) => {
   const [text, setText] = useState(par)
@@ -23,8 +24,8 @@ const BlogParagraph = ({par, index, body, setBody}) => {
     return (
       <div className="blog-paragraph-container">
         <div className="par-edit-btns">
-          <button type="button" onClick={() => removePar()}>-</button>
-          <button type="button" onClick={() => addPar()}>+</button>
+          <FaMinusCircle onClick={() => removePar()} />
+          <FaPlusCircle onClick={() => addPar()} />
         </div>
         <input
           className="blog-body-par"

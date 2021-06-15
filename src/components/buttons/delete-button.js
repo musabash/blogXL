@@ -8,5 +8,4 @@ const DeleteButton = ({id, deleteBlog}) => {
             history.push('/blogs')
           }}>delete</button>
 }
- 
 export default DeleteButton;

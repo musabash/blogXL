@@ -2,10 +2,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&display=swap');
+
+
+
 * {
   margin: 0;
   color: #333;
-  box-sizing: border-box;
+  box-sizing: border-box; 
 }
 
 :root {
@@ -26,7 +30,7 @@ body {
   margin: 0 auto;
   font-size: 20px;
   min-width: 350px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: "Crimson+Text", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -80,26 +84,6 @@ h1 {
 .form input {
   border: 1px solid #c2bebe;
 }
-
-.app li:hover {
-  border-radius: 5px;
-  transition: 300ms;
-}
-
-.app li a {
-  color: rgb(93, 82, 82);
-  margin: 0 auto;
-  padding: 0 0.5em;
-  line-height: 2rem;
-  text-decoration: none;
-  letter-spacing: 0.05rem;
-  font-size: 1rem;
-}
-
-.app li a:hover {
-  color: red;
-}
-
 
 .label, .input, .btn {
   margin: 0.4em 0.3em;
@@ -290,15 +274,20 @@ span {
   padding: 2em;
 }
 .blog-preview {
-  padding: 10px 16px;
+  background: rgba(243, 242, 242, 0.1);
+  padding: 10px 20px;
   margin: 20px 0;
+  max-width: 23em;
   box-shadow: 0 0 2px 0 #e4e4e4;
+  border-radius: 5px;
 }
 .blog-preview:hover {
-  box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+  background: #fff;
+  box-shadow: 1px 3px 10px rgba(0,0,0,0.1),
+              -1px -3px 10px rgba(0,0,0,0.1);
 }
 .blog-preview h2 {
-  font-size: 20px;
+  font-size: 24px;
   color: #f1356d;
   margin-bottom: 8px;
 }
@@ -368,8 +357,9 @@ span {
 .blog-body-par {
   border: none;
   background-color: transparent;
-  overflow: visible;
+  overflow: auto;
   width: 100%;
+  height: fit-content;
   font-size: large;
   font-family: 'Quicksand', Courier, monospace;
   padding-left: 1rem;
@@ -391,18 +381,14 @@ span {
 .par-edit-btns {
   display: flex;
 }
-.par-edit-btns > button {
-  height: 1.5em;
-  width: 1.4em;
+.par-edit-btns * {
   margin: 0.2em;
-  padding: 0.12em;
-  font-weight: 900;
   font-size: 1rem;
-  border-radius: 50%;
-  opacity: 0.2;
+  opacity: 0.5;
+  cursor: pointer;
 }
 
-.par-edit-btns > button:hover {
+.par-edit-btns *:hover {
   opacity: 1;
 }
 
@@ -419,8 +405,7 @@ span {
 .icon:hover,
 .icon:active,
 .icon:focus {
- box-shadow: 0 0 1em 0 rgba(32, 27, 73, 0.5);
- border-radius: 50%;
+  filter: invert(30%);
 }
 
 .accordion__container {
@@ -619,12 +604,10 @@ span {
 
 .user__menu__container {
   position: absolute;
+  width: 17ch;
   top: 3.5em;
   right: 1em;
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   transition: all 250ms cubic-bezier(.5, 0, .5, 1);
   transform: translateX(200%);
   opacity: 0;
@@ -659,18 +642,32 @@ span {
 .dashboard__menu,
 .user__menu__container {
   background: #fefefe;
+  padding: 0.5em 0;
   box-shadow: 2px 2px 6px 1px #eeeeee;
 }
 
 .dashboard__menu__list, .user__menu__list {
   list-style: none;
   display: flex;
-  width: 18ch;
-  flex-flow: column wrap;
-  justify-content: center;
+  flex-direction: column;
+  width: 100%;
   align-items: center;
-  margin: 0;
-  padding: 0.5em;
+  padding-left: 0;
+}
+
+.user__menu__link {
+  width: 100%;
+  margin: 0.1em auto;
+  padding: 0 0.3em;
+  text-align: center;
+}
+
+.user__menu__link a {
+  color: rgb(93, 82, 82);
+  line-height: 2rem;
+  text-decoration: none;
+  letter-spacing: 0.05rem;
+  font-size: 1rem;
 }
 
 .dashboard__menu__item {
@@ -683,8 +680,13 @@ span {
   margin: 0.2em;
 }
 
-.dashboard__menu__link:hover,
 .user__menu__link:hover {
+  transition: 200ms;
+  box-shadow: 0 5px 4px -4px rgb(200, 198, 198),
+  0 -5px 4px -4px rgb(200, 198, 198);
+}
+
+.dashboard__menu__link:hover {
     color: #00aeff;
 }
 

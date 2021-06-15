@@ -5,7 +5,6 @@ import ProfilePicture from "../profile-picture"
 function Feed({children, ...restProps}) {
   return (
     <div className="feed__container" {...restProps}>
-      <FaChartLine />
       {children}
     </div>
   )
@@ -16,7 +15,14 @@ Feed.Banner = function FeedBanner({children, ...restProps}) {
 }
 
 Feed.Trending = function FeedTrending({children, ...restProps}) {
-  return (<div className="feed__trending" {...restProps}>{children}</div>)
+  return (<div className="feed__trending" {...restProps}>
+  <FaChartLine />
+  {children}
+  </div>)
+}
+
+Feed.Title = function FeedTitle({children,...restProps}) {
+  return (<h2 {...restProps} className="feed__title">{children}</h2>)
 }
 
 Feed.Item = function FeedItem({children, user, handleClick, blog,...restProps}) {

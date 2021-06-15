@@ -32,7 +32,7 @@ export default function UserMenu({signout, user}) {
               <Link to={elm.to}>{elm.name}</Link>
             </li>
           ))}
-          <button onClick={() => handleSignOut()}>Sign out</button>
+          <button className="" onClick={() => handleSignOut()}>Sign out</button>
         </ul>
       </div>
     </>

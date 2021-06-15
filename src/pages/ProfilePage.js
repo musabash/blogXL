@@ -1,16 +1,19 @@
 import React, {useContext, useState, useEffect, useRef} from "react"
 import { UserContext } from "../contexts/UserContext"
 import ProfilePicture from "../components/profile-picture";
+import { Feed } from "../components";
 
 const ProfilePage = () => {
-  const {user, updateDoc, getUserLog, uploadPic, picLoadingPercent, updateUser} = useContext(UserContext)
+  const {user, getDocument, updateDoc, getUserLog, uploadPic, picLoadingPercent, updateUser} = useContext(UserContext)
   const [file, setFile] = useState("")
+  const [doc, setDocument] = useState("")
   const inputFileRef = useRef(null)
 
   const handleClick = () => inputFileRef.current.click()
 
   useEffect(() => {
     getUserLog()
+    getDocument("blogs", "9e6DKgd7WjWwK3fRZ2NG").then((res) => setDocument(res))
   }, [])
   return (
     <div className="profile-page__container">
@@ -44,7 +47,12 @@ const ProfilePage = () => {
       {/* <button onClick={() => updateUser({photoURL: 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})}>update user</button> */}
       <button onClick={() =>updateDoc("users", {photoURL: user.photoURL}, user.uid)}>update doc</button>
       <button onClick={() => updateUser({photoURL: ""})}>update user</button>
-      <button onClick={() => console.log(user.photoURL)}>Photo URL</button>
+      <button onClick={() => console.log(user.photoURL)}>{doc.id}</button>
+      <Feed>
+        <Feed.Trending>
+          <Feed.Title>Popular on BlogXL</Feed.Title>
+        </Feed.Trending>
+      </Feed>
     </div>
   )
 };

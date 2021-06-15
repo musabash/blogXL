@@ -2,8 +2,8 @@ import BlogList from '../components/blog-list'
 import { UserContext } from "../contexts/UserContext"
 import { useEffect, useContext, useState } from 'react'
 
-export default function Home() {
-  const { getDoc, doc, getUserLog, user } = useContext(UserContext)
+export default function Blogs() {
+  const { getCollection, doc, getUserLog, user } = useContext(UserContext)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -12,7 +12,7 @@ export default function Home() {
     setError("")
     setLoading(true)
     new Promise(resolve => {
-      getDoc("blogs")
+      getCollection("blogs")
       getUserLog()
       resolve(setLoading(false))
     })
@@ -20,9 +20,8 @@ export default function Home() {
   }, [])
   
   return (
-    <div className="home">
+    <div className="blogs">
       {error && <div>{error}</div>}
-      {console.log(loading)}
       <BlogList showAuthor={true} displayName={user.displayName} blogs={doc.filter(blog => blog.published)} title="All Blogs"/>
     </div>
   )

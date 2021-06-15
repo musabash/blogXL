@@ -12,7 +12,7 @@ export const menuList = [
   {
     name: 'Create New Blog',
     id: 2,
-    to: 'create'
+    to: '/create'
   },
   {
     name: 'All Blogs',

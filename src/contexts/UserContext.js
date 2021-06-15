@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import firebase, {auth, storage} from "../firebase"
+import firebase, {db, auth, storage} from "../firebase"
 
 
 const UserContext = React.createContext()
@@ -27,8 +27,7 @@ function UserContextProvider(props) {
     return auth.sendPasswordResetEmail(email)
   }
 
-  function getDoc(coll) {
-    const db = firebase.firestore()
+  function getCollection(coll) {
     db
     .collection(coll)
     .onSnapshot((snapshot) => {
@@ -36,8 +35,15 @@ function UserContextProvider(props) {
     }, (error) => {console.log(error)})
   }
 
+  async function getDocument(coll, docId) {
+    const docRef = db.collection(coll).doc(docId)
+    return docRef.get().then((doc) => doc.data())
+    .catch((error) => {
+        console.log("Error getting document:", error);
+    })
+  }
+
   function getUserLog() {
-    const db = firebase.firestore()
     const docRef = db.collection("users").doc(user.uid)
       docRef.get().then((doc) => {
         if (doc.exists) {
@@ -51,7 +57,6 @@ function UserContextProvider(props) {
   }
   
   function post(coll, blog) {
-    const db = firebase.firestore()
     db
     .collection(coll)
     .add(blog)
@@ -66,7 +71,6 @@ function UserContextProvider(props) {
   } 
 
   function reuploadData() {
-    const db = firebase.firestore()
     db
     .collection("blogs")
       .onSnapshot((snapshot) => {
@@ -86,7 +90,7 @@ function UserContextProvider(props) {
     const metadata = {
       contentType: 'image/jpeg'
     };
-    const storageRef = firebase.storage().ref();
+    const storageRef = storage.ref();
     const uploadTask = storageRef.child('images/' + user.uid).put(file, metadata);
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, 
@@ -128,12 +132,10 @@ function UserContextProvider(props) {
   }
 
   function deleteBlog(coll, id) {
-    const db = firebase.firestore()
     db.collection(coll).doc(id).delete()
   }
   
   function updateDoc(coll, obj, id) {
-    const db = firebase.firestore()
     db.collection(coll).doc(id).update(obj)
   }
 
@@ -159,7 +161,8 @@ function UserContextProvider(props) {
     signout,
     rstPass,
     post,
-    getDoc,
+    getDocument,
+    getCollection,
     doc,
     updateUser,
     deleteBlog,
@@ -172,7 +175,7 @@ function UserContextProvider(props) {
   }
   return (
     <UserContext.Provider value={value}>
-      {!loading && props.children}
+      {loading ? <p>loading...</p> : props.children}
     </UserContext.Provider>
   )
 }
