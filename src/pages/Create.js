@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react'
+import {useState, useContext, useEffect} from 'react'
 import { UserContext } from "../contexts/UserContext"
 import { useHistory } from 'react-router-dom'
 import BlogParagraph from '../components/blog-body-paragraph'
@@ -6,17 +6,23 @@ import BlogParagraph from '../components/blog-body-paragraph'
 const Create = () => {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState([])
+  const [isDraft, setIsDraft] = useState(true)
   const [paragraph, setParagraph] = useState("")
   const history = useHistory()
   const { post, user } = useContext(UserContext)
   const author = user.displayName
 
-  
+  useEffect(() => {
+    
+    return () => {
+      isDraft && handlePost(false)
+    }
+  }, [])
+
   const handlePost = (d) => {
     let date = new Date().toLocaleDateString()
     let time = new Date().toLocaleTimeString()
-    const blog = {title, body, author, authorId: user.uid, date, time, bookmark: [], likes: [], comments: [], published: d}
-    post("blogs", blog)
+    post("blogs", {title, body, author, authorId: user.uid, date, time, bookmarks: [], likes: [], comments: [], published: d})
   }
   
   const handleSubmit = (e) => {
@@ -24,7 +30,9 @@ const Create = () => {
     if (body.length === 0) {
       window.alert("No blog body. Please submit after adding your blog body.")
     } else {
+      setIsDraft(false)
       handlePost(true)
+      console.log(isDraft)
       history.push('/blogs')
     }
   }

@@ -266,7 +266,7 @@ span {
   display: grid;
   justify-items: flex-start;
   align-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(8em, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
   gap: 1em;
   padding-top: 2em;
 }
@@ -274,11 +274,13 @@ span {
   padding: 2em;
 }
 .blog-preview {
-  background: rgba(243, 242, 242, 0.1);
+  background: #eeeeee1a;
   padding: 10px 20px;
   margin: 20px 0;
+  width: 100%;
+  height: 100%;
   max-width: 23em;
-  box-shadow: 0 0 2px 0 #e4e4e4;
+  box-shadow: 0 0 2px 0 #c3c3c3;
   border-radius: 5px;
 }
 .blog-preview:hover {
@@ -500,8 +502,8 @@ span {
   align-items: baseline;
 }
 .logo {
-  width: 39px;
-  height: 39px;
+  width: 41px;
+  height: 41px;
   position: relative;
   margin-right: 1em;
   margin-bottom: 0.5em;
@@ -510,7 +512,7 @@ span {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 50%;
 }
 
 .logo::after{
