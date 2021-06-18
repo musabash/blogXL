@@ -54,20 +54,6 @@ function UserContextProvider(props) {
       }).catch((error) => {
         console.log(error)
       })
-  }
-  
-  function post(coll, blog) {
-    db
-    .collection(coll)
-    .add(blog)
-    .then((docRef) => {
-      return db.collection(coll).doc(docRef.id).update({
-        id: docRef.id
-      })
-    })
-    .catch((error) => {
-    console.error("Error adding document: ", error.message)
-  })
   } 
 
   function reuploadData() {
@@ -160,7 +146,6 @@ function UserContextProvider(props) {
     signup,
     signout,
     rstPass,
-    post,
     getDocument,
     getCollection,
     doc,
@@ -171,7 +156,7 @@ function UserContextProvider(props) {
     getUserLog,
     userLog,
     uploadPic,
-    picLoadingPercent
+    picLoadingPercent,
   }
   return (
     <UserContext.Provider value={value}>

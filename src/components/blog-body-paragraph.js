@@ -11,6 +11,7 @@ const BlogParagraph = ({par, index, body, setBody}) => {
   const onBlurHandler = (e) => {
     const trgt = e.target.value
     setBody((prev) => prev.map((elm, i) => i === index ? trgt : elm))
+    trgt.length === 0 ? removePar() : setText(trgt)
   }
   
   const removePar = () => {
@@ -27,12 +28,11 @@ const BlogParagraph = ({par, index, body, setBody}) => {
           <FaMinusCircle onClick={() => removePar()} />
           <FaPlusCircle onClick={() => addPar()} />
         </div>
-        <input
+        <p
+          contenteditable="true"
           className="blog-body-par"
           onBlur={onBlurHandler}
-          onChange={onChangeHandler}
-          value={text}
-        />
+        >{par}</p>
       </div>
     );
   }

@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useState, useContext } from "react"
 import { UserContext } from "../contexts/UserContext"
 import { Link, useHistory } from "react-router-dom"
-import { load } from 'recaptcha-v3'
 
 function SignUp() {
   const {signup, updateUser} = useContext(UserContext)
@@ -35,13 +34,6 @@ function SignUp() {
     setEmail("")
     setPassword("")
     setConfirmedPassword("")
-  }
-
-  async function capt() {
-    const recaptcha = await load('<site key>')
-    const token = await recaptcha.execute('<action>')
-  
-    console.log(token)
   }
 
   return(

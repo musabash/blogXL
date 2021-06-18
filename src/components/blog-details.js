@@ -19,9 +19,10 @@ const BlogDetails = () => {
   const authorised = user.uid === blog.authorId
 
   useEffect(() => {
-    db.collection('blogs').onSnapshot((snapshot) => {
+    let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
       setBlog(snapshot.docs.filter(doc => doc.id === id)[0].data())
     })
+    return (() => unsubscribe())
   }, [])
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const BlogDetails = () => {
 
   function handleDelete() {
     deleteBlog("blogs", id)
-    history.goBack()
+    history.push('/Blogs')
   }
 
   return (
@@ -73,7 +74,7 @@ const BlogDetails = () => {
           <>
             <DeleteButton
               id={id}
-              handleDelete={handleDelete}  
+              deleteBlog={handleDelete}  
             />
             <EditButton handleEdit={handleUpdate} name="save"/>
           </>
