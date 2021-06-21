@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react"
 import { InteractionBar } from "../components"
+import { GoBackBtn } from "../components/buttons"
 import firebase, { db } from "../firebase"
 
-export default function InteractionBarContainer({id, authorised, blog, user}) {
+export default function InteractionBarContainer({id, authorised, blog, user, history}) {
   const [liked, setLiked] = useState()
   const [bookmarked, setBookmarked] = useState()
 
@@ -36,13 +37,13 @@ export default function InteractionBarContainer({id, authorised, blog, user}) {
 
   return (
     <InteractionBar>
+      <GoBackBtn history={history}/>
       <InteractionBar.Share />
       {
         authorised
         ?
-        <>
-        {["comments", "bookmarks", "likes"].map(elm => <InteractionBar.Authorised key={elm} name={elm} length={blog[elm] && blog[elm].length}/>)}
-        </>
+        <InteractionBar.Authorised length={
+          [blog.comments.length, blog.bookmarks.length, blog.likes.length]}/>
         :
         <>
         <InteractionBar.Comment />

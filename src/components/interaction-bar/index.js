@@ -8,8 +8,16 @@ function InteractionBar({children, ...restProps}) {
   )
 }
 
-InteractionBar.Authorised = function InteractionBarAuthorised({length, name}) {
-  return <p>{length} {length === 1 ? name.slice(-1) : name}</p>
+InteractionBar.Authorised = function InteractionBarAuthorised({length}) {
+  return (
+    <>
+    <div className="interaction-bar__authorised"></div>
+     <div className="flex-row">{length[0]}{length[0] !== 0 ? <FaHeart className="icon"/> : <FaRegHeart className="icon"/>}</div>
+    <div className="flex-row">{length[1]}{<FaRegComment className="icon" />}</div>
+    <div className="flex-row">{length[2]}{length[2] !== 0 ? <FaBookmark className="icon"/> : <FaRegBookmark className="icon"/>}</div>
+      
+    </>
+  )
 }
 
 InteractionBar.Share = function InteractionBarShare({...restProps}) {
@@ -33,3 +41,6 @@ InteractionBar.Hey = function InteractionBarHey({children, ...restProps}) {
 }
 
 export default InteractionBar
+
+
+

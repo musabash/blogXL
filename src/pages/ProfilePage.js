@@ -11,10 +11,10 @@ const ProfilePage = () => {
 
   const handleClick = () => inputFileRef.current.click()
 
-  useEffect(() => {
-    getUserLog()
-    getDocument("blogs", "9e6DKgd7WjWwK3fRZ2NG").then((res) => setDocument(res))
-  }, [])
+  // useEffect(() => {
+  //   getUserLog()
+  //   getDocument("blogs", "9e6DKgd7WjWwK3fRZ2NG").then((res) => setDocument(res))
+  // }, [])
   return (
     <div className="profile-page__container">
       <div>

@@ -1,15 +1,13 @@
 import {useState, useContext, useEffect, useRef} from 'react'
 import { UserContext } from "../contexts/UserContext"
 import { useHistory } from 'react-router-dom'
-import BlogParagraph from '../components/blog-body-paragraph'
 import { db } from '../firebase'
 
 const Create = () => {
   const [blogId, setBlogId] = useState('')
   const [title, setTitle] = useState('')
-  const [body, setBody] = useState([])
+  const [body, setBody] = useState("")
   const [isDraft, setIsDraft] = useState(true)
-  const [paragraph, setParagraph] = useState('')
   const history = useHistory()
   const { user } = useContext(UserContext)
   const author = user.displayName
@@ -61,13 +59,13 @@ const Create = () => {
     // inputReff.current.setSelectionRange(pos, pos)
   }
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      setBody(prev => [...prev, paragraph])
-      setParagraph("")
-    }
-  }
+  // const handleKeyDown = (e) => {
+  //   if (e.key === 'Enter') {
+  //     e.preventDefault()
+  //     setBody(prev => [...prev, paragraph])
+  //     setParagraph("")
+  //   }
+  // }
    
   return ( 
     <div className="create">
@@ -82,20 +80,10 @@ const Create = () => {
         />
         <div className="blog-body">
           <label>Blog body</label>
-          {body.map((par, index) => 
-            <BlogParagraph
-              index={index}
-              key={Math.random()}
-              par={par}
-              body={body}
-              setBody={setBody}
-            />
-          )}
-          <input
-            value={paragraph}
+          <textarea
+            value={body}
             ref={inputReff}
-            onChange={(e) => setParagraph(e.target.value)}
-            onKeyDown={handleKeyDown}
+            onChange={(e) => setBody(e.target.value)}
           />  
         </div>
         <button className="publish" type="submit">Publish</button>

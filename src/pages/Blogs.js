@@ -7,7 +7,6 @@ export default function Blogs() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  
   useEffect(() => {
     setError("")
     setLoading(true)

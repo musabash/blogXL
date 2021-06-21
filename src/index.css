@@ -23,7 +23,6 @@
   --cerulean: #00b4d8;
   --sky-blue: #90e0ef;
   --powder-blue: #caf0f8;
-
 }
 
 body {
@@ -40,6 +39,14 @@ body {
 h1 {
   margin: 1em auto;
   text-align: center;
+}
+
+.flex-row {
+  padding: 0 0.2em;
+  margin: 0.1em;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(153, 152, 152, 0.5);
 }
 
 .app {
@@ -272,6 +279,7 @@ span {
 }
 .blog-details {
   padding: 2em;
+  padding-left: 6em;
 }
 .blog-preview {
   background: #eeeeee1a;
@@ -303,22 +311,11 @@ span {
   align-items: center;
 }
 
-.blog-details h2, .blog-title {
-  font-size: 30px;
-  color: var(--hover-dark);
-  margin-top: 1em;
-}
-
 .blog-title {
   border: none;
   background: transparent;
 }
-.blog-details div {
-  margin: 1em 0;
-}
-.blog-details p {
-  margin: 0.2em 0;
-}
+
 .blog-details button, .create button {
   background: rgba(246, 249, 255, 0.7);
   box-shadow: 2px 2px 4px 1px rgba(179, 179, 179, 0.7);
@@ -342,7 +339,7 @@ span {
 }
 
 .blog-body {
-  font-size: 20px;
+  font-size: 2rem;
   display: flex;
   flex-direction: column;
   font-family: "Quicksand";
@@ -350,10 +347,25 @@ span {
 
 .blog-body p {
   margin: 0.5em;
+  font-size: 2rem;
 }
 
-.blog-author, .blog-date {
-  font-size: 14px;
+.blog-body textarea {
+  resize: none;
+  overflow: hidden;
+  margin: 1em;
+  border: none;
+  outline:none;
+  min-width: 400px;
+  min-width: 800px;
+  height: auto;
+  font-size: 2rem;
+  font-family: 'Crimson', sans-serif;
+}
+
+.primary__metadata, .secondary__metadata {
+  font-family: 'Crimson', sans-serif;
+  color: var(--star)
 }
 
 .blog-body-par {
@@ -395,19 +407,30 @@ span {
 }
 
 .interaction-bar__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 5em 0.2em;
+  width: 5.5em;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  height: 100%;
+  flex-direction: column;
+  background-color: #fcfcfc;
+  box-shadow: 1px 0 5px 0 #dbdbdb;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .icon {
   cursor: pointer;
+  margin: 1em auto;
+  font-size: 1.7rem;
 }
 
 .icon:hover,
 .icon:active,
 .icon:focus {
-  filter: invert(30%);
+  filter: invert(50%);
 }
 
 .accordion__container {
@@ -747,4 +770,66 @@ span {
 .cross::before {
   transform: rotate(-45deg) scaleX(0.7);
   box-shadow: 0 0 0 0 gray;
+}
+
+.markdown {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 1.5em;
+}
+
+.markdown p {
+  color:rgb(65, 63, 63);
+}
+
+.markdown h1 {
+  color: var(--cerulean);
+  font-size: 3.5rem;
+}
+
+.markdown blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.15em 10px;
+}
+
+.markdown pre { 
+  background: #f8f8f8;
+  padding: 10px;
+}
+
+.markdown img {
+  width: 100%;
+}
+
+.markdown table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border: 1px solid #dee2e6;
+    border-collapse: collapse;
+    border-spacing: 2px;
+}
+
+.markdown thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+.markdown tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+.markdown th, .markdown td {
+  border: 2px solid #dee2e6;
+}
+
+.markdown td, .markdown th {
+  padding: 5px;
 }
