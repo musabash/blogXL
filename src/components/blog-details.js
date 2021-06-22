@@ -38,7 +38,7 @@ const BlogDetails = () => {
   
   function handleEdit() {
       setIsEditable(prev => !prev)
-      // setBody(blog.body)
+      setBody(blog.body)
   }
 
   function handleUpdate() {

@@ -7,7 +7,7 @@ import ProfilePage from "../pages/ProfilePage"
 import Create from "../pages/Create"
 import PrivateRoute from "../components/PrivateRoute"
 import PublicRoute from "../components/PublicRoute"
-import Dashboard from "../containers/MyActivities"
+import MyActivities from "../containers/MyActivities"
 import Blogs from "../pages/Blogs"
 import BlogDetails from "../components/blog-details"
 
@@ -30,7 +30,7 @@ function MainRoutes() {
         />
         <PrivateRoute
           path="/MyActivities"
-          component={Dashboard}
+          component={MyActivities}
         />
         <PrivateRoute
           exact path="/blogs"

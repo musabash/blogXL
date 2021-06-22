@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react"
-import { Link, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
+import { Form } from "../components"
 import { UserContext } from "../contexts/UserContext"
 
 function SignIn() {
@@ -9,6 +10,7 @@ function SignIn() {
   const [loading, setLoading] = useState(false)
   const {signin} = useContext(UserContext)
   const history = useHistory()
+  const isInvalid = password === '' | email === '';
   
   async function handleSubmit(e){
     e.preventDefault()
@@ -26,30 +28,40 @@ function SignIn() {
   }
 
   return(
-    
-    <div className="form-area">
-      <h1>Sign In</h1>
-      {error && <h4 className="error">{error}</h4>}
-      <form className="form" onSubmit={handleSubmit}>
-        <label htmlFor="email" className="label">Email</label>
-        <input required value={email} type="email" className="input" name="email" placeholder="e.g. xyz@abc.com" onChange={(e) => {
-          setEmail(e.target.value)
-        }}/>
-        <label htmlFor="password" className="label">Password</label>
-        <input required value={password} type="password" className="input" name="password" placeholder="Your Password" onChange={(e) => {
-          setPassword(e.target.value)
-        }}/>
-        <button className="btn btn-signin" type="submit">Sign in</button>
-        <p style={{textAlign: "center", margin: "0 auto"}}>or</p>
-        <input type="button" className="btn btn-google" value="Sign in with Google"/>
-        <p style={{textAlign: "center", margin: "0.2em auto", fontSize:"0.9em"}}>Don't have an account?{" "}
-          <Link to="SignUp" className="sub-link">Sign up here</Link>
-        </p>
-        <p style={{textAlign: "center", margin: "0.2em auto", fontSize:"0.8em"}}>
-        <Link to="PasswordReset" className="sub-link">Forgot Password?</Link></p>
-      </form>
-      
-    </div>
+    <Form>
+      <Form.Title>Sign in</Form.Title>
+      {error && <Form.Error>{error.message}</Form.Error>}
+      <Form.Base onSubmit={handleSubmit}>
+        <Form.Input
+          required
+          value={email}
+          type="email" 
+          placeholder="Email Address"
+          onChange={(e) => {
+            setEmail(e.target.value)
+          }}
+        />
+        <Form.Input
+          required
+          value={password}
+          autoComplete="off"
+          type="password" 
+          placeholder="Your Password"
+          onChange={(e) => {
+            setPassword(e.target.value)
+          }}
+        />
+        <Form.Submit disabled={isInvalid || loading} type="submit">
+          Sign In
+        </Form.Submit>
+        <Form.Text>
+          Don't have an account? <Form.Link to="SignUp">Sign up here.</Form.Link>
+        </Form.Text>
+        <Form.Text>
+          Forgot Your Password? <Form.Link to="PasswordReset">Reset Password</Form.Link>
+        </Form.Text>
+      </Form.Base>
+    </Form>
   )
 }
 

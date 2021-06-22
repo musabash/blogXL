@@ -2,19 +2,24 @@ import React, {useContext, useState, useEffect, useRef} from "react"
 import { UserContext } from "../contexts/UserContext"
 import ProfilePicture from "../components/profile-picture";
 import { Feed } from "../components";
+import { db } from "../firebase";
 
 const ProfilePage = () => {
-  const {user, getDocument, updateDoc, getUserLog, uploadPic, picLoadingPercent, updateUser} = useContext(UserContext)
+  const {user, updateDoc, uploadPic, picLoadingPercent, updateUser} = useContext(UserContext)
   const [file, setFile] = useState("")
+  const [userLog, setUserLog] = useState()
   const [doc, setDocument] = useState("")
   const inputFileRef = useRef(null)
 
   const handleClick = () => inputFileRef.current.click()
 
-  // useEffect(() => {
-  //   getUserLog()
-  //   getDocument("blogs", "9e6DKgd7WjWwK3fRZ2NG").then((res) => setDocument(res))
-  // }, [])
+  useEffect(() => {
+    let unsubscribe = db.collection('users').onSnapshot((snapshot) => {
+      setUserLog(snapshot.docs.filter(userLog => userLog.id === user.uid)[0].data())
+    })
+    return (() => unsubscribe())
+  }, [])
+
   return (
     <div className="profile-page__container">
       <div>

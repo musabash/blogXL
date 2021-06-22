@@ -49,15 +49,6 @@ h1 {
   border-top: 1px solid rgba(153, 152, 152, 0.5);
 }
 
-.app {
-  width: 100%;
-  background: white;
-  margin: 0 auto;
-  margin-bottom: 0.5em;
-  padding-bottom: 0.2em;
-  color: black;
-}
-
 .form-area {
     border: solid 0.8px white;
     margin: 0.8em;
@@ -424,13 +415,17 @@ span {
 .icon {
   cursor: pointer;
   margin: 1em auto;
-  font-size: 1.7rem;
+  font-size: 20px;
 }
 
-.icon:hover,
-.icon:active,
-.icon:focus {
-  filter: invert(50%);
+svg path {
+  color: red;
+}
+
+svg:hover,
+svg:active,
+svg:focus {
+  color: red;
 }
 
 .accordion__container {

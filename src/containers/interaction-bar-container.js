@@ -49,6 +49,7 @@ export default function InteractionBarContainer({id, authorised, blog, user, his
         <InteractionBar.Comment />
         <InteractionBar.Bookmark bookmarked={bookmarked} onClick={() => handleInteraction(bookmarked, "bookmarks")} />
         <InteractionBar.Like isLiked={liked} onClick={() => handleInteraction(liked, "likes")} />
+        <p className="icon">M</p>
         </>
       }
     </InteractionBar>
