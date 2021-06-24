@@ -50,9 +50,9 @@ const ProfilePage = () => {
         </div>
       </div>
       {/* <button onClick={() => updateUser({photoURL: 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})}>update user</button> */}
-      <button onClick={() =>updateDoc("users", {photoURL: user.photoURL}, user.uid)}>update doc</button>
+      {/* <button onClick={() =>updateDoc("users", {photoURL: user.photoURL}, user.uid)}>update doc</button>
       <button onClick={() => updateUser({photoURL: ""})}>update user</button>
-      <button onClick={() => console.log(user.photoURL)}>{doc.id}</button>
+      <button onClick={() => console.log(user.photoURL)}>{doc.id}</button> */}
       <Feed>
         <Feed.Trending>
           <Feed.Title>Popular on BlogXL</Feed.Title>

@@ -13,33 +13,36 @@ InteractionBar.Authorised = function InteractionBarAuthorised({length}) {
     <>
     <div className="interaction-bar__authorised"></div>
       <div className="flex-row">
-      {
-        length[0]}{length[0] === 0
-      ?
-        <FaRegComment className="icon"/>
-      :
-        <FaComment className="icon"/>
-      }
-     </div>
+        {length[0]}
+        {
+          length[0] === 0
+            ?
+          <FaRegComment className="icon"/>
+            :
+          <FaComment className="icon"/>
+        }
+      </div>
 
-           <div className="flex-row">
-      {
-        length[0]}{length[0] === 0
-      ?
-        <FaRegBookmark className="icon"/>
-      :
-        <FaBookmark className="icon"/>
-      }
-     </div>
+      <div className="flex-row">
+        {length[1]}
+        {
+          length[1] === 0
+            ?
+          <FaRegBookmark className="icon"/>
+            :
+          <FaBookmark className="icon"/>
+        } 
+      </div>
 
-           <div className="flex-row">
-      {
-        length[0]}{length[0] === 0
-      ?
-        <FaRegHeart className="icon"/>
-      :
-        <FaHeart className="icon"/>
-      }
+      <div className="flex-row">
+        {length[2]}
+        {
+          length[2] === 0
+            ?
+          <FaRegHeart className="icon"/>
+            :
+          <FaHeart className="icon"/>
+        }
      </div>      
     </>
   )
