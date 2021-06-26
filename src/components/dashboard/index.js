@@ -1,24 +1,30 @@
 import React, { useState, useContext, createContext } from 'react'
-import DashboardActiveElement from '../dasboard-active-element'
+import DashboardActiveElement from '../../containers/dasboard-active-element-container'
 import UserBlogs from '../user-blogs'
+import { Container, Inner, Frame, Item, Title, Body, Hamburger, Menu, MenuList, MenuItem, MenuLink } from './styles/dashboard'
 
 const ToggleContext = createContext()
 
 export default function Dashboard({children, ...restProps}) {
   const [toggleActive, setToggleActive] = useState(prev => !prev && 'blogs' )
   const [menuOpen, setMenuOpen] = useState(false)
+ 
+  const handleClick = (name) => () => {
+    setToggleActive(name)
+    setMenuOpen(prev => !prev)
+  }
 
   return (
-    <ToggleContext.Provider value={{toggleActive, setToggleActive, menuOpen, setMenuOpen}}>
-      <div className="dashboard__container" {...restProps}>
-          <div className="dashboard__inner">{children}</div> 
-      </div>
+    <ToggleContext.Provider value={{toggleActive, setToggleActive, menuOpen, setMenuOpen, handleClick}}>
+      <Container {...restProps}>
+          <Inner>{children}</Inner> 
+      </Container>
     </ToggleContext.Provider>
   )
 }
 
 Dashboard.Frame = function DashboardFrame({children, ...restProps}) {
-  return <section className="dashboard__frame" {...restProps}>{children}</section>
+  return <Frame {...restProps}>{children}</Frame>
 }
 
 Dashboard.Item = function DashboardItem({children, ...restProps}) {
@@ -33,43 +39,40 @@ Dashboard.Item = function DashboardItem({children, ...restProps}) {
 
 Dashboard.Title = function DashboardTitle({children, ...restProps}) {
   const {toggleActive} = useContext(ToggleContext)
-  return <h1 className="dashboard__title" {...restProps}>{toggleActive.toUpperCase()}</h1>
+  return <Title {...restProps}>{toggleActive.toUpperCase()}</Title>
 }
 
 Dashboard.Body = function DashboardBody({children, userLog, ...restProps}) {
   const {toggleActive} = useContext(ToggleContext)
-  return <div className="dashboard__body" {...restProps}>{children}{userLog[toggleActive].map(elm => <p>{elm}</p>)}</div>
+  return <Body {...restProps}>{children}{userLog[toggleActive].map(elm => <p>{elm}</p>)}</Body>
 }
 
-Dashboard.MenuButton = function DashboardMenuButton({children, ...restProps}) {
+Dashboard.Hamburger = function DashboardMenuButton({children, ...restProps}) {
   const {setMenuOpen, menuOpen} = useContext(ToggleContext)
-  return (<div className={menuOpen ? "hamburger cross" : "hamburger"} {...restProps} onClick={() => setMenuOpen(prev => !prev)}>
-  </div>)
+  return (<Hamburger menuOpen={menuOpen} {...restProps} onClick={() => setMenuOpen(prev => !prev)}>
+  </Hamburger>)
 }
 
 Dashboard.Menu = function DashboardMenu({children, left, ...restProps}) {
   const {menuOpen, setMenuOpen} = useContext(ToggleContext)
-  return (<nav style={{left: left}} onMouseLeave={() => setMenuOpen(false)} className={menuOpen ? "dashboard__menu dashboard__menu-open" : "dashboard__menu"} {...restProps}>
+  return (<Menu menuOpen={menuOpen} onMouseLeave={() => setMenuOpen(false)} {...restProps}>
     {children}
-  </nav>)
+  </Menu>)
 }
 
 Dashboard.MenuList = function DashboardMenuList({children, ...restProps}) {
-  return <ul className="dashboard__menu__list" {...restProps}>{children}</ul>
+  return <MenuList {...restProps}>{children}</MenuList>
 }
 
 Dashboard.MenuItem = function DashboardMenuItem({children, ...restProps}) {
-  return (<li className="dashboard__menu__item" {...restProps}>
+  return (<MenuItem {...restProps}>
     {children}
-  </li>)
+  </MenuItem>)
 }
 
 Dashboard.MenuLink = function DashboardMenuLink({children, name, ...restProps}) {
-  const {setToggleActive, setMenuOpen} = useContext(ToggleContext)
-  return (<p name={name} className="dashboard__menu__link" onClick={() => {
-    setToggleActive(name)
-    setMenuOpen(prev => !prev)
-  }} {...restProps}>
+  const {handleClick} = useContext(ToggleContext)
+  return (<MenuLink name={name} onClick={handleClick(name)} {...restProps}>
     {children}
-  </p>)
+  </MenuLink>)
 }

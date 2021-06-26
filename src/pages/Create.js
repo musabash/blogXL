@@ -5,21 +5,31 @@ import { db } from '../firebase'
 
 const Create = () => {
   const [blogId, setBlogId] = useState('')
+  const [isFirstClick, setIsFirstClick] = useState(true)
+  const [blog, setBlog] = useState()
   const [title, setTitle] = useState('')
   const [body, setBody] = useState("")
   const [isDraft, setIsDraft] = useState(true)
   const history = useHistory()
   const { user } = useContext(UserContext)
   const author = user.displayName
-  const inputRef = useRef()
-  const inputReff = useRef()
   
   useEffect(() => {
-    
-    return () => {
-      isDraft && handlePost()
+    if (!isFirstClick && title) {
+      handlePost()
     }
-  }, [])
+  }, [isFirstClick])
+
+  useEffect(() => {
+    let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
+      setBlog(snapshot.docs.map(doc => doc.data()).filter(doc => doc.id === blogId))
+    })
+    return (() => unsubscribe())
+  }, [isFirstClick])
+
+  function handleBlur() {
+    setIsFirstClick(false)
+  }
 
   function post(coll, blog) {
     db
@@ -53,12 +63,6 @@ const Create = () => {
     }
   }
 
-  const handleClick = () => {
-    const pos = window.getSelection().getRangeAt(0).startOffset
-    // inputReff.current.focus()
-    // inputReff.current.setSelectionRange(pos, pos)
-  }
-
   // const handleKeyDown = (e) => {
   //   if (e.key === 'Enter') {
   //     e.preventDefault()
@@ -75,20 +79,18 @@ const Create = () => {
           required
           type="text"
           value={title}
-          ref={inputRef}
+          onBlur={handleBlur}
           onChange={(e) => setTitle(e.target.value)}
         />
         <div className="blog-body">
           <label>Blog body</label>
           <textarea
             value={body}
-            ref={inputReff}
             onChange={(e) => setBody(e.target.value)}
           />  
         </div>
         <button className="publish" type="submit">Publish</button>
       </form>
-      <p contenteditable="true" onClick={() => handleClick()} >blogId: {blogId}</p>
     </div>
    );
 }

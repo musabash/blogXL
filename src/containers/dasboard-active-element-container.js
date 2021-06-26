@@ -1,7 +1,7 @@
 import {useContext} from "react"
 import { Link } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
-import { Accordion } from "."
+import { Accordion } from "../components"
 
 
 export default function DashboardActiveElement({toggleActive}) {
@@ -9,6 +9,7 @@ export default function DashboardActiveElement({toggleActive}) {
 
   return (
     <Accordion.Frame>
+      {console.log("active:",toggleActive, "log:", userLog)}
         {userLog[toggleActive].length === 0 ? `No ${toggleActive} yet` : userLog[toggleActive].map(elm => {
           let blog = doc.filter(blog => blog.id === elm)[0]
           return (
@@ -18,7 +19,7 @@ export default function DashboardActiveElement({toggleActive}) {
             </Accordion.Header>
             <Link to={`blogs/${blog.id}`}>
               <Accordion.Body>
-                {blog.body[0].slice(0, 25)} ...
+                {blog.body.slice(0, 25)} ...
               </Accordion.Body>
             </Link>
           </Accordion.Item>

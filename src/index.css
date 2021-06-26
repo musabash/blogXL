@@ -1,11 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&display=swap');
-
-
-
 * {
   margin: 0;
   color: #333;
@@ -15,7 +7,7 @@
 :root {
   --logo: #21086e;
   --logo-background: #f0e991;
-  --hover: #00a5f1;
+  --hover: #0c0d0e;
   --hover-dark: #0081bd;
   --mauvelous: #ff9fb2;
   --navy: #03045e;
@@ -428,93 +420,6 @@ svg:focus {
   color: red;
 }
 
-.accordion__container {
-  display: flex;
-  border-bottom: 4px solid #222;
-}
-
-.accordion__frame {
-  margin-bottom: 1em;
-  max-width: 1200px;
-}
-
-.accordion__item {
-  color: #ffffff;
-  margin-bottom: 1em;
-}
-
-.accordion__item:first-of-type {
-  margin-top: 1em;
-}
-
-.accordion__inner {
-  display: flex;
-  padding: 70px 45px;
-  flex-direction: column;
-  max-width: 815px;
-  margin: auto;
-}
-
-.accordion__title {
-  font-size: 50px;
-  line-height: 1.1;
-  margin-top: 0;
-  margin-bottom: 0.6em;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  
-  @media (max-width: 600px) {
-      font-size: 35px;
-  }
-}
-
-.accordion__header {
-  display: flex;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: pointer;
-  margin-bottom: 2px;
-  font-size: 26px;
-  color: white;
-  font-weight: normal;
-  background: #03045e;
-  padding: 0.4em 0.6em 0.4em 0.6em;
-  user-select: none;
-  align-items: center;
-  width: 100%;
-  border-radius: 5px;
-  
-  @media (max-width: 600px) {
-        font-size: 16px;
-    }
-}
-
-.accordion__header span {
-    color: rgb(253, 253, 253);
-    font-size: 1rem;
-    margin-left: 1rem;
-}
-
-.accordion__body {
-  box-sizing: border-box;
-  transition: max-height 0.25s cubic-bezier(0.5, 0, 0.1, 1);
-  font-size: 20px;
-  font-weight: normal;
-  line-height: normal;
-  background: #0077b6;
-  color: white;
-  padding: 0.4em 0.6em 0.4em 0.6em;
-  user-select: none;
-  align-items: center;
-  width: 100%;
-  border-radius: 5px;
-  
-  @media (max-width: 600px) {
-    font-size: 16px;
-    line-height: 22px;
-  }
-}
-
 .logo-container {
   display: flex;
   align-items: baseline;
@@ -659,14 +564,13 @@ svg:focus {
   margin: 0 auto;
 }
 
-.dashboard__menu,
 .user__menu__container {
   background: #fefefe;
   padding: 0.5em 0;
   box-shadow: 2px 2px 6px 1px #eeeeee;
 }
 
-.dashboard__menu__list, .user__menu__list {
+.user__menu__list {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -677,94 +581,21 @@ svg:focus {
 
 .user__menu__link {
   width: 100%;
-  margin: 0.1em auto;
+  margin: 0.2em auto;
   padding: 0 0.3em;
   text-align: center;
-}
-
-.user__menu__link a {
   color: rgb(93, 82, 82);
   line-height: 2rem;
   text-decoration: none;
   letter-spacing: 0.05rem;
   font-size: 1rem;
-}
-
-.dashboard__menu__item {
-  color: inherit;
-  font-weight: 700;
-  flex-basis: 100%;
-  font-size: 1rem;
-  text-decoration: none;
   cursor: pointer;
-  margin: 0.2em;
 }
 
 .user__menu__link:hover {
-  transition: 200ms;
+  transition: 300ms;
   box-shadow: 0 5px 4px -4px rgb(200, 198, 198),
   0 -5px 4px -4px rgb(200, 198, 198);
-}
-
-.dashboard__menu__link:hover {
-    color: #00aeff;
-}
-
-.dashboard__menu-open {
-    transform: translateX(0%);
-    opacity: 1;
-}
-
-.hamburger {
-    display: flex;
-    position: fixed;
-    background: transparent;
-    top: 5.5em;
-    left: 1.2em;
-    cursor: pointer;
-    height: 15px;
-    width: 1.4em;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    padding: 0.2em;
-}
-
-.hamburger::before {
-  position: absolute;
-  content: "";
-  background: gray;
-  width: 1.4em;
-  height: 3px;
-  border-radius: 1em;
-  box-shadow: 0 6px 0 0 gray,
-  0 -6px 0 0 gray;
-}
-
-.cross::before,
-.cross::after,
-.hamburger::before,
-.hamburger::after {
-  transition: all 190ms ease-in;
-}
-
-.hamburger::after {
-  position: absolute;
-  content: "";
-  background: gray;
-  width: 1.4em;
-  height: 3px;
-  border-radius: 1em;
-}
-
-.cross::after {
-  transform: rotate(45deg) scaleX(0.7);  
-  background: gray;
-}
-
-.cross::before {
-  transform: rotate(-45deg) scaleX(0.7);
-  box-shadow: 0 0 0 0 gray;
 }
 
 .markdown {

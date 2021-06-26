@@ -1,6 +1,7 @@
 import BlogList from '../components/blog-list'
 import { UserContext } from "../contexts/UserContext"
 import { useEffect, useContext, useState } from 'react'
+import { Dashboard } from '../components'
 
 export default function Blogs() {
   const { getCollection, doc, getUserLog, user } = useContext(UserContext)

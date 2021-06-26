@@ -28,11 +28,11 @@ export default function UserMenu({signout, user}) {
         
         <ul className="user__menu__list">
           {menuList.map(elm => (
-            <li onClick={() => setMenuOpen(false)} key={elm.id} className="user__menu__link">
-              <Link to={elm.to}>{elm.name}</Link>
-            </li>
+            
+              <Link onClick={() => setMenuOpen(false)} key={elm.id} className="user__menu__link" to={elm.to}>{elm.name}</Link>
+            
           ))}
-          <button className="" onClick={() => handleSignOut()}>Sign out</button>
+          <li className="user__menu__link" onClick={() => handleSignOut()}>Sign Out</li>
         </ul>
       </div>
     </>
