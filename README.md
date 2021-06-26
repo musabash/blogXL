@@ -10,16 +10,3 @@
 + Users can edit their blogs. Cannot like their own blogs.
 + User dashboard shows likes, bookmarks, blogs and drafts of the user
 + User can upload profile picture
-
-# Extended Syntax - Tables
---- 
-
-| Left | Center | Right |
-| :--- | :----: | ----: |
-| 1    | 2      | 3     |
-
-# Extended Syntax - Tasks List
---- 
-
-- [ ] Did you run the tests?
-- [x] Did you lint the project?
