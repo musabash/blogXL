@@ -38,7 +38,7 @@ export default function InteractionBarContainer({id, authorised, blog, user, his
   return (
     <InteractionBar>
       <GoBackBtn history={history}/>
-      <InteractionBar.Share />
+      <InteractionBar.Share onClick={() => alert("This property will be added soon")}/>
       {
         authorised
         ?
@@ -46,10 +46,9 @@ export default function InteractionBarContainer({id, authorised, blog, user, his
           [blog.comments.length, blog.bookmarks.length, blog.likes.length]}/>
         :
         <>
-        <InteractionBar.Comment />
+        <InteractionBar.Comment onClick={() => alert("This property will be added soon")}/>
         <InteractionBar.Bookmark bookmarked={bookmarked} onClick={() => handleInteraction(bookmarked, "bookmarks")} />
         <InteractionBar.Like isLiked={liked} onClick={() => handleInteraction(liked, "likes")} />
-        <p className="icon">M</p>
         </>
       }
     </InteractionBar>

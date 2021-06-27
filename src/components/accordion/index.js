@@ -1,5 +1,5 @@
 import React, { useState, useContext, createContext } from 'react'
-import { Container, Inner, Frame, Item, Title, Header, Body } from '../accordion/styles/accordion'
+import { Container, Inner, Frame, Item, Title, Header, StyledLink } from '../accordion/styles/accordion'
 
 const ToggleContext = createContext()
 
@@ -43,5 +43,5 @@ Accordion.Header = function AccordionHeader({children, ...restProps}) {
 
 Accordion.Body = function AccordionBody({children, ...restProps}) {
   const {toggleShow} = useContext(ToggleContext)
-  return toggleShow ? <Body {...restProps}>{children}</Body> : null
+  return toggleShow ? <StyledLink {...restProps}>{children}</StyledLink> : null
 }

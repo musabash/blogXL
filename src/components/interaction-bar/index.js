@@ -1,4 +1,5 @@
 import {FaRegShareSquare, FaRegHeart, FaHeart, FaComment, FaRegComment, FaRegBookmark, FaBookmark} from "react-icons/fa"
+import styled from "styled-components"
 
 function InteractionBar({children, ...restProps}) {
   return (
@@ -8,11 +9,19 @@ function InteractionBar({children, ...restProps}) {
   )
 }
 
+const Inner = styled.div`
+  padding: 0 0.2em;
+  margin: 0.1em;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(153, 152, 152, 0.5);
+`
+
 InteractionBar.Authorised = function InteractionBarAuthorised({length}) {
   return (
     <>
     <div className="interaction-bar__authorised"></div>
-      <div className="flex-row">
+      <Inner>
         {length[0]}
         {
           length[0] === 0
@@ -21,9 +30,9 @@ InteractionBar.Authorised = function InteractionBarAuthorised({length}) {
             :
           <FaComment className="icon"/>
         }
-      </div>
+      </Inner>
 
-      <div className="flex-row">
+      <Inner>
         {length[1]}
         {
           length[1] === 0
@@ -32,9 +41,9 @@ InteractionBar.Authorised = function InteractionBarAuthorised({length}) {
             :
           <FaBookmark className="icon"/>
         } 
-      </div>
+      </Inner>
 
-      <div className="flex-row">
+      <Inner>
         {length[2]}
         {
           length[2] === 0
@@ -43,25 +52,37 @@ InteractionBar.Authorised = function InteractionBarAuthorised({length}) {
             :
           <FaHeart className="icon"/>
         }
-     </div>      
+     </Inner>      
     </>
   )
 }
 
 InteractionBar.Share = function InteractionBarShare({...restProps}) {
-  return <FaRegShareSquare className="icon" {...restProps}/>
+  return <Inner><FaRegShareSquare className="icon__btn" {...restProps}/></Inner>
 }
 
 InteractionBar.Like = function InteractionBarLike({isLiked, ...restProps}) {
-  return isLiked ? <FaHeart className="icon" {...restProps}/> : <FaRegHeart className="icon" {...restProps}/>
+  return (
+    <Inner>
+      {isLiked ? <FaHeart className="icon__btn" {...restProps}/> : <FaRegHeart className="icon__btn" {...restProps}/>}
+    </Inner>
+  )
 }
 
 InteractionBar.Comment = function InteractionBarComment({...restProps}) {
-  return <FaRegComment className="icon" {...restProps}/>
+  return (
+    <Inner>
+      <FaRegComment className="icon__btn" {...restProps}/>
+    </Inner>
+  ) 
 }
 
 InteractionBar.Bookmark = function InteractionBarBookmark({bookmarked, ...restProps}) {
-  return bookmarked ? <FaBookmark className="icon" {...restProps}/> : <FaRegBookmark className="icon" {...restProps}/>
+  return (
+    <Inner>
+      {bookmarked ? <FaBookmark className="icon__btn" {...restProps}/> : <FaRegBookmark className="icon__btn" {...restProps}/>}
+    </Inner>
+  ) 
 }
 
 InteractionBar.Hey = function InteractionBarHey({children, ...restProps}) {

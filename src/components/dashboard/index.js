@@ -1,7 +1,7 @@
-import React, { useState, useContext, createContext } from 'react'
-import DashboardActiveElement from '../../containers/dasboard-active-element-container'
+import React, { useState, useContext, createContext, lazy, Suspense } from 'react'
 import UserBlogs from '../user-blogs'
 import { Container, Inner, Frame, Item, Title, Body, Hamburger, Menu, MenuList, MenuItem, MenuLink } from './styles/dashboard'
+import DashboardActiveElement from '../../containers/dasboard-active-element-container'
 
 const ToggleContext = createContext()
 

@@ -1,4 +1,32 @@
 import styled from 'styled-components';
+import { Link as ReachRouterLink  } from 'react-router-dom';
+
+export const StyledLink = styled(ReachRouterLink)`
+  box-sizing: border-box;
+  transition: max-height 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+  font-size: 20px;
+  font-weight: normal;
+  line-height: normal;
+  background: #0077b6;
+  color: white;
+  padding: 0.4em 0.6em 0.4em 0.6em;
+  user-select: none;
+  align-items: center;
+  width: 100%;
+  border-radius: 5px;
+  transition: all 250ms cubic-bezier(.5, 0, .5, 1);
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 600px) {
+    font-size: 16px;
+    line-height: 22px;
+  }
+`;
 
 export const Container = styled.section`
   display: flex;
@@ -63,25 +91,4 @@ export const Header = styled.div`
   @media (max-width: 600px) {
         font-size: 16px;
     }
-`;
-
-export const Body = styled.div`
-  box-sizing: border-box;
-  transition: max-height 0.25s cubic-bezier(0.5, 0, 0.1, 1);
-  font-size: 20px;
-  font-weight: normal;
-  line-height: normal;
-  background: #0077b6;
-  color: white;
-  padding: 0.4em 0.6em 0.4em 0.6em;
-  user-select: none;
-  align-items: center;
-  width: 100%;
-  border-radius: 5px;
-  transition: all 250ms cubic-bezier(.5, 0, .5, 1)
-  
-  @media (max-width: 600px) {
-    font-size: 16px;
-    line-height: 22px;
-  }
 `;

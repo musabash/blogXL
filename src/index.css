@@ -1,3 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&display=swap');
+
 * {
   margin: 0;
   color: #333;
@@ -31,14 +38,6 @@ body {
 h1 {
   margin: 1em auto;
   text-align: center;
-}
-
-.flex-row {
-  padding: 0 0.2em;
-  margin: 0.1em;
-  display: flex;
-  align-items: center;
-  border-top: 1px solid rgba(153, 152, 152, 0.5);
 }
 
 .form-area {
@@ -404,20 +403,26 @@ span {
   overflow-y: auto;
 }
 
-.icon {
-  cursor: pointer;
+.icon, .icon__btn {
   margin: 0.4em auto;
   font-size: 1.5em;
+  fill: gray;
 }
 
-svg path {
-  color: red;
+.icon__btn:hover,
+.icon__btn:active,
+.icon__btn:focus {
+  cursor: pointer;
+  fill: red;
 }
 
-svg:hover,
-svg:active,
-svg:focus {
-  color: red;
+.icon__btn:hover {
+  animation: hoverEffect 400ms linear;
+}
+
+@keyframes hoverEffect {
+  from {filter: drop-shadow(0 0 1px rgb(255, 0, 0));}
+  to {filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0));}
 }
 
 .logo-container {
