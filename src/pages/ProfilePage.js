@@ -20,8 +20,8 @@ const ProfilePage = () => {
                         .onSnapshot((snapshot) => {
                           setUserLog(snapshot.docs.filter(userLog => userLog.id === user.uid)[0].data())
                         })
-    return (() => unsubscribe())
-  }, [])
+    return user ? unsubscribe : null
+  }, [user])
 
   function uploadPic(file) {
     const metadata = {

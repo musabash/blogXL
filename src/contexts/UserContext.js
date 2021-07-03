@@ -27,6 +27,24 @@ function UserContextProvider(props) {
     return auth.sendPasswordResetEmail(email)
   }
 
+  function createUser(user) {
+    db.collection("users").doc(user.uid).set({
+      likes: [],
+      bookmarks: [],
+      comments: [],
+      displayName: user.displayName,
+      drafts: [],
+      photoURL: user.photoURL,
+      published: []
+    })
+    .then(() => {
+        console.log("Document successfully written!");
+    })
+    .catch((error) => {
+        console.error("Error writing document: ", error);
+    });
+  }
+
   function getCollection(coll) {
     db
     .collection(coll)
@@ -126,19 +144,19 @@ function UserContextProvider(props) {
   }
 
   function updateUser(obj){
-    firebase.auth().currentUser.updateProfile(obj)
-    .then(() => console.log("profile updated"))
+    const userRef = firebase.auth().currentUser
+    userRef.updateProfile(obj)
+    .then(() => createUser(userRef))
     .catch((error) => {
       console.error("Error writing document: ", error)
     })
   }
   
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(curUser => {
+    auth.onAuthStateChanged(curUser => {
         setUser(curUser)
         setLoading(false)
     })
-    return unsubscribe
   }, [])
   const value = {
     user,

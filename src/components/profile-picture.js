@@ -13,7 +13,7 @@ export default function ProfilePicture({displayName, size, borderRadius, photoUR
         height: size,
         width: size
       }}>
-      {!photoURL && <span>{displayName[0].toUpperCase()}</span>}
+      {/* {!photoURL && <span>{displayName[0].toUpperCase()}</span>} */}
     </div>
   )
 }

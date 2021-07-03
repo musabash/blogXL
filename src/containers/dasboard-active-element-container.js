@@ -15,7 +15,6 @@ export default function DashboardActiveElement({toggleActive}) {
 
   return (
     data ? <Accordion.Frame>
-        {console.log("rendered")}
         {data.length === 0 ? `No ${toggleActive} yet` : data.map(elm => {
           let blog = doc.filter(blog => blog.id === elm)[0]
           return (

@@ -23,7 +23,7 @@ function SignUp() {
         displayName: displayName,
         photoURL: 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'
       })
-      history.push("/ProfilePage")
+      
     } catch(error) {
       setError(`Failed to create an account: ${error.message}`)
     }
@@ -31,6 +31,7 @@ function SignUp() {
     setDisplayName("")
     setEmail("")
     setPassword("")
+    setTimeout(() => history.push("/ProfilePage"), 500)
   }
 
   return(
