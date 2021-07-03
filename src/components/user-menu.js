@@ -23,16 +23,31 @@ export default function UserMenu({signout, user}) {
 
   return (
     <>
-      {user ? <ProfilePicture displayName={user.displayName} handleClick={handleClick} photoURL={user.photoURL} size="40px" borderRadius="50%"/> : <SignInAvatar hide={false}/> }
-      <div onMouseLeave={() => setMenuOpen(false)} className={menuOpen ? "user__menu__container user__menu-open" : "user__menu__container"}>
-        
+      {
+        user ?
+        <ProfilePicture
+          displayName={user.displayName}
+          handleClick={handleClick}
+          photoURL={user.photoURL}
+          size="40px"
+          borderRadius="50%"
+        /> : 
+        <SignInAvatar />
+      }
+      <div 
+        onMouseLeave={() => setMenuOpen(false)}
+        className={menuOpen ? "user__menu__container user__menu-open" : "user__menu__container"}
+      >
         <ul className="user__menu__list">
           {menuList.map(elm => (
-            
               <Link onClick={() => setMenuOpen(false)} key={elm.id} className="user__menu__link" to={elm.to}>{elm.name}</Link>
-            
           ))}
-          <li className="user__menu__link" onClick={() => handleSignOut()}>Sign Out</li>
+          <li
+            className="user__menu__link"
+            onClick={() => handleSignOut()}
+          >
+            Sign Out
+          </li>
         </ul>
       </div>
     </>

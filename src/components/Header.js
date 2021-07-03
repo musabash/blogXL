@@ -10,7 +10,12 @@ function Header() {
         <div className="logo-name">BlogXL</div>
         <div className="logo"></div>
       </li>
-      <li><UserMenu signout={signout} user={user} /></li>
+      <li>
+        <UserMenu
+          signout={signout}
+          user={user}
+        />
+      </li>
     </ul>
   )
 }

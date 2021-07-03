@@ -5,7 +5,7 @@ export const Container = styled.section`
     display: flex;
     flex-direction: column;
     min-height: 660px;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.7);
     border-radius: 5px;
     box-sizing: border-box;
     width: 100%;

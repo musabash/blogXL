@@ -1,7 +1,7 @@
 import React from 'react'
 import { DeleteButton, EditButton } from '../components/buttons'
 
-export default function EditButtonsContainer({isEditable, handleEdit, id, authorised, handleDelete, handleUpdate}) {
+export default function EditButtonsContainer({isEditable, handleEdit, id, authorised, handleDelete, handleUpdate, published}) {
 
   return (
     <div className="edit__btns__container">
@@ -13,6 +13,7 @@ export default function EditButtonsContainer({isEditable, handleEdit, id, author
             deleteBlog={handleDelete}  
           />
           <EditButton handleEdit={handleUpdate} name="save"/>
+          {!published && <EditButton handleEdit={() => handleUpdate(true)} name="publish"/>}
         </>
       }  
     </div>

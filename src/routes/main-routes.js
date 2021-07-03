@@ -9,7 +9,7 @@ import PrivateRoute from "../components/PrivateRoute"
 import PublicRoute from "../components/PublicRoute"
 import MyActivities from "../containers/MyActivities"
 import Blogs from "../pages/Blogs"
-import BlogDetails from "../components/blog-details"
+import BlogDetails  from "../components"
 
 function MainRoutes() {
   return (

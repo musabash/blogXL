@@ -21,6 +21,7 @@ function SignIn() {
       history.push("/ProfilePage")
     } catch(error) {
       setError(`Failed to sign in: ${error.message}`)
+      console.log(error.message)
     }
     setLoading(false)
     setEmail("")
@@ -30,7 +31,7 @@ function SignIn() {
   return(
     <Form>
       <Form.Title>Sign in</Form.Title>
-      {error && <Form.Error>{error.message}</Form.Error>}
+      {error && <Form.Error>{error}</Form.Error>}
       <Form.Base onSubmit={handleSubmit}>
         <Form.Input
           required
@@ -55,10 +56,16 @@ function SignIn() {
           Sign In
         </Form.Submit>
         <Form.Text>
-          Don't have an account? <Form.Link to="SignUp">Sign up here.</Form.Link>
+          Don't have an account?
+          <Form.Link to="SignUp">
+            Sign up here.
+          </Form.Link>
         </Form.Text>
         <Form.Text>
-          Forgot Your Password? <Form.Link to="PasswordReset">Reset Password</Form.Link>
+          Forgot Your Password?
+          <Form.Link to="PasswordReset">
+            Reset Password
+          </Form.Link>
         </Form.Text>
       </Form.Base>
     </Form>

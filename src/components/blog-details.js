@@ -1,6 +1,6 @@
 import { useParams, useHistory } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
-import {useContext, useState, useEffect, useRef} from "react"
+import {useContext, useReducer, useState, useEffect, useRef} from "react"
 import InteractionBarContainer from "../containers/interaction-bar-container"
 import { db } from "../firebase"
 import ReactMarkdown from "react-markdown";
@@ -10,17 +10,13 @@ import MetaData from "./meta-data"
 import EditButtonsContainer from "../containers/edit-buttons-container"
 
 
-const BlogDetails = () => {
+export const BlogDetails = () => {
   const { id } = useParams()
   const { deleteBlog, updateDoc, user } = useContext(UserContext)
-  const [isEditable, setIsEditable] = useState(false)
   const [blog, setBlog] = useState('')
-  const [body, setBody] = useState(blog.body)
-  const [title, setTitle] = useState(blog.title)
   const history = useHistory();
   const authorised = user ? user.uid === blog.authorId : false
   const mdRef = useRef()
-
 
   useEffect(() => {
     let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
@@ -31,26 +27,54 @@ const BlogDetails = () => {
 
   useEffect(() => {
     if (blog) {
-      setBody(blog.body)
-      setTitle(blog.title)
+      dispatch({type: 'ON_CHANGE', payload: {title: blog.title, body: blog.body, isPublished: blog.published}})
     }
   }, [blog])
-  
-  function handleEdit() {
-      setIsEditable(prev => !prev)
-      setBody(blog.body)
+
+  function onChangeHandler(obj) {
+    dispatch({type: 'ON_CHANGE', payload: obj})    
   }
 
-  function handleUpdate() {
-    const obj = {title, body, published: true}
-    updateDoc("blogs", obj, id)
-    setIsEditable(prev => !prev)
-  }
+  let [state, dispatch] = useReducer((state, action) => {
+    switch(action.type) {
+      case 'HANDLE_EDIT': 
+        return { ...state, body: blog.body, isEditable: !state.isEditable }
+      
+      case 'HANDLE_UPDATE': 
+        const obj = {title: state.title, body: state.body, published: state.isPublished}
+        updateDoc("blogs", obj, id)
+        return {
+          ...state,
+          isEditable: !state.isEditable
+        }
+      case 'HANDLE_DELETE': {
+        deleteBlog("blogs", id)
+        history.goBack()
+        return state
+      }
 
-  function handleDelete() {
-    deleteBlog("blogs", id)
-    history.goBack()
-  }
+      case 'ON_CHANGE': 
+        return {
+          ...state,
+          ...action.payload
+        }
+
+      case 'PUBLISH':
+        updateDoc("blogs", {published: true}, id)
+        return {
+          ...state,
+          isPublished: true
+        }
+
+      default:
+        return state
+    }
+  }, {
+    isEditable: false,
+    body: "",
+    isPublished: "",
+    title: ""
+  })
   
   return (
     <>
@@ -71,38 +95,37 @@ const BlogDetails = () => {
           <ReactMarkdown 
             remarkPlugins={[gfm]}
             className="markdown"
-            children={title} 
+            children={state.title} 
             components={{p: 'h1'}}
           />
           <div className="blog-body" ref={mdRef} >
             {
-              isEditable
+              state.isEditable
               ?
               <TextArea
-                value={body}
-                setValue={setBody}
+                value={state.body}
+                onChangeHandler={onChangeHandler}
                 mdRef={mdRef}
               />
               :
               <ReactMarkdown
                 remarkPlugins={[gfm]}
                 className="markdown"
-                children={body}
+                children={state.body}
               />
             }
           </div>
           <EditButtonsContainer 
-            isEditable={isEditable} 
-            handleEdit={handleEdit}
+            isEditable={state.isEditable} 
+            handleEdit={() => dispatch({type: 'HANDLE_EDIT'})}
             id={id}
+            published={state.isPublished}
             authorised={authorised}
-            handleDelete={handleDelete}
-            handleUpdate={handleUpdate}
+            handleDelete={() => dispatch({type: 'HANDLE_DELETE'})}
+            handleUpdate={() => dispatch({type: 'HANDLE_UPDATE'})}
           />         
         </article>
       </div>
     </>
    );
 }
- 
-export default BlogDetails
