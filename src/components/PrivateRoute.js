@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { UserContext } from "../contexts/UserContext"
 
-const PrivateRoute = ({component: Component, ...rest}) => {
-  const {user} = useContext(UserContext)  
+const PrivateRoute = ({user, component: Component, ...rest}) => {
+ 
   return (
         <Route 
           {...rest} 

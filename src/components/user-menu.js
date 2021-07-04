@@ -1,22 +1,20 @@
 import React, {useState} from 'react'
-import ProfilePicture from './profile-picture'
 import { Link, useHistory } from "react-router-dom"
 import { menuList } from './menulist'
+import {ProfilePicture} from '../components'
 import SignInAvatar from './sign-in-avatar'
+import { auth } from '../firebase'
 
-export default function UserMenu({signout, user}) {
+export default function UserMenu({ user }) {
   const history = useHistory()
   const [error, setError] = useState("")
   const [menuOpen, setMenuOpen] = useState(false)
 
-  async function handleSignOut() {
-    setError("")
-    try {
-      await signout()
-      history.push("/")
-    } catch(error) {
+  function handleSignOut() {
+    auth.signOut().then(() => history.push("/"))
+    .catch((error) => {
       setError(`Failed to sign out: ${error.message}`)
-    }
+    })
   }
 
   const handleClick = () => setMenuOpen(prev => !prev)
@@ -26,9 +24,8 @@ export default function UserMenu({signout, user}) {
       {
         user ?
         <ProfilePicture
-          displayName={user.displayName}
           handleClick={handleClick}
-          photoURL={user.photoURL}
+          photoURL={user ? user.photoURL : "https://gravatar.com/avatar/8e1741bcab7ec27915445c32a5af4d97?s=600&d=mp&r=pg"}
           size="40px"
           borderRadius="50%"
         /> : 

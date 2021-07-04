@@ -1,38 +1,31 @@
-import React, { useState, useContext } from "react"
+import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import { Form } from "../components"
-import { UserContext } from "../contexts/UserContext"
+import { auth } from "../firebase"
 
 function SignIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-  const {signin} = useContext(UserContext)
   const history = useHistory()
-  const isInvalid = password === '' | email === '';
+  const isInvalid = password === '' | email === ''
   
-  async function handleSubmit(e){
+  function handleSignIn(e){
     e.preventDefault()
-    try{
-      setError("")
-      setLoading(true)
-      await signin(email, password)
-      history.push("/ProfilePage")
-    } catch(error) {
-      setError(`Failed to sign in: ${error.message}`)
-      console.log(error.message)
-    }
-    setLoading(false)
-    setEmail("")
-    setPassword("")
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => history.push("/ProfilePage"))
+      .catch((error) => {
+        setEmail('')
+        setPassword('')
+        setError(error.message)
+      });
   }
-
   return(
     <Form>
       <Form.Title>Sign in</Form.Title>
       {error && <Form.Error>{error}</Form.Error>}
-      <Form.Base onSubmit={handleSubmit}>
+      <Form.Base onSubmit={handleSignIn}>
         <Form.Input
           required
           value={email}

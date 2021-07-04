@@ -1,48 +1,19 @@
 import React, { useState, useEffect } from "react"
 import firebase, {db, auth, storage} from "../firebase"
+import { useAuthListener } from "../hooks"
 
 
 const UserContext = React.createContext()
 function UserContextProvider(props) {
-  const [user, setUser] = useState()
   const [loading, setLoading] = useState(true)
   const [doc, setDocs] = useState([])
   const [userLog, setUserLog] = useState([])
   const [picLoadingPercent, setPicLoadingPercent] = useState(0)
   const [error, setError] = useState("")
-
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password)
-  }
-  
-  function signin(email, password) {
-    return auth.signInWithEmailAndPassword(email, password)
-  }
-
-  function signout() {
-    return auth.signOut()
-  }
+  const {user} = useAuthListener()
 
   function rstPass(email) {
     return auth.sendPasswordResetEmail(email)
-  }
-
-  function createUser(user) {
-    db.collection("users").doc(user.uid).set({
-      likes: [],
-      bookmarks: [],
-      comments: [],
-      displayName: user.displayName,
-      drafts: [],
-      photoURL: user.photoURL,
-      published: []
-    })
-    .then(() => {
-        console.log("Document successfully written!");
-    })
-    .catch((error) => {
-        console.error("Error writing document: ", error);
-    });
   }
 
   function getCollection(coll) {
@@ -146,23 +117,16 @@ function UserContextProvider(props) {
   function updateUser(obj){
     const userRef = firebase.auth().currentUser
     userRef.updateProfile(obj)
-    .then(() => createUser(userRef))
     .catch((error) => {
       console.error("Error writing document: ", error)
     })
   }
   
   useEffect(() => {
-    auth.onAuthStateChanged(curUser => {
-        setUser(curUser)
         setLoading(false)
-    })
-  }, [])
+    }, [])
   const value = {
     user,
-    signin,
-    signup,
-    signout,
     rstPass,
     getDocument,
     getCollection,

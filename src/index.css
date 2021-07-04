@@ -548,21 +548,6 @@ span {
   transform: translateX(0%)
 }
 
-.profile__pic {
-  cursor: pointer;
-  text-align: center;
-  border: 0.2px solid red;
-  box-shadow: 0 0 0.5px 0.5px rgb(248, 133, 133),
-              0 0 0.2px 0.2px rgb(221, 175, 175),
-              0 0 0.5px 1px red;
-}
-
-.profile__pic span {
-  vertical-align: middle;
-  font-size: 1.7rem;
-  text-shadow: rgb(51, 82, 117) 0px 0px 2px;
-}
-
 .signin-avatar {
   border: 1px solid red;
   color: red;

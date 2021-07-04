@@ -1,10 +1,9 @@
-import React, { useState, useContext } from "react"
-import { UserContext } from "../contexts/UserContext"
+import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import { Form } from "../components"
+import { auth, db } from "../firebase"
 
 function SignUp() {
-  const {signup, updateUser} = useContext(UserContext)
   const [displayName, setDisplayName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -13,32 +12,39 @@ function SignUp() {
   const history = useHistory()
   const isInvalid = displayName === '' || password === '' || email === '';
   
-  async function handleSubmit(e){
+  function handleSignup(e){
     e.preventDefault()
-    try{
-      setError("")
-      setLoading(true)
-      await signup(email, password)
-      await updateUser({
-        displayName: displayName,
-        photoURL: 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'
-      })
-      
-    } catch(error) {
-      setError(`Failed to create an account: ${error.message}`)
-    }
-    setLoading(false)
-    setDisplayName("")
-    setEmail("")
-    setPassword("")
-    setTimeout(() => history.push("/ProfilePage"), 500)
-  }
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((result) => result.user.updateProfile({
+          displayName: displayName,
+          photoURL: 'https://gravatar.com/avatar/8e1741bcab7ec27915445c32a5af4d97?s=600&d=mp&r=pg'
+        })
+        .then(() => {
+          const user = auth.currentUser
+          db.collection("users").doc(user.uid).set({
+            likes: [],
+            bookmarks: [],
+            comments: [],
+            displayName: user.displayName,
+            drafts: [],
+            photoURL: user.photoURL,
+            published: []
+          })
+        })
+        .then(() => history.push('/ProfilePage'))
+      )
+      .catch((error) => {
+        setEmail('');
+        setPassword('');
+        setError(error.message);
+      }) 
+ }
 
   return(
     <Form>
       <Form.Title>Sign Up</Form.Title>
       
-      <Form.Base onSubmit={handleSubmit}>
+      <Form.Base onSubmit={handleSignup}>
         {error && <Form.Error>{error}</Form.Error>}
         <Form.Input
           required

@@ -1,27 +1,20 @@
-import React, {useContext, useState, useEffect, useRef} from "react"
+import React, {useContext, useState, useRef} from "react"
 import { UserContext } from "../contexts/UserContext"
-import ProfilePicture from "../components/profile-picture";
-import { Feed } from "../components";
-import firebase, { db, storage } from "../firebase";
+import {ProfilePicture} from "../components";
+import firebase, { storage } from "../firebase";
+import LoadingBar from "../components/loading-bar";
+import { useAuthListener, useSnapshot } from "../hooks";
 
 const ProfilePage = () => {
   const [file, setFile] = useState("")
-  const [userLog, setUserLog] = useState()
-  const [doc, setDocument] = useState("")
   const [error, setError] = useState("")
   const [picLoadingPercent, setPicLoadingPercent] = useState(0)
   const inputFileRef = useRef(null)
-  const {user, updateDoc, updateUser} = useContext(UserContext)
+  const {updateUser} = useContext(UserContext)
+  const { user } = useAuthListener()
+  const userLog = useSnapshot('users', user.uid)
 
   const handleClick = () => inputFileRef.current.click()
-
-  useEffect(() => {
-    let unsubscribe = db.collection('users')
-                        .onSnapshot((snapshot) => {
-                          setUserLog(snapshot.docs.filter(userLog => userLog.id === user.uid)[0].data())
-                        })
-    return user ? unsubscribe : null
-  }, [user])
 
   function uploadPic(file) {
     const metadata = {
@@ -56,8 +49,7 @@ const ProfilePage = () => {
     <div className="profile-page__container">
       <div>
         <ProfilePicture
-          displayName={" "}
-          photoURL={user.photoURL}
+          photoURL={user ? user.photoURL : "https://gravatar.com/avatar/8e1741bcab7ec27915445c32a5af4d97?s=600&d=mp&r=pg"}
           handleClick={handleClick}
           borderRadius="5%" size="100px"
         />
@@ -72,19 +64,13 @@ const ProfilePage = () => {
           <button disabled={!file}
             onClick={() => uploadPic(file)}
           >upload</button>
-          {![0, 100].includes(picLoadingPercent) &&
-            <div style={{background: "gray", width: "20%", height: "4px"}}>
-              <div style={{background: "blue", height: "4px", width: `${picLoadingPercent}%`}}></div>
-            </div>
+          {file && <p>{file.name}/{file.size}KB</p>}
+          {![0, 100].includes(picLoadingPercent) && <LoadingBar picLoadingPercent={picLoadingPercent}/>
           }
           <h3><span>Username: </span>{user.displayName}</h3>
           <h3><span>Email address: </span>{user.email}</h3>
         </div>
       </div>
-      {/* <button onClick={() => updateUser({photoURL: 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})}>update user</button> */}
-      {/* <button onClick={() =>updateDoc("users", {photoURL: user.photoURL}, user.uid)}>update doc</button>
-      <button onClick={() => updateUser({photoURL: ""})}>update user</button>
-      <button onClick={() => console.log(user.photoURL)}>{doc.id}</button> */}
     </div>
   )
 };

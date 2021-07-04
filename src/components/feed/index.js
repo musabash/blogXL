@@ -1,6 +1,6 @@
 import { FaChartLine } from "react-icons/fa"
 import { Link } from 'react-router-dom'
-import ProfilePicture from "../profile-picture"
+import {ProfilePicture} from ".."
 
 function Feed({children, ...restProps}) {
   return (
