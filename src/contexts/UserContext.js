@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import firebase, {db, auth, storage} from "../firebase"
 import { useAuthListener } from "../hooks"
 
-
 const UserContext = React.createContext()
 function UserContextProvider(props) {
   const [loading, setLoading] = useState(true)
@@ -11,10 +10,6 @@ function UserContextProvider(props) {
   const [picLoadingPercent, setPicLoadingPercent] = useState(0)
   const [error, setError] = useState("")
   const {user} = useAuthListener()
-
-  function rstPass(email) {
-    return auth.sendPasswordResetEmail(email)
-  }
 
   function getCollection(coll) {
     db
@@ -81,6 +76,7 @@ function UserContextProvider(props) {
         //     break;
         //   default:
         //     console.log(snapshot.state);
+
         // }
       }, 
       (error) => {
@@ -127,7 +123,6 @@ function UserContextProvider(props) {
     }, [])
   const value = {
     user,
-    rstPass,
     getDocument,
     getCollection,
     doc,
@@ -142,7 +137,8 @@ function UserContextProvider(props) {
   }
   return (
     <UserContext.Provider value={value}>
-      {loading ? <p>loading...</p> : props.children}
+      {loading ? <p>Loading...</p> : props.children}
+      {error && <p>{error}</p>}
     </UserContext.Provider>
   )
 }

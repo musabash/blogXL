@@ -1,4 +1,4 @@
-import {useState, useContext, useEffect, useRef} from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { UserContext } from "../contexts/UserContext"
 import { db } from '../firebase'
 import { useHistory } from 'react-router'

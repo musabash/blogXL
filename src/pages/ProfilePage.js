@@ -28,13 +28,13 @@ const ProfilePage = () => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setPicLoadingPercent(progress);
       }, 
-      (error) => {
+      (err) => {
         const errorCodes = {
           unauthorized: "unauthorised request",
           canceled: "canceled request",
           unknown: "unknown file"
         }
-        error && setError(errorCodes[error.code.slice(8)])
+        err && setError(errorCodes[error.code.slice(8)])
         }, 
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
@@ -67,8 +67,10 @@ const ProfilePage = () => {
           {file && <p>{file.name}/{file.size}KB</p>}
           {![0, 100].includes(picLoadingPercent) && <LoadingBar picLoadingPercent={picLoadingPercent}/>
           }
+          {error && <h3>{error}</h3>}
           <h3><span>Username: </span>{user.displayName}</h3>
           <h3><span>Email address: </span>{user.email}</h3>
+          {console.log(userLog, new Date().getTime())}
         </div>
       </div>
     </div>

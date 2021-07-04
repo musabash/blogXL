@@ -7,7 +7,6 @@ function SignIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(false)
   const history = useHistory()
   const isInvalid = password === '' | email === ''
   
@@ -45,7 +44,7 @@ function SignIn() {
             setPassword(e.target.value)
           }}
         />
-        <Form.Submit disabled={isInvalid || loading} type="submit">
+        <Form.Submit disabled={isInvalid} type="submit">
           Sign In
         </Form.Submit>
         <Form.Text>

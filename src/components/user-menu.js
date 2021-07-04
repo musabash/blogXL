@@ -21,6 +21,7 @@ export default function UserMenu({ user }) {
 
   return (
     <>
+      {error && alert(error)}
       {
         user ?
         <ProfilePicture

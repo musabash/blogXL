@@ -1,7 +1,6 @@
 import BlogList from '../components/blog-list'
 import { UserContext } from "../contexts/UserContext"
 import { useEffect, useContext, useState } from 'react'
-import { Dashboard } from '../components'
 
 export default function Blogs() {
   const { getCollection, doc, getUserLog, user } = useContext(UserContext)
@@ -20,7 +19,7 @@ export default function Blogs() {
   }, [])
   
   return (
-    <div className="blogs">
+    loading ? <p>Loading...</p> : <div className="blogs">
       {error && <div>{error}</div>}
       <BlogList showAuthor={true} displayName={user.displayName} blogs={doc.filter(blog => blog.published)} title="All Blogs"/>
     </div>

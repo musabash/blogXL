@@ -1,7 +1,8 @@
 import React from 'react';
 import { 
     Container, 
-    Error, 
+    Error,
+    Success, 
     Base, 
     Title, 
     Text, 
@@ -37,6 +38,10 @@ Form.Link = function FormLink({ children, ...restProps }) {
 
 Form.Error = function FormError({ children, ...restProps }) {
     return <Error {...restProps}>{children}</Error>;
+}
+
+Form.Success = function FormSuccess({ children, ...restProps }) {
+    return <Success {...restProps}>{children}</Success>;
 }
 
 Form.Input = function FormInput({ children, ...restProps }) {

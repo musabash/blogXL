@@ -8,7 +8,6 @@ function SignUp() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(false)
   const history = useHistory()
   const isInvalid = displayName === '' || password === '' || email === '';
   
@@ -70,7 +69,7 @@ function SignUp() {
           setPassword(e.target.value)}}
         />        
         <Form.Submit
-          disabled={isInvalid || loading}
+          disabled={isInvalid}
           type="submit"
         >
           Sign up
