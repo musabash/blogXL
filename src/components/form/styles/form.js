@@ -50,7 +50,7 @@ export const Title = styled.h1`
 `;
 
 export const Text = styled.h1`
-  color: #939393;
+  color: ${({colour}) => colour ?? "#939393"};
   font-size: 16px;
   font-weight: 500;
 `;

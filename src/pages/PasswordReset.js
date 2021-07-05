@@ -19,7 +19,8 @@ function PasswordReset() {
       setEmail("")
     })
     .catch((error) => {
-      setError(error.message)
+      setError({msg: error.message, email: email})
+      setLoading(false)
       setEmail("")
     })
   }
@@ -30,7 +31,7 @@ function PasswordReset() {
     <Form>
       <Form.Title>Password Reset</Form.Title>
       {emailSent && <Form.Success className="success">{emailSent}</Form.Success>}
-      {error && <Form.Error>{error}</Form.Error>}
+      {error && <Form.Error>{error.msg} <Form.Text colour="#efefef">{error.email}</Form.Text></Form.Error>}
       <Form.Base onSubmit={sendResetEmail}>
         <Form.Input
           required

@@ -5,8 +5,8 @@ export default function useSnapshot(collection, id) {
   const [content, setContent] = useState()
 
   useEffect(() => {
-    let unsubscribe = db.collection(collection).onSnapshot((snapshot) => {
-      setContent(snapshot.docs.map(doc => doc.data()).filter(doc => doc.id === id))
+    let unsubscribe = db.collection(collection).doc(id).onSnapshot((snapshot) => {
+      setContent(snapshot.data())
     })
     return (() => unsubscribe())
   }, [])

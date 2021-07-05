@@ -4,11 +4,13 @@ import { menuList } from './menulist'
 import {ProfilePicture} from '../components'
 import SignInAvatar from './sign-in-avatar'
 import { auth } from '../firebase'
+import { useAuthListener } from '../hooks'
 
-export default function UserMenu({ user }) {
+export default function UserMenu() {
   const history = useHistory()
   const [error, setError] = useState("")
   const [menuOpen, setMenuOpen] = useState(false)
+  const { user } = useAuthListener()
 
   function handleSignOut() {
     auth.signOut().then(() => history.push("/"))
@@ -26,6 +28,8 @@ export default function UserMenu({ user }) {
         user ?
         <ProfilePicture
           handleClick={handleClick}
+          subText={false}
+          id={user.uid}
           photoURL={user ? user.photoURL : "https://gravatar.com/avatar/8e1741bcab7ec27915445c32a5af4d97?s=600&d=mp&r=pg"}
           size="40px"
           borderRadius="50%"

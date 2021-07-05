@@ -22,7 +22,7 @@ function SignIn() {
   }
   return(
     <Form>
-      <Form.Title>Sign in</Form.Title>
+      <Form.Title>Sign In</Form.Title>
       {error && <Form.Error>{error}</Form.Error>}
       <Form.Base onSubmit={handleSignIn}>
         <Form.Input

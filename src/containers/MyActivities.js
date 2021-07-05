@@ -1,6 +1,29 @@
 import {Dashboard} from "../components"
 
 export default function MyActivities() {
+
+  const dashboardMenuList = [
+    {
+      name: "blogs",
+      title: "Your Blogs"
+    },
+    {
+      name: "bookmarks",
+      title: "Blogs You Bookmarked"
+    },
+    {
+      name: "recent",
+      title: "Your Recent Views"
+    },
+    {
+      name: "likes",
+      title: "Blogs You Liked"
+    },
+    {
+      name: "comments",
+      title: "Blogs You Commented on"
+    }
+  ]
   
   return (
     <div>
@@ -9,18 +32,11 @@ export default function MyActivities() {
           <Dashboard.Hamburger/>
           <Dashboard.Menu>
             <Dashboard.MenuList>
-              <Dashboard.MenuItem>
-                <Dashboard.MenuLink name="blogs" >Your Blogs</Dashboard.MenuLink>
-              </Dashboard.MenuItem>
-              <Dashboard.MenuItem>
-                <Dashboard.MenuLink name="bookmarks">Your Bookmarks</Dashboard.MenuLink>
-              </Dashboard.MenuItem>
-              <Dashboard.MenuItem>
-                <Dashboard.MenuLink name="yourRecentViews">Your Recent Views</Dashboard.MenuLink>
-              </Dashboard.MenuItem>
-              <Dashboard.MenuItem>
-                <Dashboard.MenuLink name="likes">You Liked</Dashboard.MenuLink>
-              </Dashboard.MenuItem>
+              {dashboardMenuList.map((item) => (
+                <Dashboard.MenuItem>
+                  <Dashboard.MenuLink name={item.name}>{item.title}</Dashboard.MenuLink>
+                </Dashboard.MenuItem>
+              ))}
             </Dashboard.MenuList> 
           </Dashboard.Menu>
         </Dashboard.Frame>

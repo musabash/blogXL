@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import ReactMarkdown from "react-markdown";
 import gfm from 'remark-gfm';
   
-export default function TextArea({value, onChangeHandler}) {
+export default function TextArea({name, value, onChangeHandler}) {
   const [height, setHeight] = useState("50px")
   const hiddenTextRef = useRef()
   const textareaRef = useRef()
@@ -13,7 +13,7 @@ export default function TextArea({value, onChangeHandler}) {
   }, [value])
 
   const onChange = (e) => {
-    onChangeHandler({body: e.target.value})
+    onChangeHandler({[name]: e.target.value})
   }
 
   return (

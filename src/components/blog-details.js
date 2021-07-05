@@ -16,7 +16,6 @@ export const BlogDetails = () => {
   const [blog, setBlog] = useState('')
   const history = useHistory();
   const authorised = user ? user.uid === blog.authorId : false
-  const mdRef = useRef()
 
   useEffect(() => {
     let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
@@ -91,21 +90,34 @@ export const BlogDetails = () => {
             span={blog.author} 
             dataPrimary="Written by"
             dataSecondary={blog.date}
-          />         
-          <ReactMarkdown 
-            remarkPlugins={[gfm]}
-            className="markdown"
-            children={state.title} 
-            components={{p: 'h1'}}
           />
-          <div className="blog-body" ref={mdRef} >
+          {
+            state.isEditable 
+            ?
+            <div className="blog-title">
+              <TextArea
+                name="title"
+                value={state.title}
+                onChangeHandler={onChangeHandler}
+              />
+            </div>
+            :
+            <ReactMarkdown 
+              remarkPlugins={[gfm]}
+              className="markdown"
+              children={state.title} 
+              components={{p: 'h1'}}
+            />
+          }         
+
+          <div className="blog-body">
             {
               state.isEditable
               ?
               <TextArea
+                name="body"
                 value={state.body}
                 onChangeHandler={onChangeHandler}
-                mdRef={mdRef}
               />
               :
               <ReactMarkdown

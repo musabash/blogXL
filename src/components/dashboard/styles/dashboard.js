@@ -28,7 +28,7 @@ export const Menu = styled.nav`
   transition: all 250ms cubic-bezier(.5, 0, .5, 1);
   left: ${({left}) => left};
   background: #fefefe;
-  padding: 0.5em 0;
+  padding: 0.5em 0.5em;
   box-shadow: 2px 2px 6px 1px #eeeeee;
   transform: ${({menuOpen}) => menuOpen ? "translateX(0%)" : "translateX(-100%)"};
   opacity: ${({menuOpen}) => menuOpen ? "1" : "0"};
