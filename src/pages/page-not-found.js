@@ -9,7 +9,6 @@ const Container = styled.div`
   justify-content: center;
   margin-top: 2em;
   & p {
-    align-self: center;
     color: red;
   }
 `
@@ -19,8 +18,7 @@ const GoBackButton = styled.button`
   font-weight: 500;
   font-size: 1rem;
   padding: 0.4em 0.7em;
-  border: none;
-  background: 
+  border: none; 
   &:hover {
     color: red;
   }
