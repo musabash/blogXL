@@ -58,7 +58,7 @@ function MainRoutes() {
         />
         <PrivateRoute
           user={user}
-          path="/blogs/:id"
+          exact path="/blogs/:id"
           component={BlogDetails}
         />
         <Route component={PageNotFound} />

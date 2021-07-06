@@ -14,14 +14,22 @@ export const BlogDetails = () => {
   const { id } = useParams()
   const { deleteBlog, updateDoc, user } = useContext(UserContext)
   const [blog, setBlog] = useState('')
+  const [error, setError] = useState(null)
   const history = useHistory();
   const authorised = user ? user.uid === blog.authorId : false
 
   useEffect(() => {
-    let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
-      setBlog(snapshot.docs.filter(doc => doc.id === id)[0].data())
-    })
-    return (() => unsubscribe())
+    const docRef = db.collection('blogs').doc(id)
+    docRef.get().then((doc) => {
+    if (doc.exists) {
+      let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
+        setBlog(snapshot.docs.filter(doc => doc.id === id)[0].data())
+      })
+      return (() => unsubscribe())
+    } else {
+        alert("There is no such document!")
+        history.goBack()
+    }})
   }, [])
 
   useEffect(() => {
@@ -76,7 +84,7 @@ export const BlogDetails = () => {
   })
   
   return (
-    <>
+    error ? <p>{error}</p> : <>
       <InteractionBarContainer 
         history={history}
         user={user}

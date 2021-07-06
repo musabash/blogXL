@@ -482,11 +482,17 @@ span {
   padding-top: 1em;
 }
 
+.dashboard__frame {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 .dashboard__tab {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   text-align: center;
-  width: 136.5px;
+  flex-basis: 33.33%;
+  /* width: 136.5px; */
   margin: 0;
   cursor: pointer;
   padding: 0.3em 0.5em;
@@ -502,18 +508,8 @@ span {
 }
 
 .slider-container {
-  width: 100;
+  width: 100%;
   background: rgb(217, 220, 221);
-}
-
-.slider {
-  align-self: baseline;
-  left: 0;
-  padding: 0.06em;
-  background-color: #444;
-  border-radius: 50px;
-  width: 110px;
-  transition: transform 250ms cubic-bezier(.5, 0, .5, 1);
 }
 
 .dashboard__menu {

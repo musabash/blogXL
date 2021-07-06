@@ -15,14 +15,30 @@ export default function UserBlogs() {
     return (() => unsubscribe())
   }, [])
 
+  const tabs = [
+    {
+      name: "published",
+      title: "Published"
+    },
+    {
+      name: "drafts",
+      title: "Drafts"
+    },
+    {
+      name: "comments",
+      title: "Comments"
+    }
+  ]
+
   return (
-    <TabView>
+    <TabView tabs={tabs}>
       <TabView.Frame>
         <TabView.Tabs>
-          <TabView.Tab name="published">Published</TabView.Tab>
-          <TabView.Tab name="drafts">Drafts</TabView.Tab>
-          <TabView.Tab name="comments">Comments</TabView.Tab>
+          {tabs.map((tab, index) => (
+            <TabView.Tab id={index} key={tab.name} name={tab.name}>{tab.title}</TabView.Tab>
+          ))}
         </TabView.Tabs>
+        <TabView.Slider />
         <TabView.Body blogs={blogs} />
       </TabView.Frame>
     </TabView>

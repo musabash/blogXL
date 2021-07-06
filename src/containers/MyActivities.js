@@ -1,3 +1,4 @@
+import React from "react"
 import {Dashboard} from "../components"
 
 export default function MyActivities() {
@@ -33,7 +34,7 @@ export default function MyActivities() {
           <Dashboard.Menu>
             <Dashboard.MenuList>
               {dashboardMenuList.map((item) => (
-                <Dashboard.MenuItem>
+                <Dashboard.MenuItem key={item.name}>
                   <Dashboard.MenuLink name={item.name}>{item.title}</Dashboard.MenuLink>
                 </Dashboard.MenuItem>
               ))}
