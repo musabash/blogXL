@@ -1,28 +1,59 @@
-import React, {useContext, useState, useEffect, useRef} from "react"
+import React, {useContext, useState, useRef} from "react"
 import { UserContext } from "../contexts/UserContext"
-import ProfilePicture from "../components/profile-picture";
-import { Feed } from "../components";
+import {ProfilePicture} from "../components";
+import firebase, { storage } from "../firebase";
+import LoadingBar from "../components/loading-bar";
+import { useAuthListener, useSnapshot } from "../hooks";
 
 const ProfilePage = () => {
-  const {user, getDocument, updateDoc, getUserLog, uploadPic, picLoadingPercent, updateUser} = useContext(UserContext)
   const [file, setFile] = useState("")
-  const [doc, setDocument] = useState("")
+  const [error, setError] = useState("")
+  const [picLoadingPercent, setPicLoadingPercent] = useState(0)
   const inputFileRef = useRef(null)
+  const {updateUser} = useContext(UserContext)
+  const { user } = useAuthListener()
+  const [photoUrl, setPhotoUrl] = useState(user.photoURL)
+  // const userLog = useSnapshot('users', user.uid)
+  const errorCodes = {
+    unauthorized: "unauthorised request",
+    canceled: "canceled request",
+    unknown: "unknown file"
+  }
 
   const handleClick = () => inputFileRef.current.click()
 
-  useEffect(() => {
-    getUserLog()
-    getDocument("blogs", "9e6DKgd7WjWwK3fRZ2NG").then((res) => setDocument(res))
-  }, [])
+  function uploadPic(file) {
+    const metadata = {contentType: 'image/jpeg'}
+    const uploadTask = storage.ref().child('images/' + user.uid).put(file, metadata)
+    uploadTask
+    .on(firebase.storage.TaskEvent.STATE_CHANGED, 
+      (snapshot) => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setPicLoadingPercent(progress);
+      }, 
+      (err) => {
+        err && setError(errorCodes[error.code.slice(8)])
+        }, 
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          updateUser({photoURL: downloadURL})
+          setPhotoUrl(downloadURL)
+          setFile("")
+          setPicLoadingPercent(0)
+        });
+      }
+    );
+  }
+
   return (
     <div className="profile-page__container">
       <div>
         <ProfilePicture
-          displayName={" "}
-          photoURL={user.photoURL}
+          photoURL={user ? photoUrl : "https://gravatar.com/avatar/8e1741bcab7ec27915445c32a5af4d97?s=600&d=mp&r=pg"}
           handleClick={handleClick}
-          borderRadius="5%" size="100px"
+          subText={true}
+          borderRadius="5%"
+          size="10em"
         />
         <input
           style={{visibility: 'hidden'}}
@@ -32,29 +63,20 @@ const ProfilePage = () => {
           onChange={(e) => setFile(e.target.files[0])}
         />
         <div>
-          <button
+          {file && <LoadingBar picLoadingPercent={picLoadingPercent} file={file}/>
+          }
+          <button disabled={!file || ![0, 100].includes(picLoadingPercent)}
             onClick={() => uploadPic(file)}
           >upload</button>
-          {![0, 100].includes(picLoadingPercent) &&
-            <div style={{background: "gray", width: "20%", height: "4px"}}>
-              <div style={{background: "blue", height: "4px", width: `${picLoadingPercent}%`}}></div>
-            </div>
-          }
-          <h2>{user.displayName}</h2>
-          <h3>{user.email}</h3>
+          {error && <h3>{error}</h3>}
+          <h3><span>Username: </span>{user.displayName}</h3>
+          <h3><span>Email address: </span>{user.email}</h3>
+          {/* {userLog ? <h3>{userLog.bookmarks.length} Bookmarks</h3> : null} */}
         </div>
       </div>
-      {/* <button onClick={() => updateUser({photoURL: 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})}>update user</button> */}
-      <button onClick={() =>updateDoc("users", {photoURL: user.photoURL}, user.uid)}>update doc</button>
-      <button onClick={() => updateUser({photoURL: ""})}>update user</button>
-      <button onClick={() => console.log(user.photoURL)}>{doc.id}</button>
-      <Feed>
-        <Feed.Trending>
-          <Feed.Title>Popular on BlogXL</Feed.Title>
-        </Feed.Trending>
-      </Feed>
     </div>
   )
 };
 
 export default ProfilePage
+

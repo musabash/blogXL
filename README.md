@@ -2,6 +2,7 @@
 + Blogging and publishing app
 + React functional components and hooks
 + React Router
++ Styled Components
 + Firebase Authentication
 + Firebase Firestore (read, write, delete, edit)
 + Firebase Storage to upload user profile picture

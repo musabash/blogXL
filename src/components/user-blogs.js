@@ -1,20 +1,46 @@
 import { UserContext } from "../contexts/UserContext"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import {TabView} from "."
+import { db } from "../firebase"
 
 export default function UserBlogs() {
-  const { userLog, doc, user } = useContext(UserContext)
-  const blogs = doc.filter(blog => blog.authorId === user.uid)
+  const [blogs, setBlogs] = useState([])
+  const { user } = useContext(UserContext)
+
+
+  useEffect(() => {
+    let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
+      setBlogs(snapshot.docs.map(doc => doc.data()).filter(blog => blog.authorId === user.uid))
+    })
+    return (() => unsubscribe())
+  }, [])
+
+  const tabs = [
+    {
+      name: "published",
+      title: "Published"
+    },
+    {
+      name: "drafts",
+      title: "Drafts"
+    },
+    {
+      name: "comments",
+      title: "Comments"
+    }
+  ]
+
   return (
-    <TabView>
+    <TabView tabs={tabs}>
       <TabView.Frame>
         <TabView.Tabs>
-          <TabView.Tab name="published">Published</TabView.Tab>
-          <TabView.Tab name="drafts">Drafts</TabView.Tab>
-          <TabView.Tab name="comments">Comments</TabView.Tab>
+          {tabs.map((tab, index) => (
+            <TabView.Tab id={index} key={tab.name} name={tab.name}>{tab.title}</TabView.Tab>
+          ))}
         </TabView.Tabs>
-        <TabView.Body blogs={blogs} />
+        <TabView.Slider />
       </TabView.Frame>
+      <TabView.Body blogs={blogs} />
     </TabView>
   )
 }

@@ -1,28 +1,50 @@
-import {useState, useContext, useEffect} from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { UserContext } from "../contexts/UserContext"
-import { useHistory } from 'react-router-dom'
-import BlogParagraph from '../components/blog-body-paragraph'
+import { db } from '../firebase'
+import { useHistory } from 'react-router'
 
 const Create = () => {
+  const [blogId, setBlogId] = useState('')
+  const [isFirstClick, setIsFirstClick] = useState(true)
   const [title, setTitle] = useState('')
-  const [body, setBody] = useState([])
-  const [isDraft, setIsDraft] = useState(true)
-  const [paragraph, setParagraph] = useState("")
-  const history = useHistory()
-  const { post, user } = useContext(UserContext)
+  const [body, setBody] = useState("")
+  const { user, updateDoc } = useContext(UserContext)
   const author = user.displayName
-
+  const history = useHistory()
+  
   useEffect(() => {
-    
-    return () => {
-      isDraft && handlePost(false)
+    if (!isFirstClick && title) {
+      handlePost()
     }
-  }, [])
+  }, [isFirstClick])
 
-  const handlePost = (d) => {
+  function handleBlur() {
+    setIsFirstClick(false)
+  }
+
+  function handleUpdateBody() {
+     updateDoc("blogs", {body: body}, blogId)
+  }
+
+  function post(coll, blog) {
+    db
+    .collection(coll)
+    .add(blog)
+    .then((docRef) => {
+      setBlogId(docRef.id)
+      db.collection(coll).doc(docRef.id).update({
+        id: docRef.id
+      })
+    })
+    .catch((error) => {
+    console.error("Error adding document: ", error.message)
+  })
+  }
+  
+  const handlePost = () => {
     let date = new Date().toLocaleDateString()
     let time = new Date().toLocaleTimeString()
-    post("blogs", {title, body, author, authorId: user.uid, date, time, bookmarks: [], likes: [], comments: [], published: d})
+    post("blogs", {title, body, author, authorId: user.uid, date, time, bookmarks: [], likes: [], comments: [], published: false})
   }
   
   const handleSubmit = (e) => {
@@ -30,18 +52,8 @@ const Create = () => {
     if (body.length === 0) {
       window.alert("No blog body. Please submit after adding your blog body.")
     } else {
-      setIsDraft(false)
-      handlePost(true)
-      console.log(isDraft)
-      history.push('/blogs')
-    }
-  }
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      setBody(prev => [...prev, paragraph])
-      setParagraph("")
+      updateDoc("blogs", {body: body, published: true}, blogId)
+      history.goBack()
     }
   }
    
@@ -53,23 +65,15 @@ const Create = () => {
           required
           type="text"
           value={title}
+          onBlur={handleBlur}
           onChange={(e) => setTitle(e.target.value)}
         />
         <div className="blog-body">
           <label>Blog body</label>
-          {body.map((par, index) => 
-            <BlogParagraph
-              index={index}
-              key={Math.random()}
-              par={par}
-              body={body}
-              setBody={setBody}
-            />
-          )}
-          <input
-            value={paragraph}
-            onChange={(e) => setParagraph(e.target.value)}
-            onKeyDown={handleKeyDown}
+          <textarea
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            onBlur={handleUpdateBody}
           />  
         </div>
         <button className="publish" type="submit">Publish</button>

@@ -1,31 +1,15 @@
 import React, { useState, useEffect } from "react"
 import firebase, {db, auth, storage} from "../firebase"
-
+import { useAuthListener } from "../hooks"
 
 const UserContext = React.createContext()
 function UserContextProvider(props) {
-  const [user, setUser] = useState()
   const [loading, setLoading] = useState(true)
   const [doc, setDocs] = useState([])
   const [userLog, setUserLog] = useState([])
   const [picLoadingPercent, setPicLoadingPercent] = useState(0)
   const [error, setError] = useState("")
-
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password)
-  }
-  
-  function signin(email, password) {
-    return auth.signInWithEmailAndPassword(email, password)
-  }
-
-  function signout() {
-    return auth.signOut()
-  }
-
-  function rstPass(email) {
-    return auth.sendPasswordResetEmail(email)
-  }
+  const {user} = useAuthListener()
 
   function getCollection(coll) {
     db
@@ -54,20 +38,6 @@ function UserContextProvider(props) {
       }).catch((error) => {
         console.log(error)
       })
-  }
-  
-  function post(coll, blog) {
-    db
-    .collection(coll)
-    .add(blog)
-    .then((docRef) => {
-      return db.collection(coll).doc(docRef.id).update({
-        id: docRef.id
-      })
-    })
-    .catch((error) => {
-    console.error("Error adding document: ", error.message)
-  })
   } 
 
   function reuploadData() {
@@ -106,6 +76,7 @@ function UserContextProvider(props) {
         //     break;
         //   default:
         //     console.log(snapshot.state);
+
         // }
       }, 
       (error) => {
@@ -140,27 +111,18 @@ function UserContextProvider(props) {
   }
 
   function updateUser(obj){
-    firebase.auth().currentUser.updateProfile(obj)
-    .then(() => console.log("profile updated"))
+    const userRef = firebase.auth().currentUser
+    userRef.updateProfile(obj)
     .catch((error) => {
       console.error("Error writing document: ", error)
     })
   }
   
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(curUser => {
-        setUser(curUser)
         setLoading(false)
-    })
-    return unsubscribe
-  }, [])
+    }, [])
   const value = {
     user,
-    signin,
-    signup,
-    signout,
-    rstPass,
-    post,
     getDocument,
     getCollection,
     doc,
@@ -171,11 +133,12 @@ function UserContextProvider(props) {
     getUserLog,
     userLog,
     uploadPic,
-    picLoadingPercent
+    picLoadingPercent,
   }
   return (
     <UserContext.Provider value={value}>
-      {loading ? <p>loading...</p> : props.children}
+      {loading ? <p>Loading...</p> : props.children}
+      {error && <p>{error}</p>}
     </UserContext.Provider>
   )
 }

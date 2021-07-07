@@ -1,143 +1,85 @@
-import React, { useState, useContext, useEffect } from "react"
-import { UserContext } from "../contexts/UserContext"
-import { Link, useHistory } from "react-router-dom"
-import { load } from 'recaptcha-v3'
+import React, { useState } from "react"
+import { useHistory } from "react-router-dom"
+import { Form } from "../components"
+import { auth, db } from "../firebase"
 
 function SignUp() {
-  const {signup, updateUser} = useContext(UserContext)
   const [displayName, setDisplayName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [confirmedPassword, setConfirmedPassword] = useState("")
   const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(false)
   const history = useHistory()
+  const isInvalid = displayName === '' || password === '' || email === '';
   
-  async function handleSubmit(e){
+  function handleSignup(e){
     e.preventDefault()
-    if (password !== confirmedPassword) {
-      return setError("Passwords do not match!")
-    }
-    try{
-      setError("")
-      setLoading(true)
-      await signup(email, password)
-      await updateUser({
-        displayName: displayName,
-        photoURL: 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'
-      })
-      history.push("/ProfilePage")
-    } catch(error) {
-      setError(`Failed to create an account: ${error.message}`)
-    }
-    setLoading(false)
-    setDisplayName("")
-    setEmail("")
-    setPassword("")
-    setConfirmedPassword("")
-  }
-
-  async function capt() {
-    const recaptcha = await load('<site key>')
-    const token = await recaptcha.execute('<action>')
-  
-    console.log(token)
-  }
+    auth.createUserWithEmailAndPassword(email, password)
+      .then((result) => result.user.updateProfile({
+          displayName: displayName,
+          photoURL: 'https://gravatar.com/avatar/8e1741bcab7ec27915445c32a5af4d97?s=600&d=mp&r=pg'
+        })
+        .then(() => {
+          const user = auth.currentUser
+          db.collection("users").doc(user.uid).set({
+            likes: [],
+            bookmarks: [],
+            comments: [],
+            displayName: user.displayName,
+            drafts: [],
+            photoURL: user.photoURL,
+            published: []
+          })
+        })
+        .then(() => history.push('/ProfilePage'))
+      )
+      .catch((error) => {
+        setEmail('');
+        setPassword('');
+        setError(error.message);
+      }) 
+ }
 
   return(
-    
-    <div className="form-area">
-      <h1>Sign Up</h1>
+    <Form>
+      <Form.Title>Sign Up</Form.Title>
       
-      <form className="form" onSubmit={handleSubmit}>
-        {error && <h4 className="error">{error}</h4>}
-        <label 
-          htmlFor="displayName"
-          className="label"
-        >
-          User Name
-        </label>
-        <input
+      <Form.Base onSubmit={handleSignup}>
+        {error && <Form.Error>{error}</Form.Error>}
+        <Form.Input
           required
           value={displayName}
           type="text"
-          className="input"
-          name="displayName"
-          placeholder="e.g. John123"
+          placeholder="Username"
           onChange={(e) => {setDisplayName(e.target.value)}}
         />
-        <label
-          htmlFor="email"
-          className="label"
-        >
-          Email
-        </label>
-        <input
+        <Form.Input
           required
           value={email}
           type="email"
-          className="input"
-          name="email"
-          placeholder="e.g. xyz@abc.com"
+          placeholder="Email Address"
           onChange={(e) => {setEmail(e.target.value)}}
         />
-        <label
-          htmlFor="password"
-          className="label"
-        >
-          Password
-        </label>
-        <input
+        <Form.Input
           required
           value={password}
           type="password"
-          className="input"
-          name="password"
+          autoComplete="off"
           placeholder="Your Password"
           onChange={(e) => {
           setPassword(e.target.value)}}
-        />
-        <label
-          htmlFor="confirmedPassword"
-          className="label"
-        >
-          Password Confirmation <span>{password !== confirmedPassword && "!!!Passwords do not match!!!"}</span>
-        </label>
-        <input
-          required
-          value={confirmedPassword}
-          type="password"
-          className="input"
-          name="confirmedPassword"
-          placeholder="Re-type Your Password"
-          onChange={(e) => {setConfirmedPassword(e.target.value)}}
-        />
-        
-        <button
-          disabled={loading}
-          className="btn btn-signup" 
+        />        
+        <Form.Submit
+          disabled={isInvalid}
           type="submit"
         >
           Sign up
-        </button>
-        <p style={{textAlign: "center", margin: "0 auto"}}>or</p>
-        <input
-          type="button"
-          className="btn btn-google" 
-          value="Sign in with Google"
-        />
-        <p
-          style={{
-            textAlign: "center",
-            margin: "0.2em auto",
-            fontSize:"0.8em"
-          }}
-        >
-          Already have an account{" "}
-          <Link to="/" className="sub-link">Sign in here</Link>
-        </p>
-      </form>
-    </div>
+        </Form.Submit>
+        <Form.Text>
+          Already have an account?{" "}
+          <Form.Link to="/">Sign in here</Form.Link>
+        </Form.Text>
+      </Form.Base>
+    </Form>
   )
 }
 

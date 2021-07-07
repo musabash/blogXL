@@ -1,10 +1,7 @@
-import React, {useContext} from "react"
+import React from "react"
 import {Redirect, Route} from "react-router-dom"
-import { UserContext } from "../contexts/UserContext"
 
-
-const PublicRoute = ({component: Component, restricted, ...rest}) => {
-  const {user} = useContext(UserContext)  
+const PublicRoute = ({user, component: Component, restricted, ...rest}) => {
 
   return (
     <Route {...rest} render={props => (

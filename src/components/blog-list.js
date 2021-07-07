@@ -1,6 +1,5 @@
-import userEvent from "@testing-library/user-event";
 import { Link } from "react-router-dom";
-import ProfilePicture from "./profile-picture";
+import {ProfilePicture} from "../components";
 
 const BlogList = ({blogs, showAuthor}) => {
 

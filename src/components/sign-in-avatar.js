@@ -1,15 +1,19 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function SignInAvatar({hide}) {
-  const [isHidden, setIsHidden] = useState(hide)
+export default function SignInAvatar() {
   return (
-    !isHidden &&
     <Link to="/">
-      <div
-        className= "btn signin-avatar"
-        onClick={() => setIsHidden(true)}
-      >Sign in</div>
+      <img
+        src="../assets/images/avatar.png"
+        alt="avatar"
+        style={{  
+          backgroundSize: "cover",
+          borderRadius: "50%",
+          height: "50px",
+          width: "50px"
+        }}
+      />
     </Link>
   )
 }

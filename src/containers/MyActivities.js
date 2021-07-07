@@ -1,26 +1,43 @@
-import { Dashboard } from "../components"
+import React from "react"
+import {Dashboard} from "../components"
 
 export default function MyActivities() {
+
+  const dashboardMenuList = [
+    {
+      name: "blogs",
+      title: "Your Blogs"
+    },
+    {
+      name: "bookmarks",
+      title: "Blogs You Bookmarked"
+    },
+    {
+      name: "recent",
+      title: "Your Recent Views"
+    },
+    {
+      name: "likes",
+      title: "Blogs You Liked"
+    },
+    {
+      name: "comments",
+      title: "Blogs You Commented on"
+    }
+  ]
   
   return (
     <div>
       <Dashboard>
         <Dashboard.Frame>
-          <Dashboard.MenuButton/>
+          <Dashboard.Hamburger/>
           <Dashboard.Menu>
             <Dashboard.MenuList>
-              <Dashboard.MenuItem>
-                <Dashboard.MenuLink name="blogs" >Your Blogs</Dashboard.MenuLink>
-              </Dashboard.MenuItem>
-              <Dashboard.MenuItem>
-                <Dashboard.MenuLink name="bookmarks">Your Bookmarks</Dashboard.MenuLink>
-              </Dashboard.MenuItem>
-              <Dashboard.MenuItem>
-                <Dashboard.MenuLink name="yourRecentViews">Your Recent Views</Dashboard.MenuLink>
-              </Dashboard.MenuItem>
-              <Dashboard.MenuItem>
-                <Dashboard.MenuLink name="likes">You Liked</Dashboard.MenuLink>
-              </Dashboard.MenuItem>
+              {dashboardMenuList.map((item) => (
+                <Dashboard.MenuItem key={item.name}>
+                  <Dashboard.MenuLink name={item.name}>{item.title}</Dashboard.MenuLink>
+                </Dashboard.MenuItem>
+              ))}
             </Dashboard.MenuList> 
           </Dashboard.Menu>
         </Dashboard.Frame>
@@ -29,38 +46,6 @@ export default function MyActivities() {
           <Dashboard.Item />
         </Dashboard.Frame>
       </Dashboard>
-
-      {/* <Accordion>
-        <Accordion.Title>My Activities</Accordion.Title>
-        <Accordion.Frame>
-          {["likes", "bookmarks", "comments"].map(act => (
-            <Accordion.Item key={act}>
-              <Accordion.Header>
-                {act}
-              </Accordion.Header>
-              <Accordion.Body>
-                <Accordion.Frame>
-                  {userLog[act].length === 0 ? `No ${act} yet!` : userLog[act].map(elm => {
-                    let blog = doc.filter(blog => blog.id === elm)[0]
-                    return (
-                    <Accordion.Item key={elm}>
-                      <Accordion.Header>
-                        {blog.title} by {blog.author}
-                      </Accordion.Header>
-                      <Accordion.Body>
-                        {blog.body[0].slice(0, 25)} ...
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    )} 
-                  )}
-                </Accordion.Frame>
-                
-              </Accordion.Body>
-            </Accordion.Item>
-            )
-          )}
-        </Accordion.Frame>
-      </Accordion> */}
     </div>
   )
 }

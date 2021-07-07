@@ -7,7 +7,6 @@ export default function Blogs() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  
   useEffect(() => {
     setError("")
     setLoading(true)
@@ -20,7 +19,7 @@ export default function Blogs() {
   }, [])
   
   return (
-    <div className="blogs">
+    loading ? <p>Loading...</p> : <div className="blogs">
       {error && <div>{error}</div>}
       <BlogList showAuthor={true} displayName={user.displayName} blogs={doc.filter(blog => blog.published)} title="All Blogs"/>
     </div>
