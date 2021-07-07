@@ -478,7 +478,7 @@ span {
   display: flex;
   align-items: center;
   justify-content: left;
-  /* background: rgb(203, 206, 207); */
+  /* background: rgb(241, 244, 245); */
   padding-top: 1em;
 }
 
@@ -486,13 +486,15 @@ span {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  width: 99%;
 }
+
 .dashboard__tab {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   text-align: center;
-  flex-basis: 33.33%;
-  /* width: 136.5px; */
+  flex-basis: 6em;
+  min-width: 6em;
   margin: 0;
   cursor: pointer;
   padding: 0.3em 0.5em;
@@ -505,10 +507,11 @@ span {
 .tabs-container {
   display: flex;
   flex-direction: column;
+  width: 99%;
 }
 
 .slider-container {
-  width: 100%;
+  width: 99%;
   background: rgb(217, 220, 221);
 }
 

@@ -39,8 +39,8 @@ export default function UserBlogs() {
           ))}
         </TabView.Tabs>
         <TabView.Slider />
-        <TabView.Body blogs={blogs} />
       </TabView.Frame>
+      <TabView.Body blogs={blogs} />
     </TabView>
   )
 }

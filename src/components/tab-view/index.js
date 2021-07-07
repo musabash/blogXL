@@ -2,18 +2,17 @@ import React, { useState, useContext, createContext } from 'react'
 import styled from 'styled-components'
 import BlogList from "../blog-list"
 
-const TabContext = createContext()
-
 const Slider = styled.div`
   align-self: baseline;
   left: 0;
   transform: ${({sliderPos}) => `translateX(${sliderPos})`};
   padding: 0.06em;
-  background-image: linear-gradient(to right, transparent 10%, #444 10% 90%, transparent 90% 100%);
+  background-image: linear-gradient(to right, transparent 5% , #444 5% 95%, transparent 95% 100%);
   border-radius: 50px;
-  width: 33.33%;
+  width: 6em;
   transition: transform 250ms cubic-bezier(.5, 0, .5, 1);
 `
+const TabContext = createContext()
 
 export default function TabView({tabs, children, ...restProps}) {
   const [tab, setTab] = useState(tabs[0].name)

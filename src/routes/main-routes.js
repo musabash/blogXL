@@ -47,7 +47,7 @@ function MainRoutes() {
         <PublicRoute
           path="/PasswordReset"
           user={user}
-          restricted={true}
+          restricted={false}
           component={PasswordReset}
         />
         <PublicRoute 
