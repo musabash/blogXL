@@ -1,41 +1,38 @@
+import React, { useState, createContext } from 'react';
 import { FaChartLine } from "react-icons/fa"
-import { Link } from 'react-router-dom'
-import {ProfilePicture} from ".."
+import {Title, Container, Group, Link, Entities, Meta } from './styles/feed'
+
+const FeatureContext = createContext();
 
 function Feed({children, ...restProps}) {
+  const [showFeature, setShowFeature] = useState(false);
+    const [itemFeature, setItemFeature] = useState(false);
   return (
-    <div className="feed__container" {...restProps}>
-      {children}
-    </div>
+    <FeatureContext.Provider value={{ showFeature, setShowFeature, itemFeature, setItemFeature }}>
+        <Container {...restProps}>{children}</Container>
+    </FeatureContext.Provider>
   )
 }
 
-Feed.Banner = function FeedBanner({children, ...restProps}) {
-  return (<div className="feed__banner" {...restProps}>{children}</div>)
+Feed.Group = function FeedGroup({children, ...restProps}) {
+  return (<Group{...restProps}>{children}</Group>)
 }
 
 Feed.Trending = function FeedTrending({children, ...restProps}) {
-  return (<div className="feed__trending" {...restProps}>
+  return (<Group {...restProps}>
   <FaChartLine />
   {children}
-  </div>)
+  </Group>)
 }
 
 Feed.Title = function FeedTitle({children,...restProps}) {
-  return (<h2 {...restProps} className="feed__title">{children}</h2>)
+  return (<Title {...restProps}>{children}</Title>)
 }
-
-Feed.Item = function FeedItem({children, user, handleClick, blog,...restProps}) {
-  return (
-    <div className="blog-preview" {...restProps}>
-      <ProfilePicture handleClick={handleClick} photoURL={user.photoURL} size="40px" borderRadius="50%"/> 
-      <Link to={`blogs/${blog.id}`}>
-        <h2>{blog.title}</h2>
-        <p>Written by: {blog.author}</p>
-      </Link>
-      {children}
-    </div>
-  )
+Feed.Entities = function FeedEntities({children,...restProps}) {
+  return (<Entities {...restProps}>{children}</Entities>)
+}
+Feed.Meta = function FeedMeta({children,...restProps}) {
+  return (<Meta {...restProps}>{children}</Meta>)
 }
 
 Feed.Discover = function FeedDiscover({children, ...restProps}) {
@@ -46,21 +43,8 @@ Feed.All = function FeedAll({children, ...restProps}) {
   return (<div className="feed__all" {...restProps}>{children}</div>)
 }
 
+Feed.Link = function FeedLink({children, ...restProps}) {
+  return (<Link {...restProps}>{children}</Link>)
+}
+
 export default Feed
-
-// const BlogList = ({blogs, title}) => {
-
-//   return ( 
-//     <div className="blog-list">
-//       <h2>{title}</h2>
-//       {blogs.map ((blog) => (
-//         <div className="blog-preview" key={blog.id}>
-//           <Link to={`blogs/${blog.id}`}>
-//             <h2>{blog.title}</h2>
-//             <p>Written by: {blog.author}</p>
-//           </Link>
-//         </div>
-//       ))}
-//     </div>
-//    );
-// }

@@ -3,7 +3,7 @@ import { UserContext } from "../contexts/UserContext"
 import { db } from '../firebase'
 import { useHistory } from 'react-router'
 
-const Create = () => {
+export const Create = () => {
   const [blogId, setBlogId] = useState('')
   const [isFirstClick, setIsFirstClick] = useState(true)
   const [title, setTitle] = useState('')
@@ -23,7 +23,7 @@ const Create = () => {
   }
 
   function handleUpdateBody() {
-     updateDoc("blogs", {body: body}, blogId)
+     body && updateDoc("blogs", {body: body}, blogId)
   }
 
   function post(coll, blog) {
@@ -76,10 +76,8 @@ const Create = () => {
             onBlur={handleUpdateBody}
           />  
         </div>
-        <button className="publish" type="submit">Publish</button>
+        <button className="publish" type="submit" disabled={title=== "" || body === ""} >Publish</button>
       </form>
     </div>
    );
 }
- 
-export default Create;

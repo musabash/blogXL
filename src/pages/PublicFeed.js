@@ -1,22 +1,26 @@
-import {ProfilePicture} from "../components";
-import { useAuthListener } from "../hooks";
-import Card from "./card";
-import Feed from "./feed";
-import InteractionBar from "./interaction-bar";
+import React, {useState, useEffect} from 'react'
+import { Feed, Card, ProfilePicture } from '../components'
+import {db} from '../firebase'
 
-const BlogList = ({blogs, showAuthor}) => {
-  const {user} = useAuthListener()
+export function PublicFeed() {
+  const [blogs, setBlogs] = useState([])
+
+  useEffect(() => {
+    let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
+      setBlogs(snapshot.docs.map(doc => doc.data()))
+    })
+    return (() => unsubscribe())
+  }, [])
 
   return (
+    <Feed>
       <Feed.Group>
-        {blogs.map ((blog) => (
+        {blogs.filter(blog => blog.published).map ((blog) => (
           <Card.Container key={blog.id}>
             {
-              showAuthor && 
               <Card.Group justifyContent="space-between" margin=".5em"> 
                 <ProfilePicture displayName=" " id={blog.authorId} size="40px" borderRadius="50%"/>
                 <Card.Text>{blog.author}</Card.Text>
-                <div>...</div>
               </Card.Group>
             }
             <Card.Link to={`blogs/${blog.id}`}>
@@ -25,14 +29,10 @@ const BlogList = ({blogs, showAuthor}) => {
             </Card.Link>
             <Card.Group justifyContent="space-between" margin="1em">
               <Card.SmallText>{blog.date}</Card.SmallText>
-              {user.uid !== blog.authorId && <InteractionBar blog={blog} id={blog.id} singleItem size="1.5em"><InteractionBar.Bookmark/></InteractionBar>}
             </Card.Group>
           </Card.Container>
         ))}
       </Feed.Group>
-   );
+    </Feed>
+  )
 }
-
-export default BlogList;
-
-

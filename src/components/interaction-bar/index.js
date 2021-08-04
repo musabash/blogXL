@@ -1,13 +1,8 @@
+import React, {useState, useEffect, useContext, createContext} from "react"
 import {FaRegShareSquare, FaRegHeart, FaHeart, FaComment, FaRegComment, FaRegBookmark, FaBookmark} from "react-icons/fa"
+import firebase, { db } from "../../firebase"
 import styled from "styled-components"
-
-function InteractionBar({children, ...restProps}) {
-  return (
-    <div className="interaction-bar__container" {...restProps}>
-      {children}
-    </div>
-  )
-}
+import { useAuthListener } from "../../hooks"
 
 const Inner = styled.div`
   padding: 0 0.2em;
@@ -16,11 +11,80 @@ const Inner = styled.div`
   align-items: center;
   border-top: 1px solid rgba(153, 152, 152, 0.5);
 `
+const Container = styled.div`
+  
+  ${({ singleItem, size }) => !singleItem ? `
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 5em 0.2em;
+  width: 5.5em;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  background-color: #fcfcfc;
+  box-shadow: 1px 0 5px 0 #dbdbdb;
+  overflow-x: hidden;
+  overflow-y: auto;
+  ` : `width: ${ size && size };
+      margin: 0;
+      > * {border: none;}`};
+`
 
-InteractionBar.Authorised = function InteractionBarAuthorised({length}) {
+const InteractionContext = createContext()
+
+function InteractionBar({children, blog, ...restProps}) {
+
+  const [isLiked, setIsLiked] = useState()
+  const [isBookmarked, setIsBookmarked] = useState()
+  const {user} = useAuthListener()
+
+  useEffect(() => {
+    if (blog){
+      setIsLiked(blog.likes.includes(user.uid))
+      setIsBookmarked(blog.bookmarks.includes(user.uid))
+    }  
+    }, [blog])
+
+  function handleInteraction(currentStatus, key) {
+    const RefBlog = db.collection("blogs").doc(blog.id);
+    const RefUser = db.collection("users").doc(user.uid);
+    console.log("hey")
+    if (currentStatus){
+      RefBlog.update({
+        [key]: firebase.firestore.FieldValue.arrayRemove(user.uid)
+      })
+      RefUser.update({
+        [key]: firebase.firestore.FieldValue.arrayRemove(blog.id)
+      })
+    } else {
+      RefBlog.update({
+        [key]: firebase.firestore.FieldValue.arrayUnion(user.uid)
+      })
+      RefUser.update({
+        [key]: firebase.firestore.FieldValue.arrayUnion(blog.id)
+      })
+    }
+  }
+
+  return (
+    <InteractionContext.Provider value={{isLiked, setIsLiked, isBookmarked, setIsBookmarked, blog, handleInteraction}}>
+      <Container {...restProps}>
+        {children}
+      </Container>
+    </InteractionContext.Provider>
+    
+  )
+}
+
+
+InteractionBar.Authorised = function InteractionBarAuthorised() {
+
+  const {blog} = useContext(InteractionContext)
+  const length = blog ? [blog.comments.length, blog.bookmarks.length, blog.likes.length] : []
+
   return (
     <>
-    <div className="interaction-bar__authorised"></div>
       <Inner>
         {length[0]}
         {
@@ -58,12 +122,15 @@ InteractionBar.Authorised = function InteractionBarAuthorised({length}) {
 }
 
 InteractionBar.Share = function InteractionBarShare({...restProps}) {
-  return <Inner><FaRegShareSquare className="icon__btn" {...restProps}/></Inner>
+  return <Inner><FaRegShareSquare onClick={() => alert("This property will be added soon")} className="icon__btn" {...restProps}/></Inner>
 }
 
-InteractionBar.Like = function InteractionBarLike({isLiked, ...restProps}) {
+InteractionBar.Like = function InteractionBarLike({...restProps}) {
+
+  const {isLiked, handleInteraction} = useContext(InteractionContext)
+
   return (
-    <Inner>
+    <Inner onClick={() => handleInteraction(isLiked, "likes")}>
       {isLiked ? <FaHeart className="icon__btn" {...restProps}/> : <FaRegHeart className="icon__btn" {...restProps}/>}
     </Inner>
   )
@@ -71,16 +138,19 @@ InteractionBar.Like = function InteractionBarLike({isLiked, ...restProps}) {
 
 InteractionBar.Comment = function InteractionBarComment({...restProps}) {
   return (
-    <Inner>
+    <Inner onClick={() => alert("This property will be added soon")}>
       <FaRegComment className="icon__btn" {...restProps}/>
     </Inner>
   ) 
 }
 
-InteractionBar.Bookmark = function InteractionBarBookmark({bookmarked, ...restProps}) {
+InteractionBar.Bookmark = function InteractionBarBookmark({...restProps}) {
+
+  const {isBookmarked, handleInteraction} = useContext(InteractionContext)
+
   return (
-    <Inner>
-      {bookmarked ? <FaBookmark className="icon__btn" {...restProps}/> : <FaRegBookmark className="icon__btn" {...restProps}/>}
+    <Inner onClick={() => handleInteraction(isBookmarked, "bookmarks")}>
+      {isBookmarked ? <FaBookmark className="icon__btn" {...restProps}/> : <FaRegBookmark className="icon__btn" {...restProps}/>}
     </Inner>
   ) 
 }

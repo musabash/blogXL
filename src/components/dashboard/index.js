@@ -1,16 +1,15 @@
 import React, { useState, useContext, createContext} from 'react'
+import { Container, Inner, Frame, Title, Body, Hamburger, Menu, MenuList, MenuItem, MenuLink, Item, ItemMenu } from './styles/dashboard'
 import UserBlogs from '../user-blogs'
-import { Container, Inner, Frame, Title, Body, Hamburger, Menu, MenuList, MenuItem, MenuLink } from './styles/dashboard'
-import DashboardActiveElement from '../../containers/dasboard-active-element-container'
 
 const ToggleContext = createContext()
 
 export default function Dashboard({children, ...restProps}) {
-  const [toggleActive, setToggleActive] = useState(prev => !prev && 'blogs' )
+  const [toggleActive, setToggleActive] = useState(prev => !prev && {name: 'blogs', title: 'Your Blogs', component: <UserBlogs /> } )
   const [menuOpen, setMenuOpen] = useState(false)
  
-  const handleClick = (name) => () => {
-    setToggleActive(name)
+  const handleClick = (item) => () => {
+    setToggleActive(item)
     setMenuOpen(prev => !prev)
   }
 
@@ -27,24 +26,32 @@ Dashboard.Frame = function DashboardFrame({children, ...restProps}) {
   return <Frame {...restProps}>{children}</Frame>
 }
 
-Dashboard.Item = function DashboardItem({children, ...restProps}) {
+Dashboard.Item = function DashboardItem({children}) {
   
   const {toggleActive} = useContext(ToggleContext)
-  return (
-    toggleActive === "blogs" ?
-    <UserBlogs {...restProps}/> :
-    <DashboardActiveElement toggleActive={toggleActive} {...restProps}/>
-  )
+  return <Item>
+    {toggleActive.component}
+    {children}
+  </Item>   
 }
+
+Dashboard.ItemMenu = function DashboardItemMenu({children}) {
+  
+  return <ItemMenu>
+  ...
+    {children}
+  </ItemMenu>   
+}
+
 
 Dashboard.Title = function DashboardTitle({children, ...restProps}) {
   const {toggleActive} = useContext(ToggleContext)
-  return <Title {...restProps}>{toggleActive.toUpperCase()}</Title>
+  return <Title {...restProps}>{toggleActive.title.toUpperCase()}</Title>
 }
 
 Dashboard.Body = function DashboardBody({children, userLog, ...restProps}) {
   const {toggleActive} = useContext(ToggleContext)
-  return <Body {...restProps}>{children}{userLog[toggleActive].map(elm => <p>{elm}</p>)}</Body>
+  return <Body {...restProps}>{children}{userLog[toggleActive.name].map(elm => <p>{elm}</p>)}</Body>
 }
 
 Dashboard.Hamburger = function DashboardMenuButton({children, ...restProps}) {
@@ -70,9 +77,9 @@ Dashboard.MenuItem = function DashboardMenuItem({children, ...restProps}) {
   </MenuItem>)
 }
 
-Dashboard.MenuLink = function DashboardMenuLink({children, name, ...restProps}) {
+Dashboard.MenuLink = function DashboardMenuLink({children, item, ...restProps}) {
   const {handleClick} = useContext(ToggleContext)
-  return (<MenuLink name={name} onClick={handleClick(name)} {...restProps}>
+  return (<MenuLink item={item} onClick={handleClick(item)} {...restProps}>
     {children}
   </MenuLink>)
 }

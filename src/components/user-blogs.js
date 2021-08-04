@@ -2,6 +2,7 @@ import { UserContext } from "../contexts/UserContext"
 import { useContext, useEffect, useState } from "react"
 import {TabView} from "."
 import { db } from "../firebase"
+import { userBlogsTabs as tabs} from "./menu-lists"
 
 export default function UserBlogs() {
   const [blogs, setBlogs] = useState([])
@@ -14,21 +15,6 @@ export default function UserBlogs() {
     })
     return (() => unsubscribe())
   }, [])
-
-  const tabs = [
-    {
-      name: "published",
-      title: "Published"
-    },
-    {
-      name: "drafts",
-      title: "Drafts"
-    },
-    {
-      name: "comments",
-      title: "Comments"
-    }
-  ]
 
   return (
     <TabView tabs={tabs}>

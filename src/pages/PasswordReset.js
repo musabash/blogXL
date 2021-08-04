@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Form } from "../components"
 import { auth } from "../firebase"
 
-function PasswordReset() {
+export function PasswordReset() {
   const [email, setEmail] = useState("")
   const [emailSent, setEmailSent] = useState(false)
   const [error, setError] = useState(null)
@@ -48,7 +48,7 @@ function PasswordReset() {
         
         <Form.Text>
           &larr; Back to
-          <Form.Link to="/">
+          <Form.Link to="/Signin">
             Sign In page
           </Form.Link>
         </Form.Text>
@@ -56,4 +56,3 @@ function PasswordReset() {
     </Form>
   )
 }
-export default PasswordReset

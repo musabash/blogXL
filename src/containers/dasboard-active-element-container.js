@@ -4,18 +4,18 @@ import { Accordion } from "../components"
 import useDocument from "../hooks/useDocument"
 
 
-export default function DashboardActiveElement({toggleActive}) {
+export function DashboardActiveElement({name}) {
   const [data, setData] = useState()
   const { user, doc } = useContext(UserContext)
   const userLog  = useDocument("users", user.uid)
 
   useEffect(() => {
-    userLog && setData(userLog[toggleActive])
-  }, [userLog, toggleActive])
+    userLog && setData(userLog[name])
+  }, [userLog, name])
 
   return (
     data ? <Accordion.Frame>
-        {data.length === 0 ? `No ${toggleActive} yet` : data.map(elm => {
+        {data.length === 0 ? `No ${name} yet` : data.map(elm => {
           let blog = doc.filter(blog => blog.id === elm)[0]
           return (
           <Accordion.Item key={elm}>

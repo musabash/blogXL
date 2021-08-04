@@ -2,7 +2,7 @@ import BlogList from '../components/blog-list'
 import { UserContext } from "../contexts/UserContext"
 import { useEffect, useContext, useState } from 'react'
 
-export default function Blogs() {
+export function Blogs() {
   const { getCollection, doc, getUserLog, user } = useContext(UserContext)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')

@@ -1,16 +1,16 @@
-import React, {useContext, useState, useRef} from "react"
+import React, {useEffect, useContext, useState, useRef} from "react"
 import { UserContext } from "../contexts/UserContext"
 import {ProfilePicture} from "../components";
 import firebase, { storage } from "../firebase";
 import LoadingBar from "../components/loading-bar";
 import { useAuthListener, useSnapshot } from "../hooks";
 
-const ProfilePage = () => {
+export const ProfilePage = () => {
   const [file, setFile] = useState("")
   const [error, setError] = useState("")
   const [picLoadingPercent, setPicLoadingPercent] = useState(0)
   const inputFileRef = useRef(null)
-  const {updateUser} = useContext(UserContext)
+  const {updateUser, updateDoc} = useContext(UserContext)
   const { user } = useAuthListener()
   const [photoUrl, setPhotoUrl] = useState(user.photoURL)
   // const userLog = useSnapshot('users', user.uid)
@@ -37,6 +37,7 @@ const ProfilePage = () => {
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           updateUser({photoURL: downloadURL})
+          updateDoc("users", {photoURL: downloadURL}, user.uid)
           setPhotoUrl(downloadURL)
           setFile("")
           setPicLoadingPercent(0)
@@ -49,7 +50,7 @@ const ProfilePage = () => {
     <div className="profile-page__container">
       <div>
         <ProfilePicture
-          photoURL={user ? photoUrl : "https://gravatar.com/avatar/8e1741bcab7ec27915445c32a5af4d97?s=600&d=mp&r=pg"}
+          id={user ? user.uid : "guest"}
           handleClick={handleClick}
           subText={true}
           borderRadius="5%"
@@ -77,6 +78,4 @@ const ProfilePage = () => {
     </div>
   )
 };
-
-export default ProfilePage
 

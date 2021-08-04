@@ -1,30 +1,8 @@
 import React from "react"
 import {Dashboard} from "../components"
+import { dashboardMenuList } from "../components/menu-lists"
 
-export default function MyActivities() {
-
-  const dashboardMenuList = [
-    {
-      name: "blogs",
-      title: "Your Blogs"
-    },
-    {
-      name: "bookmarks",
-      title: "Blogs You Bookmarked"
-    },
-    {
-      name: "recent",
-      title: "Your Recent Views"
-    },
-    {
-      name: "likes",
-      title: "Blogs You Liked"
-    },
-    {
-      name: "comments",
-      title: "Blogs You Commented on"
-    }
-  ]
+export function MyActivities() {
   
   return (
     <div>
@@ -35,7 +13,7 @@ export default function MyActivities() {
             <Dashboard.MenuList>
               {dashboardMenuList.map((item) => (
                 <Dashboard.MenuItem key={item.name}>
-                  <Dashboard.MenuLink name={item.name}>{item.title}</Dashboard.MenuLink>
+                  <Dashboard.MenuLink item={item}>{item.title}</Dashboard.MenuLink>
                 </Dashboard.MenuItem>
               ))}
             </Dashboard.MenuList> 

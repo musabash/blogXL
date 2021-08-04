@@ -1,6 +1,6 @@
 import React from "react"
-import Header from "./components/Header"
-import MainRoutes from "./routes/main-routes"
+import { Header } from "./components";
+import MainRoutes from "./routes"
 
 function App() {
   return (

@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 import { Form } from "../components"
 import { auth, db } from "../firebase"
 
-function SignUp() {
+export function SignUp() {
   const [displayName, setDisplayName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -76,11 +76,9 @@ function SignUp() {
         </Form.Submit>
         <Form.Text>
           Already have an account?{" "}
-          <Form.Link to="/">Sign in here</Form.Link>
+          <Form.Link to="/Signin">Sign in here</Form.Link>
         </Form.Text>
       </Form.Base>
     </Form>
   )
 }
-
-export default SignUp

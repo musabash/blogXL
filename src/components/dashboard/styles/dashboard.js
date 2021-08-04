@@ -13,6 +13,11 @@ export const Frame = styled.section`
 export const Item = styled.div`
   margin-top: 1em;
 `
+export const ItemMenu = styled.div`
+  top: 0.5em;
+  right: 0.5em;
+  font-weight: 700;
+`
 export const Title = styled.h1`
   margin-top: 1em;
 `

@@ -1,0 +1,11 @@
+export const PUBLIC_FEED = '/';
+export const BROWSE = '/browse';
+export const SIGN_UP = '/Signup';
+export const SIGN_IN = '/Signin';
+export const MAIN_FEED = '/MainFeed';
+export const PROFILE_PAGE = "/ProfilePage";
+export const CREATE = "/create";
+export const MY_ACTIVITIES = "/MyActivities";
+export const BLOGS = "/blogs";
+export const BLOG = "/blogs/:id";
+export const PASSWORD_RESET = "/PasswordReset";

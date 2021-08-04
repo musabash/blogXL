@@ -1,5 +1,5 @@
-import { BlogDetails } from './blog-details'
-export default BlogDetails
+export { BlogDetails } from './blog-details'
+export {PublicRoute, PrivateRoute} from './routes'
 export { default as Accordion } from './accordion'
 export { default as InteractionBar } from './interaction-bar'
 export { default as Dashboard } from './dashboard'
@@ -7,3 +7,5 @@ export { default as TabView } from './tab-view'
 export { default as Feed } from './feed'
 export { default as Form } from './form'
 export { default as ProfilePicture } from './profile-picture'
+export { default as Header } from './header'
+export { default as Card } from './card'

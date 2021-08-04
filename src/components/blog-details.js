@@ -1,20 +1,18 @@
 import { useParams, useHistory } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
 import {useContext, useReducer, useState, useEffect, useRef} from "react"
-import InteractionBarContainer from "../containers/interaction-bar-container"
+import {InteractionBarContainer, EditButtonsContainer} from "../containers"
 import { db } from "../firebase"
 import ReactMarkdown from "react-markdown";
 import gfm from 'remark-gfm';
 import TextArea from "./text-area"
 import MetaData from "./meta-data"
-import EditButtonsContainer from "../containers/edit-buttons-container"
-
 
 export const BlogDetails = () => {
-  const { id } = useParams()
-  const { deleteBlog, updateDoc, user } = useContext(UserContext)
   const [blog, setBlog] = useState('')
   const [error, setError] = useState(null)
+  const { id } = useParams()
+  const { deleteBlog, updateDoc, user } = useContext(UserContext)
   const history = useHistory();
   const authorised = user ? user.uid === blog.authorId : false
 
@@ -87,12 +85,19 @@ export const BlogDetails = () => {
     error ? <p>{error}</p> : <>
       <InteractionBarContainer 
         history={history}
-        user={user}
         blog={blog}
         authorised={authorised}
-        id={id}
       />
       <div className="blog-details">
+        <EditButtonsContainer 
+          isEditable={state.isEditable} 
+          handleEdit={() => dispatch({type: 'HANDLE_EDIT'})}
+          id={id}
+          published={state.isPublished}
+          authorised={authorised}
+          handleDelete={() => dispatch({type: 'HANDLE_DELETE'})}
+          handleUpdate={() => dispatch({type: 'HANDLE_UPDATE'})}
+        />         
         <article>
           <MetaData
             span={blog.author} 
@@ -135,15 +140,6 @@ export const BlogDetails = () => {
               />
             }
           </div>
-          <EditButtonsContainer 
-            isEditable={state.isEditable} 
-            handleEdit={() => dispatch({type: 'HANDLE_EDIT'})}
-            id={id}
-            published={state.isPublished}
-            authorised={authorised}
-            handleDelete={() => dispatch({type: 'HANDLE_DELETE'})}
-            handleUpdate={() => dispatch({type: 'HANDLE_UPDATE'})}
-          />         
         </article>
       </div>
     </>

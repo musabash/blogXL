@@ -5,7 +5,7 @@ export const Container = styled.section`
   display: flex;
   flex-direction: column;
   min-height: 660px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 5px;
   box-sizing: border-box;
   width: 100%;
@@ -63,7 +63,7 @@ export const TextSmall = styled.h2`
 `;
 
 export const Link = styled(ReachRouterLink)`
-  color: #fff;
+  color: ${({colour}) => colour ?? "#fff"};
   text-decoration: none;
   margin-left: 1ch;
   &:hover {

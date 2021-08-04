@@ -24,7 +24,7 @@ const GoBackButton = styled.button`
   }
 `
 
-export default function PageNotFound() {
+export function PageNotFound() {
   const history = useHistory()
   return (
     <Container>

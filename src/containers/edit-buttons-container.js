@@ -1,7 +1,7 @@
 import React from 'react'
 import { DeleteButton, EditButton } from '../components/buttons'
 
-export default function EditButtonsContainer({isEditable, handleEdit, id, authorised, handleDelete, handleUpdate, published}) {
+export function EditButtonsContainer({isEditable, handleEdit, id, authorised, handleDelete, handleUpdate, published}) {
 
   return (
     <div className="edit__btns__container">

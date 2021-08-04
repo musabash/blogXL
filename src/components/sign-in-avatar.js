@@ -1,18 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import ProfilePicture from './profile-picture'
+import { SIGN_IN } from '../constants/routes'
 
 export default function SignInAvatar() {
   return (
-    <Link to="/">
-      <img
-        src="../assets/images/avatar.png"
-        alt="avatar"
-        style={{  
-          backgroundSize: "cover",
-          borderRadius: "50%",
-          height: "50px",
-          width: "50px"
-        }}
+    <Link to={SIGN_IN}>
+      <ProfilePicture
+        id={"guest"}
+        size="40px"
+        borderRadius="50%"
       />
     </Link>
   )
