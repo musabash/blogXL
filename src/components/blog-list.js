@@ -4,7 +4,7 @@ import Card from "./card";
 import Feed from "./feed";
 import InteractionBar from "./interaction-bar";
 
-const BlogList = ({blogs, showAuthor}) => {
+export const BlogList = ({blogs, showAuthor, pub}) => {
   const {user} = useAuthListener()
 
   return (
@@ -13,9 +13,11 @@ const BlogList = ({blogs, showAuthor}) => {
           <Card.Container key={blog.id}>
             {
               showAuthor && 
-              <Card.Group justifyContent="space-between" margin=".5em"> 
-                <ProfilePicture displayName=" " id={blog.authorId} size="40px" borderRadius="50%"/>
-                <Card.Text>{blog.author}</Card.Text>
+              <Card.Group justifyContent="space-between" margin=".5em">
+                <Card.Group>
+                  <ProfilePicture displayName=" " id={blog.authorId} size="40px" borderRadius="50%"/>
+                  <Card.Text>{blog.author}</Card.Text>
+                </Card.Group>
                 <div>...</div>
               </Card.Group>
             }
@@ -25,14 +27,12 @@ const BlogList = ({blogs, showAuthor}) => {
             </Card.Link>
             <Card.Group justifyContent="space-between" margin="1em">
               <Card.SmallText>{blog.date}</Card.SmallText>
-              {user.uid !== blog.authorId && <InteractionBar blog={blog} id={blog.id} singleItem size="1.5em"><InteractionBar.Bookmark/></InteractionBar>}
+              {!pub && user.uid !== blog.authorId && <InteractionBar blog={blog} id={blog.id} singleItem size="1.5em"><InteractionBar.Bookmark/></InteractionBar>}
             </Card.Group>
           </Card.Container>
         ))}
       </Feed.Group>
    );
 }
-
-export default BlogList;
 
 

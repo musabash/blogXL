@@ -1,5 +1,5 @@
 import React, { useState, useContext, createContext } from 'react'
-import BlogList from "../blog-list"
+import {BlogList} from ".."
 import { Slider, Container, Inner, Frame, Wrapper, Tabs, SliderContainer, Title, Tab, Body } from './styles/tab-view'
 
 const TabContext = createContext()

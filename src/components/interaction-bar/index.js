@@ -10,6 +10,16 @@ const Inner = styled.div`
   display: flex;
   align-items: center;
   border-top: 1px solid rgba(153, 152, 152, 0.5);
+  > *{
+    margin: 0.4em auto;
+    font-size: 1.5em;
+    fill: gray;
+  }
+  >:hover{
+    cursor: pointer;
+    fill: ${({color}) => color && color};
+  }
+
 `
 const Container = styled.div`
   
@@ -90,9 +100,9 @@ InteractionBar.Authorised = function InteractionBarAuthorised() {
         {
           length[0] === 0
             ?
-          <FaRegComment className="icon"/>
+          <FaRegComment />
             :
-          <FaComment className="icon"/>
+          <FaComment />
         }
       </Inner>
 
@@ -101,9 +111,9 @@ InteractionBar.Authorised = function InteractionBarAuthorised() {
         {
           length[1] === 0
             ?
-          <FaRegBookmark className="icon"/>
+          <FaRegBookmark />
             :
-          <FaBookmark className="icon"/>
+          <FaBookmark />
         } 
       </Inner>
 
@@ -112,9 +122,9 @@ InteractionBar.Authorised = function InteractionBarAuthorised() {
         {
           length[2] === 0
             ?
-          <FaRegHeart className="icon"/>
+          <FaRegHeart />
             :
-          <FaHeart className="icon"/>
+          <FaHeart />
         }
      </Inner>      
     </>
@@ -122,7 +132,7 @@ InteractionBar.Authorised = function InteractionBarAuthorised() {
 }
 
 InteractionBar.Share = function InteractionBarShare({...restProps}) {
-  return <Inner><FaRegShareSquare onClick={() => alert("This property will be added soon")} className="icon__btn" {...restProps}/></Inner>
+  return <Inner color="orange"><FaRegShareSquare onClick={() => alert("This property will be added soon")} {...restProps}/></Inner>
 }
 
 InteractionBar.Like = function InteractionBarLike({...restProps}) {
@@ -130,16 +140,16 @@ InteractionBar.Like = function InteractionBarLike({...restProps}) {
   const {isLiked, handleInteraction} = useContext(InteractionContext)
 
   return (
-    <Inner onClick={() => handleInteraction(isLiked, "likes")}>
-      {isLiked ? <FaHeart className="icon__btn" {...restProps}/> : <FaRegHeart className="icon__btn" {...restProps}/>}
+    <Inner color="red" onClick={() => handleInteraction(isLiked, "likes")}>
+      {isLiked ? <FaHeart {...restProps}/> : <FaRegHeart {...restProps}/>}
     </Inner>
   )
 }
 
 InteractionBar.Comment = function InteractionBarComment({...restProps}) {
   return (
-    <Inner onClick={() => alert("This property will be added soon")}>
-      <FaRegComment className="icon__btn" {...restProps}/>
+    <Inner color="green" onClick={() => alert("This property will be added soon")}>
+      <FaRegComment {...restProps}/>
     </Inner>
   ) 
 }
@@ -149,8 +159,8 @@ InteractionBar.Bookmark = function InteractionBarBookmark({...restProps}) {
   const {isBookmarked, handleInteraction} = useContext(InteractionContext)
 
   return (
-    <Inner onClick={() => handleInteraction(isBookmarked, "bookmarks")}>
-      {isBookmarked ? <FaBookmark className="icon__btn" {...restProps}/> : <FaRegBookmark className="icon__btn" {...restProps}/>}
+    <Inner color="blue" onClick={() => handleInteraction(isBookmarked, "bookmarks")}>
+      {isBookmarked ? <FaBookmark {...restProps}/> : <FaRegBookmark {...restProps}/>}
     </Inner>
   ) 
 }

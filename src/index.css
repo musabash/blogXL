@@ -153,9 +153,7 @@ span {
 }
 
 .create {
-  max-width: 400px;
-  margin: 2em auto;
-  text-align: center;
+  background: wheat;
 }
 .create label {
   text-align: left;
@@ -166,7 +164,7 @@ span {
   color: #f1356d;
   margin-bottom: 30px;
 }
-.create input, .create textarea {
+/* .create input, .create textarea {
   width: 100%;
   padding: 6px 10px;
   margin: 1em 0;
@@ -175,14 +173,14 @@ span {
   display: block;
   background: transparent;
   outline: none;
-}
+} */
 
 .blog-details {
   padding: 2em;
   padding-left: 6em;
 }
 
-.blog-details button, .create button {
+.blog-details button{
   background: rgba(246, 249, 255, 0.7);
   box-shadow: 1.2px 1.2px 2px 0.5px #b3b3b3b3,
   -0.2px -0.2px 2px 0.5px rgba(179, 179, 179, 0.7);
@@ -214,25 +212,26 @@ span {
   display: flex;
   flex-direction: column;
   font-family: "Quicksand";
+  width: 100%;
 }
 
 .blog-body p {
-  margin: 0.5em;
+  margin: 0.5em auto;
+  padding: 1em;
   font-size: 2rem;
+  text-align: center;
 }
 
 .blog-body textarea,
 .blog-title textarea {
   resize: none;
+  margin: 2% auto;
   overflow: hidden;
-  margin: 1em;
   border: none;
   outline:none;
-  min-width: 400px;
-  min-width: 800px;
   height: auto;
   font-size: 2rem;
-  font-family: 'Crimson', sans-serif;
+  font-family: "Quicksand";
 }
 
 .blog-title textarea{
@@ -284,27 +283,6 @@ span {
   opacity: 1;
 }
 
-.icon, .icon__btn {
-  margin: 0.4em auto;
-  font-size: 1.5em;
-  fill: gray;
-}
-
-.icon__btn:hover,
-.icon__btn:active,
-.icon__btn:focus {
-  cursor: pointer;
-  fill: red;
-}
-
-.icon__btn:hover {
-  animation: hoverEffect 400ms linear;
-}
-
-@keyframes hoverEffect {
-  from {filter: drop-shadow(0 0 1px rgb(255, 0, 0));}
-  to {filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0));}
-}
 
 .user__menu__container {
   position: absolute;

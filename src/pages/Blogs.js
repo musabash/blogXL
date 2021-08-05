@@ -1,4 +1,4 @@
-import BlogList from '../components/blog-list'
+import {BlogList} from '../components'
 import { UserContext } from "../contexts/UserContext"
 import { useEffect, useContext, useState } from 'react'
 

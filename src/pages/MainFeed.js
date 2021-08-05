@@ -18,7 +18,6 @@ export function MainFeed() {
     <Feed>
       <TabView tabs={feedTabsList}>
         <TabView.Frame>
-          <Feed.Group>Hello World</Feed.Group>
           <TabView.Tabs>
             {feedTabsList.map((tab, index) => (
               <TabView.Tab id={index} key={tab.name} name={tab.name}>{tab.title}</TabView.Tab> 

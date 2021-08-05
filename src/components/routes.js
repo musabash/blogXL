@@ -34,7 +34,7 @@ export function PrivateRoute({ user, children, ...restProps }) {
         if (!user) {
           return (
             <>
-            {alert("Sorry, you need to sign in to view blogs.")}
+            {alert("Sorry, you need to sign in for further action.")}
             <Redirect
               to={{
                 pathname: SIGN_IN,

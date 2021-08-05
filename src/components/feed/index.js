@@ -1,6 +1,6 @@
 import React, { useState, createContext } from 'react';
 import { FaChartLine } from "react-icons/fa"
-import {Title, Container, Group, Link, Entities, Meta } from './styles/feed'
+import {Title, Container, Group, Link, Entities, Meta, Item, FeatureText, SubTitle } from './styles/feed'
 
 const FeatureContext = createContext();
 
@@ -45,6 +45,18 @@ Feed.All = function FeedAll({children, ...restProps}) {
 
 Feed.Link = function FeedLink({children, ...restProps}) {
   return (<Link {...restProps}>{children}</Link>)
+}
+
+Feed.Item = function FeedItem({children, ...restProps}) {
+  return (<Item {...restProps}>{children}</Item>)
+}
+
+Feed.FeatureText = function FeedFeatureText({children, ...restProps}) {
+  return (<FeatureText {...restProps}>{children}</FeatureText>)
+}
+
+Feed.SubTitle = function FeedSubTitle({children, ...restProps}) {
+  return (<SubTitle {...restProps}>{children}</SubTitle>)
 }
 
 export default Feed

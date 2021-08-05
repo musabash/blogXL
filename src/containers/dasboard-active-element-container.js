@@ -1,12 +1,14 @@
-import {useContext, useState, useEffect} from "react"
-import { UserContext } from "../contexts/UserContext"
+import { useState, useEffect } from "react"
 import { Accordion } from "../components"
 import useDocument from "../hooks/useDocument"
+import { useAuthListener } from "../hooks"
+import useCollection from "../hooks/use-collection"
 
 
 export function DashboardActiveElement({name}) {
   const [data, setData] = useState()
-  const { user, doc } = useContext(UserContext)
+  const {user} = useAuthListener()
+  const blogs = useCollection("blogs")
   const userLog  = useDocument("users", user.uid)
 
   useEffect(() => {
@@ -16,7 +18,7 @@ export function DashboardActiveElement({name}) {
   return (
     data ? <Accordion.Frame>
         {data.length === 0 ? `No ${name} yet` : data.map(elm => {
-          let blog = doc.filter(blog => blog.id === elm)[0]
+          let blog = blogs.filter(blog => blog.id === elm)[0]
           return (
           <Accordion.Item key={elm}>
             <Accordion.Header>
