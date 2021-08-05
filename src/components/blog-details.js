@@ -21,7 +21,8 @@ export const BlogDetails = () => {
     docRef.get().then((doc) => {
     if (doc.exists) {
       let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
-        setBlog(snapshot.docs.filter(doc => doc.id === id)[0].data())
+        const data = snapshot.docs.filter(doc => doc.id === id)[0]
+        data && setBlog(data.data())
       })
       return (() => unsubscribe())
     } else {
