@@ -4,6 +4,13 @@ import { Slider, Container, Inner, Frame, Wrapper, Tabs, SliderContainer, Title,
 
 const TabContext = createContext()
 
+const blogListDefinitions = {
+  drafts: "!blog.published",
+  published: "blog.published",
+  following: "userLog.following.includes(blog.authorId)",
+  all: "blog.published"
+}
+
 export default function TabView({tabs, children, ...restProps}) {
   const [tab, setTab] = useState(tabs[0].name)
   const [sliderPos, setSliderPos] = useState(1)
@@ -57,7 +64,7 @@ TabView.Tab = function TabViewTab({children, name, id, ...restProps}) {
 
 TabView.Body = function TabViewBody({children, userLog, blogs, showAuthor,...restProps}) {
   const {tab} = useContext(TabContext)
-  const blogList = tab === "drafts" ? blogs.filter(blog => !blog.published) : blogs.filter(blog => blog.published)
+  const blogList = blogs.filter(blog => eval(blogListDefinitions[tab]))
 
   return (
     <Body {...restProps}>
@@ -66,3 +73,4 @@ TabView.Body = function TabViewBody({children, userLog, blogs, showAuthor,...res
     </Body>
   ) 
 }
+

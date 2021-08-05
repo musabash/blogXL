@@ -142,7 +142,6 @@ export const Create = () => {
             onChange={(e) => handleOnChange(e)}
             onBlur={handleUpdateBody}
           />
-          <p>{body}</p>
         </BlogBody>
       </Form>
     </div>
