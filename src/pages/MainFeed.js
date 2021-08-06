@@ -23,7 +23,7 @@ export function MainFeed() {
         <TabView.Frame>
           <TabView.Tabs>
             {feedTabsList.map((tab, index) => (
-              <TabView.Tab id={index} key={tab.name} name={tab.name}>{tab.title}</TabView.Tab> 
+              <TabView.Tab id={index} key={tab.name} name={tab.name} def={tab.def}>{tab.title}</TabView.Tab> 
             ))}
           </TabView.Tabs>
           <TabView.Slider />

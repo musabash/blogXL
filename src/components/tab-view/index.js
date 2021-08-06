@@ -1,22 +1,16 @@
-import React, { useState, useContext, createContext } from 'react'
+import React, { useState, useContext, createContext, useEffect } from 'react'
 import {BlogList} from ".."
 import { Slider, Container, Inner, Frame, Wrapper, Tabs, SliderContainer, Title, Tab, Body } from './styles/tab-view'
 
 const TabContext = createContext()
 
-const blogListDefinitions = {
-  drafts: "!blog.published",
-  published: "blog.published",
-  following: "userLog.following.includes(blog.authorId)",
-  all: "blog.published"
-}
-
 export default function TabView({tabs, children, ...restProps}) {
   const [tab, setTab] = useState(tabs[0].name)
+  const [blogDef, setBlogDef] = useState(tabs[0].def)
   const [sliderPos, setSliderPos] = useState(1)
   const tabCount = tabs.length
   return (
-    <TabContext.Provider value={{tab, setTab, tabCount, sliderPos, setSliderPos}}>
+    <TabContext.Provider value={{tab, setTab, tabCount, sliderPos, setSliderPos, blogDef, setBlogDef}}>
       <Container {...restProps}>
           <Inner>{children}</Inner> 
       </Container>
@@ -50,11 +44,12 @@ TabView.Title = function TabViewTitle({children, ...restProps}) {
   return <Title {...restProps}>{tab.toUpperCase()}</Title>
 }
 
-TabView.Tab = function TabViewTab({children, name, id, ...restProps}) {
-  const {tab, setTab, setSliderPos} = useContext(TabContext)
+TabView.Tab = function TabViewTab({children, name, def, id, ...restProps}) {
+  const {tab, setTab, setSliderPos, setBlogDef} = useContext(TabContext)
   return (
-    <Tab name={name} id={id} tab={tab} onClick={() => {
+    <Tab name={name} id={id} tab={tab} def={def} onClick={() => {
       setTab(name)
+      setBlogDef(def)
       setSliderPos(() => `${id * 100}%`)
     }} {...restProps}>
       {children}
@@ -63,8 +58,12 @@ TabView.Tab = function TabViewTab({children, name, id, ...restProps}) {
 }
 
 TabView.Body = function TabViewBody({children, userLog, blogs, showAuthor,...restProps}) {
-  const {tab} = useContext(TabContext)
-  const blogList = blogs.filter(blog => eval(blogListDefinitions[tab]))
+  const {tab, blogDef} = useContext(TabContext)
+  const [blogList, setBlogList] = useState([])
+  
+  useEffect(() => {
+    blogs && setBlogList(blogs.filter(blog => eval(blogDef)))
+  }, [blogDef, blogs])
 
   return (
     <Body {...restProps}>

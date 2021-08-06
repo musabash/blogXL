@@ -33,25 +33,30 @@ export const dashboardMenuList = [
 export const userBlogsTabs = [
     {
       name: "published",
-      title: "Published"
+      title: "Published",
+      def:"blog.published"
     },
     {
       name: "drafts",
-      title: "Drafts"
+      title: "Drafts",
+      def:"!blog.published"
     },
     {
       name: "comments",
-      title: "Comments"
+      title: "Comments",
+      def:"blog.comments.length !== 0"
     }
   ]
 export const feedTabsList = [
     {
       name: "following",
-      title: "Follows"
+      title: "Follows",
+      def:"userLog.following.includes(blog.authorId)"
     },
     {
       name: "all",
-      title: "All Blogs"
+      title: "All Blogs",
+      def:"blog.published"
     }
   ]
 
