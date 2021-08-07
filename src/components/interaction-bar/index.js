@@ -16,7 +16,7 @@ const Inner = styled.div`
     fill: gray;
   }
   >:hover{
-    cursor: pointer;
+    cursor: ${({noPointer}) => !noPointer && "pointer"};
     fill: ${({color}) => color && color};
   }
 
@@ -95,7 +95,7 @@ InteractionBar.Authorised = function InteractionBarAuthorised() {
 
   return (
     <>
-      <Inner>
+      <Inner noPointer>
         {length[0]}
         {
           length[0] === 0
@@ -106,7 +106,7 @@ InteractionBar.Authorised = function InteractionBarAuthorised() {
         }
       </Inner>
 
-      <Inner>
+      <Inner noPointer>
         {length[1]}
         {
           length[1] === 0
@@ -117,7 +117,7 @@ InteractionBar.Authorised = function InteractionBarAuthorised() {
         } 
       </Inner>
 
-      <Inner>
+      <Inner noPointer>
         {length[2]}
         {
           length[2] === 0

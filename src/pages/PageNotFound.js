@@ -9,7 +9,7 @@ const Container = styled.div`
   justify-content: center;
   margin-top: 2em;
   & p {
-    color: red;
+    color: gray;
   }
 `
 const GoBackButton = styled.button`
@@ -29,7 +29,7 @@ export function PageNotFound() {
   return (
     <Container>
       <p>
-        Sorry, the page you are trying to visit does not exist or you are not allowed.
+        Sorry, the page you are trying to visit does not exist <span>(Author might have chosen to delete the blog)</span> or you are not allowed.
       </p>
       <p>
         If you are not signed in, try again after signing in.

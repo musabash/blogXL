@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import firebase, {db, auth, storage} from "../firebase"
+import firebase, {db, storage} from "../firebase"
 import { useAuthListener } from "../hooks"
 
 const UserContext = React.createContext()
@@ -110,6 +110,13 @@ function UserContextProvider(props) {
     db.collection(coll).doc(id).update(obj)
   }
 
+  function moveToBin(coll, id) {
+    db.collection(coll).doc(id).update({
+      published: firebase.firestore.FieldValue.delete(),
+      deleted: true
+    })
+  }
+
   function updateUser(obj){
     const userRef = firebase.auth().currentUser
     userRef.updateProfile(obj)
@@ -134,6 +141,7 @@ function UserContextProvider(props) {
     userLog,
     uploadPic,
     picLoadingPercent,
+    moveToBin
   }
   return (
     <UserContext.Provider value={value}>

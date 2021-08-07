@@ -1,6 +1,6 @@
 import { useParams, useHistory } from "react-router-dom"
 import { UserContext } from "../contexts/UserContext"
-import {useContext, useReducer, useState, useEffect, useRef} from "react"
+import {useContext, useReducer, useState, useEffect} from "react"
 import {InteractionBarContainer, EditButtonsContainer} from "../containers"
 import { db } from "../firebase"
 import ReactMarkdown from "react-markdown";
@@ -12,7 +12,7 @@ export const BlogDetails = () => {
   const [blog, setBlog] = useState('')
   const [error, setError] = useState(null)
   const { id } = useParams()
-  const { deleteBlog, updateDoc, user } = useContext(UserContext)
+  const { deleteBlog, updateDoc, user, moveToBin } = useContext(UserContext)
   const history = useHistory();
   const authorised = user ? user.uid === blog.authorId : false
 
@@ -26,8 +26,8 @@ export const BlogDetails = () => {
       })
       return (() => unsubscribe())
     } else {
-        alert("There is no such document!")
-        history.goBack()
+        setError("There is no such document!")
+        setTimeout(() => history.goBack(), 2000)
     }})
   }, [])
 
@@ -54,7 +54,7 @@ export const BlogDetails = () => {
           isEditable: !state.isEditable
         }
       case 'HANDLE_DELETE': {
-        deleteBlog("blogs", id)
+        moveToBin("blogs", id)
         history.goBack()
         return state
       }

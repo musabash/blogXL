@@ -3,10 +3,12 @@ import { useContext, useEffect, useState } from "react"
 import {TabView} from "."
 import { db } from "../firebase"
 import { userBlogsTabs as tabs} from "./menu-lists"
+import { useDocument } from "../hooks"
 
 export default function UserBlogs() {
   const [blogs, setBlogs] = useState([])
   const { user } = useContext(UserContext)
+  const userLog = useDocument("users", user.uid)
 
 
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function UserBlogs() {
         </TabView.Tabs>
         <TabView.Slider />
       </TabView.Frame>
-      <TabView.Body blogs={blogs} />
+      <TabView.Body blogs={blogs} userLog={userLog}/>
     </TabView>
   )
 }

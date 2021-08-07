@@ -24,7 +24,7 @@ export function DashboardActiveElement({name}) {
             <Accordion.Header>
               {blog.title} by {blog.author}
             </Accordion.Header>
-              <Accordion.Body to={`blogs/${blog.id}`}>
+              <Accordion.Body to={!blog.deleted ? `blogs/${blog.id}` : "/BlogDeleted"}>
                 {blog.body.slice(0, 25)} ...
               </Accordion.Body>
           </Accordion.Item>

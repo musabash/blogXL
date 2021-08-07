@@ -39,7 +39,12 @@ export const userBlogsTabs = [
     {
       name: "drafts",
       title: "Drafts",
-      def:"!blog.published"
+      def:"!blog.published && !blog.deleted"
+    },
+    {
+      name: "deleted",
+      title: "Deleted",
+      def:"blog.deleted"
     },
     {
       name: "comments",

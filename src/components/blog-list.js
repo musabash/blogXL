@@ -21,10 +21,19 @@ export const BlogList = ({blogs, showAuthor, pub}) => {
                 <div>...</div>
               </Card.Group>
             }
-            <Card.Link to={`blogs/${blog.id}`}>
-              <Card.Title>{blog.title}</Card.Title>
-              {blog.body.slice(0, 35)} ...
-            </Card.Link>
+            {
+              blog.deleted
+              ?
+              <Card.NoLink>
+                <Card.Title>{blog.title}</Card.Title>
+                {blog.body.slice(0, 35)} ...
+              </Card.NoLink>
+              :
+              <Card.Link to={`blogs/${blog.id}`}>
+                <Card.Title>{blog.title}</Card.Title>
+                {blog.body.slice(0, 35)} ...
+              </Card.Link>
+            }
             <Card.Group justifyContent="space-between" margin="1em">
               <Card.SmallText>{blog.date}</Card.SmallText>
               {!pub && user.uid !== blog.authorId && <InteractionBar blog={blog} id={blog.id} singleItem size="1.5em"><InteractionBar.Bookmark/></InteractionBar>}

@@ -46,6 +46,15 @@ export const Link = styled(ReachRouterLink)`
   }
 `;
 
+export const NoLink = styled.div`
+  color: #a0a0a0;
+  text-decoration: none;
+  margin-left: 1ch;
+  &:hover {
+      color: #b0b0b0;
+  }
+`;
+
 export const Meta = styled.div`
     display: none;
     position: absolute;

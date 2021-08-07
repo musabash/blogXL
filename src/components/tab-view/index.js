@@ -62,8 +62,8 @@ TabView.Body = function TabViewBody({children, userLog, blogs, showAuthor,...res
   const [blogList, setBlogList] = useState([])
   
   useEffect(() => {
-    blogs && setBlogList(blogs.filter(blog => eval(blogDef)))
-  }, [blogDef, blogs])
+    userLog && blogs && setBlogList(blogs.filter(blog => eval(blogDef)))
+  }, [blogDef, blogs, userLog])
 
   return (
     <Body {...restProps}>

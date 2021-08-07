@@ -1,5 +1,5 @@
 import React, { useState, createContext } from 'react';
-import {Container, Title, Link, Meta, Group, Text, SmallText} from './styles/card'
+import {Container, Title, Link, NoLink, Meta, Group, Text, SmallText} from './styles/card'
 
 const CardContext = createContext();
 
@@ -33,6 +33,10 @@ Card.Meta = function CardMeta({children,...restProps}) {
 
 Card.Link = function CardLink({children, ...restProps}) {
   return (<Link {...restProps}>{children}</Link>)
+}
+
+Card.NoLink = function CardNoLink({children, ...restProps}) {
+  return (<NoLink {...restProps}>{children}</NoLink>)
 }
 
 Card.Group = function CardGroup({children,...restProps}) {

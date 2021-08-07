@@ -1,9 +1,9 @@
-import React, {useEffect, useContext, useState, useRef} from "react"
+import React, {useContext, useState, useRef} from "react"
 import { UserContext } from "../contexts/UserContext"
 import {ProfilePicture} from "../components";
 import firebase, { storage } from "../firebase";
 import LoadingBar from "../components/loading-bar";
-import { useAuthListener, useSnapshot } from "../hooks";
+import { useAuthListener } from "../hooks";
 
 export const ProfilePage = () => {
   const [file, setFile] = useState("")
@@ -12,7 +12,6 @@ export const ProfilePage = () => {
   const inputFileRef = useRef(null)
   const {updateUser, updateDoc} = useContext(UserContext)
   const { user } = useAuthListener()
-  const [photoUrl, setPhotoUrl] = useState(user.photoURL)
   // const userLog = useSnapshot('users', user.uid)
   const errorCodes = {
     unauthorized: "unauthorised request",
@@ -38,7 +37,6 @@ export const ProfilePage = () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           updateUser({photoURL: downloadURL})
           updateDoc("users", {photoURL: downloadURL}, user.uid)
-          setPhotoUrl(downloadURL)
           setFile("")
           setPicLoadingPercent(0)
         });
