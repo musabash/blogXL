@@ -90,3 +90,11 @@ export const SmallText = styled.h5`
     line-height: normal;
     letter-spacing: 0.05rem;
 `;
+
+export const Restore = styled.p`
+  font-weight: 600;
+  &:hover{
+    color: #00aeff;
+    cursor: pointer;
+  }
+`

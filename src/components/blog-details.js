@@ -12,7 +12,7 @@ export const BlogDetails = () => {
   const [blog, setBlog] = useState('')
   const [error, setError] = useState(null)
   const { id } = useParams()
-  const { deleteBlog, updateDoc, user, moveToBin } = useContext(UserContext)
+  const { deleteBlog, updateDoc, user, changeFieldValue } = useContext(UserContext)
   const history = useHistory();
   const authorised = user ? user.uid === blog.authorId : false
 
@@ -54,7 +54,7 @@ export const BlogDetails = () => {
           isEditable: !state.isEditable
         }
       case 'HANDLE_DELETE': {
-        moveToBin("blogs", id)
+        changeFieldValue("blogs", id, {delField: "published", newField: "deleted", newFieldValue: true})
         history.goBack()
         return state
       }

@@ -22,11 +22,11 @@ export function DashboardActiveElement({name}) {
           return (
           <Accordion.Item key={elm}>
             <Accordion.Header>
-              {blog.title} by {blog.author}
+              {blog.title} <span>by {blog.author}</span>
             </Accordion.Header>
-              <Accordion.Body to={!blog.deleted ? `blogs/${blog.id}` : "/BlogDeleted"}>
-                {blog.body.slice(0, 25)} ...
-              </Accordion.Body>
+            <Accordion.Body to={!blog.deleted ? `blogs/${blog.id}` : "/BlogDeleted"}>
+              {blog.body.slice(0, 25)} ...
+            </Accordion.Body>
           </Accordion.Item>
           )} 
         )}

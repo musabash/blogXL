@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import {ProfilePicture} from "../components";
+import { UserContext } from "../contexts/UserContext";
 import { useAuthListener } from "../hooks";
 import Card from "./card";
 import Feed from "./feed";
@@ -6,6 +8,11 @@ import InteractionBar from "./interaction-bar";
 
 export const BlogList = ({blogs, showAuthor, pub}) => {
   const {user} = useAuthListener()
+  const {changeFieldValue} = useContext(UserContext)
+
+  const handleRecover = (id) => {
+    changeFieldValue("blogs", id, {delField: "deleted", newField: "published", newFieldValue: true})
+  }
 
   return (
       <Feed.Group>
@@ -37,6 +44,7 @@ export const BlogList = ({blogs, showAuthor, pub}) => {
             <Card.Group justifyContent="space-between" margin="1em">
               <Card.SmallText>{blog.date}</Card.SmallText>
               {!pub && user.uid !== blog.authorId && <InteractionBar blog={blog} id={blog.id} singleItem size="1.5em"><InteractionBar.Bookmark/></InteractionBar>}
+              {blog.deleted && <Card.Restore onClick={() => handleRecover(blog.id)}>recover</Card.Restore>}
             </Card.Group>
           </Card.Container>
         ))}

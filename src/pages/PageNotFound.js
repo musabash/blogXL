@@ -29,7 +29,7 @@ export function PageNotFound() {
   return (
     <Container>
       <p>
-        Sorry, the page you are trying to visit does not exist <span>(Author might have chosen to delete the blog)</span> or you are not allowed.
+        Sorry, the page you are trying to visit does not exist <span>(content might be deleted)</span> or you are not allowed.
       </p>
       <p>
         If you are not signed in, try again after signing in.

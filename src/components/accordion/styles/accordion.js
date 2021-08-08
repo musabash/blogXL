@@ -3,18 +3,17 @@ import { Link as ReachRouterLink  } from 'react-router-dom';
 
 export const StyledLink = styled(ReachRouterLink)`
   box-sizing: border-box;
-  transition: max-height 0.25s cubic-bezier(0.5, 0, 0.1, 1);
+  transition: all 2.5s cubic-bezier(0.5, 0, 0.1, 1);
   font-size: 20px;
   font-weight: normal;
   line-height: normal;
   background: #0077b6;
   color: white;
-  padding: 0.4em 0.6em 0.4em 0.6em;
+  padding: 0.7em 0.6em;
   user-select: none;
   align-items: center;
   width: 100%;
   border-radius: 5px;
-  transition: all 250ms cubic-bezier(.5, 0, .5, 1);
   text-decoration: none;
   display: block;
   cursor: pointer;
@@ -61,7 +60,6 @@ export const Title = styled.h1`
   margin-bottom: 0.6em;
   color: rgb(255, 255, 255);
   text-align: center;
-  
   @media (max-width: 600px) {
       font-size: 35px;
   }
@@ -69,7 +67,6 @@ export const Title = styled.h1`
 
 export const Header = styled.div`
   display: flex;
-  justify-content: space-between;
   box-sizing: border-box;
   cursor: pointer;
   margin-bottom: 2px;
@@ -77,15 +74,14 @@ export const Header = styled.div`
   color: white;
   font-weight: normal;
   background: #03045e;
-  padding: 0.4em 0.6em 0.4em 0.6em;
+  padding: 0.7em 0.6em;
   user-select: none;
   align-items: center;
   width: 100%;
   border-radius: 5px;
-  &:span {
-    color: rgb(253, 253, 253);
-    font-size: 1rem;
-    margin-left: 1rem;
+  >:last-child{
+    margin-left: auto;
+    color: red;
   }
   
   @media (max-width: 600px) {

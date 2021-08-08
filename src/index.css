@@ -136,6 +136,9 @@ h1 {
 span {
   color: #f13506;
   font-weight: bold;
+  padding-left: 1em;
+  font-family: 'Crimson', sans-serif, sans-serif, Verdana;
+  font-style: italic;
 }
 
 @media (max-width: 550px) {

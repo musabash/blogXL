@@ -110,10 +110,10 @@ function UserContextProvider(props) {
     db.collection(coll).doc(id).update(obj)
   }
 
-  function moveToBin(coll, id) {
+  function changeFieldValue(coll, id, obj) {
     db.collection(coll).doc(id).update({
-      published: firebase.firestore.FieldValue.delete(),
-      deleted: true
+      [obj.delField]: firebase.firestore.FieldValue.delete(),
+      [obj.newField]: obj.newFieldValue
     })
   }
 
@@ -141,7 +141,7 @@ function UserContextProvider(props) {
     userLog,
     uploadPic,
     picLoadingPercent,
-    moveToBin
+    changeFieldValue
   }
   return (
     <UserContext.Provider value={value}>
