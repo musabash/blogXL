@@ -1,22 +1,14 @@
 import { UserContext } from "../contexts/UserContext"
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import {TabView} from "."
-import { db } from "../firebase"
 import { userBlogsTabs as tabs} from "./menu-lists"
 import { useDocument } from "../hooks"
+import useQuery from "../hooks/useQuery"
 
 export default function UserBlogs() {
-  const [blogs, setBlogs] = useState([])
   const { user } = useContext(UserContext)
   const userLog = useDocument("users", user.uid)
-
-
-  useEffect(() => {
-    let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
-      setBlogs(snapshot.docs.map(doc => doc.data()).filter(blog => blog.authorId === user.uid))
-    })
-    return (() => unsubscribe())
-  }, [])
+  const blogs = useQuery("blogs", "authorId", "==", user.uid)
 
   return (
     <TabView tabs={tabs}>
