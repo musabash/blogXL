@@ -16,7 +16,7 @@ export const BlogList = ({blogs, showAuthor, pub}) => {
 
   return (
       <Feed.Group>
-        {blogs.map ((blog) => (
+        {blogs && blogs.map ((blog) => (
           <Card.Container key={blog.id}>
             {
               showAuthor && 

@@ -1,12 +1,15 @@
 import React, { useState, useContext, createContext, useEffect } from 'react'
 import {BlogList} from ".."
+import { db } from '../../firebase'
+import { useDocument } from '../../hooks'
+import useQuery from '../../hooks/useQuery'
 import { Slider, Container, Inner, Frame, Wrapper, Tabs, SliderContainer, Title, Tab, Body } from './styles/tab-view'
 
 const TabContext = createContext()
 
 export default function TabView({tabs, children, ...restProps}) {
   const [tab, setTab] = useState(tabs[0].name)
-  const [blogDef, setBlogDef] = useState(tabs[0].def)
+  const [blogDef, setBlogDef] = useState(() => tabs[0].def)
   const [sliderPos, setSliderPos] = useState(1)
   const tabCount = tabs.length
   return (
@@ -49,7 +52,7 @@ TabView.Tab = function TabViewTab({children, name, def, id, ...restProps}) {
   return (
     <Tab name={name} id={id} tab={tab} def={def} onClick={() => {
       setTab(name)
-      setBlogDef(def)
+      setBlogDef(() => def)
       setSliderPos(() => `${id * 100}%`)
     }} {...restProps}>
       {children}
@@ -57,18 +60,27 @@ TabView.Tab = function TabViewTab({children, name, def, id, ...restProps}) {
   )
 }
 
-TabView.Body = function TabViewBody({children, userLog, blogs, showAuthor,...restProps}) {
+TabView.Body = function TabViewBody({children, userId, qOne, showAuthor,...restProps}) {
   const {tab, blogDef} = useContext(TabContext)
-  const [blogList, setBlogList] = useState([])
-  
+  const userLog = useDocument("users", userId)
+  const [blogs, setBlogs] = useState([])
+  const query = db.collection("blogs").where(qOne.where, qOne.condition, qOne.val)
+
+  const getFollowedAuthorsBlogs = async() => {
+    const following = tab === "following" ? await db.collection("users").doc(userId).get().then((doc) => doc.data().following) : null
+    await query.where(blogDef(following).where, blogDef(following).condition, blogDef(following).val).get().then((querySnapshot) => {
+      setBlogs(querySnapshot.docs.map(elm => elm.data()))
+    })
+  }
+
   useEffect(() => {
-    userLog && blogs && setBlogList(blogs.filter(blog => eval(blogDef)))
-  }, [blogDef, blogs, userLog])
+    userLog && getFollowedAuthorsBlogs()
+  }, [userLog, tab])
 
   return (
     <Body {...restProps}>
       {children}
-      {blogList.length === 0 ? `No ${tab}` : <BlogList blogs={blogList} showAuthor={showAuthor} />  }
+      {blogs && blogs.length === 0 ? `No ${tab}` : <BlogList blogs={blogs} showAuthor={showAuthor} />  }
     </Body>
   ) 
 }

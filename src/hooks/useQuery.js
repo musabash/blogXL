@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { db } from '../firebase'
 
-export default function useQuery(coll, where, condition, val) {
-    const [content, setContent] = useState();
+export default function useQuery(coll, qOne, qTwo) {
+    const [content, setContent] = useState([]);
     const docRef = db.collection(coll)
+    const query = docRef.where(qOne.where, qOne.condition, qOne.val)
+    const compoundQuery = qTwo ? query.where(qTwo.where, qTwo.condition, qTwo.val) : null
       
     useEffect(() => {
-      let query = docRef.where(where, condition, val);
-      let unsubscribe = query.get().then((querySnapshot) => {
+      let q = compoundQuery ? compoundQuery : query
+      let unsubscribe = q.get().then((querySnapshot) => {
         let arr = querySnapshot.docs.map(elm => elm.data())
         setContent(arr)
       }
@@ -15,7 +17,7 @@ export default function useQuery(coll, where, condition, val) {
           console.log(error)
         })
       return unsubscribe
-    }, [val])
+    }, [])
 
     return content;
 }

@@ -34,34 +34,34 @@ export const userBlogsTabs = [
     {
       name: "published",
       title: "Published",
-      def:"blog.published"
+      def: function(){return {where: "published", condition: "==", val: true}}
     },
     {
       name: "drafts",
       title: "Drafts",
-      def:"!blog.published && !blog.deleted"
+      def: function(){return {where: "published", condition: "==", val: false}}
     },
     {
       name: "deleted",
       title: "Deleted",
-      def:"blog.deleted"
+      def: function(){return {where: "deleted", condition: "==", val: true}}
     },
     {
       name: "comments",
       title: "Comments",
-      def:"blog.comments.length !== 0"
+      def: function(){return {where: "comments", condition: "!=", val: []}}
     }
   ]
 export const feedTabsList = [
     {
       name: "following",
       title: "Follows",
-      def:"userLog.following.includes(blog.authorId)"
+      def: function(arr) {return {where: "authorId", condition: "in", val: arr}}
     },
     {
       name: "all",
       title: "All Blogs",
-      def:"blog.published"
+      def: function(){return {where: "published", condition: "==", val: true}}
     }
   ]
 

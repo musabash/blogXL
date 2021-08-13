@@ -2,13 +2,10 @@ import { UserContext } from "../contexts/UserContext"
 import { useContext } from "react"
 import {TabView} from "."
 import { userBlogsTabs as tabs} from "./menu-lists"
-import { useDocument } from "../hooks"
-import useQuery from "../hooks/useQuery"
 
 export default function UserBlogs() {
   const { user } = useContext(UserContext)
-  const userLog = useDocument("users", user.uid)
-  const blogs = useQuery("blogs", "authorId", "==", user.uid)
+  const qOne = {where: "authorId", condition: "==", val: user.uid}
 
   return (
     <TabView tabs={tabs}>
@@ -20,7 +17,7 @@ export default function UserBlogs() {
         </TabView.Tabs>
         <TabView.Slider />
       </TabView.Frame>
-      <TabView.Body blogs={blogs} userLog={userLog}/>
+      <TabView.Body userId={user.uid} qOne={qOne} />
     </TabView>
   )
 }
