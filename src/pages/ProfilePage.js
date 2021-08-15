@@ -12,7 +12,6 @@ export const ProfilePage = () => {
   const inputFileRef = useRef(null)
   const {updateUser, updateDoc} = useContext(UserContext)
   const { user } = useAuthListener()
-  // const userLog = useSnapshot('users', user.uid)
   const errorCodes = {
     unauthorized: "unauthorised request",
     canceled: "canceled request",
@@ -70,7 +69,6 @@ export const ProfilePage = () => {
           {error && <h3>{error}</h3>}
           <h3><span>Username: </span>{user.displayName}</h3>
           <h3><span>Email address: </span>{user.email}</h3>
-          {/* {userLog ? <h3>{userLog.bookmarks.length} Bookmarks</h3> : null} */}
         </div>
       </div>
     </div>

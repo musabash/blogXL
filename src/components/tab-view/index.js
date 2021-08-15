@@ -67,10 +67,15 @@ TabView.Body = function TabViewBody({children, userId, qOne, showAuthor,...restP
   const query = db.collection("blogs").where(qOne.where, qOne.condition, qOne.val)
 
   const getFollowedAuthorsBlogs = async() => {
-    const following = tab === "following" ? await db.collection("users").doc(userId).get().then((doc) => doc.data().following) : null
-    await query.where(blogDef(following).where, blogDef(following).condition, blogDef(following).val).get().then((querySnapshot) => {
-      setBlogs(querySnapshot.docs.map(elm => elm.data()))
-    })
+    try {
+      const following = tab === "following" ? await db.collection("users").doc(userId).get().then((doc) => ["", ...doc.data().following]) : null
+      await query.where(blogDef().where, blogDef().condition, blogDef(following).val).get().then((querySnapshot) => {
+        setBlogs(querySnapshot.docs.map(elm => elm.data()))
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+
   }
 
   useEffect(() => {
