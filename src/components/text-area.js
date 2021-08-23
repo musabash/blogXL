@@ -22,11 +22,13 @@ export default function TextArea({name, value, onChangeHandler}) {
         onChange={onChange}
         ref={textareaRef}
         style={{
-          height: height
+          height: height,
+          padding: "1.5em 0",
+          
         }}
         value={value}
       />
-      <div ref={hiddenTextRef} style={{position: "absolute", fontSize: "2.5rem", visibility: "hidden"}}>
+      <div ref={hiddenTextRef} style={{position: "absolute", fontSize: "2rem", visibility: "hidden", border: "1px solid blue"}}>
         <ReactMarkdown
           remarkPlugins={[gfm]}
           className="markdown"

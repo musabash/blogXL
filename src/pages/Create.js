@@ -1,14 +1,14 @@
-import { useState, useContext, useEffect, useRef } from 'react'
+import { useState, useContext, useMemo, useEffect, useRef } from 'react'
 import { UserContext } from "../contexts/UserContext"
 import { db } from '../firebase'
 import { useHistory } from 'react-router'
 import styled from 'styled-components'
 
 const TextField = styled.textarea`
-  margin: 0 auto;
   width: 95%;
-  height: auto;
+  height: ${({height, noOfBreaks}) => height && noOfBreaks && `calc(${height + 50}px + ${noOfBreaks * 2}ch)`};
   resize: none;
+  padding: 1em 1em 0 1em;
   margin: 2% auto;
   overflow: hidden;
   border: none;
@@ -16,6 +16,15 @@ const TextField = styled.textarea`
   text-align: ${({textAlign}) => textAlign && textAlign};
   font-size: ${({fontSize}) => fontSize ? fontSize : "1.2rem"};
   font-family: "Quicksand";
+  &+div {
+    font-size: ${({fontSize}) => fontSize ? fontSize : "1.2rem"};
+    font-weight: 400;
+    width: 95%;
+    margin: 2% auto;
+    padding: 1em 1em 0 1em;
+    ${'' /* visibility: hidden;
+    position: absolute; */}
+  }
 `
 
 const Form = styled.form`
@@ -58,18 +67,22 @@ const SubmitButton = styled.input`
 export const Create = () => {
   const [blogId, setBlogId] = useState('')
   const [isFirstClick, setIsFirstClick] = useState(true)
+  const [isFirstLoad, setIsFirstLoad] = useState(true)
   const [title, setTitle] = useState('')
   const [body, setBody] = useState("")
   const { user, updateDoc } = useContext(UserContext)
   const author = user.displayName
   const history = useHistory()
-  const textRef = useRef(null)
-  
+  const textRef = useRef()
+  const height = useMemo(() => !isFirstLoad && textRef.current.clientHeight, [body])
+  const noOfBreaks = useMemo(() => body.split(/\n|\r/).length, [body])
   useEffect(() => {
     if (!isFirstClick && title) {
       handlePost()
     }
+    setIsFirstLoad(false)
   }, [isFirstClick])
+
 
   function handleBlur() {
     setIsFirstClick(false)
@@ -80,7 +93,6 @@ export const Create = () => {
   }
 
   function handleOnChange(e){
-    // console.log(e)
     setBody(e.target.value)
   }
 
@@ -135,13 +147,16 @@ export const Create = () => {
         />
         <BlogBody>
           <TextField
-            ref={textRef}
+            fontSize="1.5rem"
             type="text"
             placeholder="Your Blog here"
             value={body}
             onChange={(e) => handleOnChange(e)}
             onBlur={handleUpdateBody}
+            height={height}
+            noOfBreaks={noOfBreaks}
           />
+          <div ref={textRef}>{body}</div>
         </BlogBody>
       </Form>
     </div>

@@ -156,7 +156,7 @@ span {
 }
 
 .create {
-  background: wheat;
+  background: white;
 }
 .create label {
   text-align: left;
@@ -214,8 +214,13 @@ span {
   font-size: 2rem;
   display: flex;
   flex-direction: column;
-  font-family: "Quicksand";
   width: 100%;
+}
+
+.blog-title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .blog-body p {
@@ -230,6 +235,7 @@ span {
   resize: none;
   margin: 2% auto;
   overflow: hidden;
+  width: 90%;
   border: none;
   outline:none;
   height: auto;
@@ -241,6 +247,7 @@ span {
   background: transparent;
   font-size: 2.5rem;
   text-align: center;
+  height: 4em;
 }
 
 .primary__metadata, .secondary__metadata {
