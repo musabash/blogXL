@@ -13,6 +13,7 @@ const TextField = styled.textarea`
   overflow: hidden;
   border: none;
   outline:none;
+  line-height: 2ch;
   text-align: ${({textAlign}) => textAlign && textAlign};
   font-size: ${({fontSize}) => fontSize ? fontSize : "1.2rem"};
   font-family: "Quicksand";
@@ -22,8 +23,8 @@ const TextField = styled.textarea`
     width: 95%;
     margin: 2% auto;
     padding: 1em 1em 0 1em;
-    ${'' /* visibility: hidden;
-    position: absolute; */}
+    visibility: hidden;
+    position: absolute;
   }
 `
 
