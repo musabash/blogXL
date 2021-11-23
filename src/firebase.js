@@ -16,5 +16,6 @@ const app = firebase.initializeApp({
 export const db = firebase.firestore()
 firebase.firestore().settings({timestampsInSnapshots: true})
 export const auth = app.auth()
-export const storage = firebase.storage();
+export const storage = firebase.storage()
+export const signInAnon = firebase.auth().signInAnonymously()
 export default firebase

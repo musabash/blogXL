@@ -5,11 +5,12 @@ import {ProfilePicture} from '../components'
 import SignInAvatar from './sign-in-avatar'
 import { auth } from '../firebase'
 import { useAuthListener } from '../hooks'
+import { UserMenuLink, UserMenuContainer, UserMenuList } from './header/styles/header'
 
 export default function UserMenu() {
   const history = useHistory()
   const [error, setError] = useState("")
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuIsOpen, setMenuIsOpen] = useState(false)
   const { user } = useAuthListener()
 
   function handleSignOut() {
@@ -19,7 +20,7 @@ export default function UserMenu() {
     })
   }
 
-  const handleClick = () => setMenuOpen(prev => !prev)
+  const handleClick = () => setMenuIsOpen(prev => !prev)
 
   return (
     <>
@@ -34,22 +35,19 @@ export default function UserMenu() {
         /> : 
         <SignInAvatar />
       }
-      <div 
-        onMouseLeave={() => setMenuOpen(false)}
-        className={menuOpen ? "user__menu__container user__menu-open" : "user__menu__container"}
+      <UserMenuContainer 
+        onMouseLeave={() => setMenuIsOpen(false)}
+        menuIsOpen={menuIsOpen}
       >
-        <ul className="user__menu__list">
+        <UserMenuList>
           {menuList.map(elm => (
-              <Link onClick={() => setMenuOpen(false)} key={elm.id} className="user__menu__link" to={elm.to}>{elm.name}</Link>
+              <UserMenuLink onClick={() => setMenuIsOpen(false)} key={elm.id} to={elm.to}>{elm.name}</UserMenuLink>
           ))}
-          <li
-            className="user__menu__link"
-            onClick={() => handleSignOut()}
-          >
+          <UserMenuLink onClick={() => handleSignOut()}>
             Sign Out
-          </li>
-        </ul>
-      </div>
+          </UserMenuLink>
+        </UserMenuList>
+      </UserMenuContainer>
     </>
   )
 }

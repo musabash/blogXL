@@ -21,6 +21,7 @@ export function SignUp() {
         .then(() => {
           const user = auth.currentUser
           db.collection("users").doc(user.uid).set({
+            authorId: user.uid,
             likes: [],
             bookmarks: [],
             comments: [],

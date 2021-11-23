@@ -27,6 +27,8 @@ export const Body = styled.div`
 export const Menu = styled.nav`
   position: fixed;
   top: 5em;
+  max-height: 70vh;
+  overflow: auto;
   z-index: 100;
   display: flex;
   flex-direction: column;

@@ -10,13 +10,17 @@ export default function ProfilePicture({subText, size, borderRadius, id, handleC
     let unsubscribe = docRef
       .onSnapshot((snapshot) => {
       setUrl(snapshot.data().photoURL)
-      }, (error) => {console.log(error)})
+      }, (error) => {console.log("ERROR:", error.message)})
       return () => unsubscribe
     }, [])
 
   return (
     <Container size={size}>
-      <ImageContainer size={size} borderRadius={borderRadius} photoURL={url} onClick={handleClick}/>
+      <ImageContainer
+        size={size}
+        borderRadius={borderRadius}
+        photoURL={url}
+        onClick={handleClick}/>
       {subText && <SubText>Click on your profile photo to choose file.</SubText>}
     </Container>
   )

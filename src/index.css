@@ -197,6 +197,7 @@ span {
   margin-right: 0.5rem;
   letter-spacing: 0.1ch;
   width: auto;
+  background: #f8f2f2
 }
 
 .blog-details button:hover {
@@ -293,61 +294,10 @@ span {
   opacity: 1;
 }
 
-
-.user__menu__container {
-  position: absolute;
-  width: 17ch;
-  top: 3.5em;
-  right: 1em;
-  z-index: 1;
-  transition: all 250ms cubic-bezier(.5, 0, .5, 1);
-  transform: translateX(200%);
-  opacity: 0;
-}
-
-.user__menu-open {
-  opacity: 1;
-  transform: translateX(0%)
-}
-
 .signin-avatar {
   border: 1px solid red;
   color: red;
   margin: 0 auto;
-}
-
-.user__menu__container {
-  background: #fefefe;
-  padding: 0.5em 0;
-  box-shadow: 2px 2px 6px 1px #eeeeee;
-}
-
-.user__menu__list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  padding-left: 0;
-}
-
-.user__menu__link {
-  width: 100%;
-  margin: 0.2em auto;
-  padding: 0 0.3em;
-  text-align: center;
-  color: rgb(93, 82, 82);
-  line-height: 2rem;
-  text-decoration: none;
-  letter-spacing: 0.05rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.user__menu__link:hover {
-  transition: 300ms;
-  box-shadow: 0 5px 4px -4px rgb(200, 198, 198),
-  0 -5px 4px -4px rgb(200, 198, 198);
 }
 
 .markdown {

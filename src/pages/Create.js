@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 const TextField = styled.textarea`
   width: 95%;
-  height: ${({height, noOfBreaks}) => height && noOfBreaks && `calc(${height + 50}px + ${noOfBreaks * 2}ch)`};
+  height: ${({height, noOfBreaks}) => height && noOfBreaks && `calc(${height}px + ${noOfBreaks * 2}ch)`};
   resize: none;
   padding: 1em 1em 0 1em;
   margin: 2% auto;
@@ -21,6 +21,7 @@ const TextField = styled.textarea`
     font-size: ${({fontSize}) => fontSize ? fontSize : "1.2rem"};
     font-weight: 400;
     width: 95%;
+    line-height: 2ch;
     margin: 2% auto;
     padding: 1em 1em 0 1em;
     visibility: hidden;
@@ -94,6 +95,7 @@ export const Create = () => {
   }
 
   function handleOnChange(e){
+    console.log(noOfBreaks)
     setBody(e.target.value)
   }
 

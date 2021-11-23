@@ -17,15 +17,6 @@ export const Nav = styled.ul`
   z-index: 10;
 `
 
-export const Link = styled(ReachRouterLink)`
-  color: #fff;
-  text-decoration: none;
-  margin-left: 1ch;
-  &:hover {
-      text-decoration: underline;
-  }
-`;
-
 export const InnerListItem = styled.li`
   display: flex;
   align-items: baseline;
@@ -80,5 +71,61 @@ export const Logo = styled.div`
 `
 
 export const MenuContainer = styled.li`
+  
+`
 
+export const Link = styled(ReachRouterLink)`
+  color: #fff;
+  text-decoration: none;
+  margin-left: 1ch;
+  &:hover {
+      text-decoration: underline;
+  }
+`
+
+export const UserMenuLink = styled(ReachRouterLink)`
+  width: 100%;
+  margin: 0.2em auto;
+  padding: 0 0.3em;
+  text-align: center;
+  color: rgb(93, 82, 82);
+  line-height: 2rem;
+  text-decoration: none;
+  letter-spacing: 0.05rem;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    transition: 300ms;
+    text-decoration: underline;
+    color: red;
+  }
+`
+
+export const UserMenuContainer = styled.div`
+  max-width: 100%;
+  position: fixed;
+  width: 17ch;
+  max-height: 70vh;
+  overflow: auto;
+  top: 3.5em;
+  right: 1em;
+  z-index: 1;
+  transition: all 250ms cubic-bezier(.5, 0, .5, 1);
+  background: #fefefe;
+  padding: 0.5em 0;
+  box-shadow: 0px 0px 6px 4px #efefef;
+  ${({menuIsOpen}) => menuIsOpen ?
+  `opacity: 1; transform: translate(0%);` : 
+  `opacity: 0; transform: translate(200%);`
+  }
+`
+
+export const UserMenuList = styled.div`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  padding-left: 0;
 `

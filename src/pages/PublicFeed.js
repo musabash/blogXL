@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react'
 import { Feed, BlogList } from '../components'
 import {db} from '../firebase'
 
+
 export function PublicFeed() {
   const [blogs, setBlogs] = useState([])
-
+  
   useEffect(() => {
-    let unsubscribe = db.collection('blogs').onSnapshot((snapshot) => {
+    let unsubscribe = db.collection('snapshots').onSnapshot((snapshot) => {
       setBlogs(snapshot.docs.map(doc => doc.data()))
     })
     return (() => unsubscribe())
