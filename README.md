@@ -16,6 +16,6 @@ React JS (React Functional Components, React Hooks), Firebase (Authentication, S
 2. `$ npm install`
 3. `$ npm run start`
 
-### [Click Here to Download] (https://github.com/musabash/blogXL/archive/refs/heads/main.zip)
+### [Click Here to Download](https://github.com/musabash/blogXL/archive/refs/heads/main.zip)
 
 
