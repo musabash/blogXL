@@ -20,9 +20,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
+    - name: npm run install
+      run: |
+        npm run install
+
     - name: npm run deploy
       run: |
-        npm run deploy 
+        npm run deploy
       env:
         CI: true
         REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY}}
