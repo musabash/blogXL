@@ -1,4 +1,5 @@
 # blogXL
+![](https://github.com/<Github username>/<repo name>/workflows/<workflow name>/badge.svg)
 
 This is a blogging and publishing app.
 +	Signup, sign in, reset password features with real time update.
