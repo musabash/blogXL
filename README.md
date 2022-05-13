@@ -1,4 +1,4 @@
-# blogXL ![pages-build-deployment](https://github.com/musabash/blogXL/actions/workflows/pages/pages-build-deployment/badge.svg)
+# blogXL ![page-build-deploy](https://github.com/musabash/blogXL/actions/workflows/pages/pages-build-deployment/badge.svg)
 
 This is a blogging and publishing app.
 +	Signup, sign in, reset password features with real time update.
